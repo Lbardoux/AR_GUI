@@ -1,0 +1,11 @@
+NB_ARGUMENT 0
+[Usage]
+%0% 
+
+[Available arguments]
+	Coming soon :D
+END
+
+# A partir de là, ça ne compte plus.
+# %0% Permet d'afficher le contenu d'argv[0] dans le programme.
+# Et c'est le seul truc affichable dynamiquement ici :D
