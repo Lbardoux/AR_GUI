@@ -2,17 +2,85 @@
  * @file main.cpp
  * @mainpage
  * @section    s_id_usage Utilisation
- * @subsection ss_id_compile [DEV] : Compiler chez nous
+ * @subsection ss_id_compile Installer tout ça.
  * Salut camarade développeur ! Alors comme ça tu veux compiler ce truc ?@n
  * Pour cela, rien de plus dur, il suffit, si tu es chez toi, d'avoir les <b>libs suivantes</b> d'installées@n
- * La version reste encore à définir :
- *    - @b <a href="http://opencv.org/downloads.html">OpenCV</a> 
+ * Une procédure va etre détaillée pour chaque morceau, mais ça donne une idée de l'ampleur de la tache :
+ *    - @b <a href="http://opencv.org/downloads.html">OpenCV</a>
  *    - @b <a href="http://openni.ru/openni-sdk/">OpenNI</a>
  *    - @b <a href="http://openni.ru/files/nite/">Nite</a>
+ *    - @b tinyxml2 et son wrapper XmlLoader.
  * 
- * Une fois que ce travail épuisant est accompli, il suffit alors de taper :
+ * 
+ * @subsection ss_id_base Le plus facile d'abord !
+ * Ici cela va consister à installer la première librairie (la mienne - by MTLCRBN), il suffit juste de faire:
  * @code
- * make
+ * make install
+ * @endcode
+ * Cela va créer les répertoires qu'il faut, décompresser XmlLoader, et compiler la lib.
+ * 
+ * @subsection ss_id_openni_sucks Installer OpenNI2, les VRAIS ennuis.
+ * Actuellement le plus gros morceau de l'installation, cela va vous prendre des heures de sueur, sang et larmes.
+ * Toujours près ?@n
+ * Il va falloir suivre vraiment pas à pas cette procédure, sinon ... il vous en cuira.
+ *     - On commence par télécharger OpenNI2 à cette <a href="https://structure.io/openni">adresse</a>, en choississant
+ *       le bon format (x86 ou x64).
+ *     - Puis on déplace l'archive téléchargée dans le répertoire @b libs/ du projet.
+ *     - On le dézippe.
+ *     - On se rend dans le répertoire créé
+ *       @code
+ *       cd OpenNI-Linux-*
+ *       @endcode
+ *     - On lance le "script d'installation" :
+ *       @code
+ *       sudo ./install.sh
+ *       @endcode
+ *     - Pour tester que le bousin s'est bien établie, on procède de la façon suivante :
+ *       @code
+ *       cd Tools
+ *       ./NiViewer
+ *       @endcode
+ *       Si vous n'avez rien de brancher, ça ne va rien démarrer, mais le programme va se lancer :D.@n
+ *       Sinon, si la caméra n'est pas reconnue, essayer l'astuce suivante :
+ *       @code
+ *       sudo ln -s /lib/x86_64-linux-gnu/libudev.so.X.X.X /lib/x86_64-linux-gnu/libudev.so.0
+ *       @endcode
+ *       En remplaçant les X par les bons nombres (auto-complétion, toussa toussa).
+ *     - Ensuite, le contenu du fichier OpenNIDevEnvironment va permettre de configurer les options -I et -L.
+ *       Cette partie étant spécifique, elle sera refaite via le Makefile lors de chaque compilation.
+ *       Du coup, il va falloir bricoler un peu :
+ *       @code
+ *       chown votre_nom(tab_marche_bien) OpenNIDevEnvironment
+ *       chmod u+x OpenNIDevEnvironment
+ *       sed -i '1 i#!/bin/sh' OpenNIDevEnvironment
+ *       @endcode
+ *     - Et enfin, il suffit d'ajouter dans votre .bashrc :
+ *       @code
+ *       export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"chemin_jusqua_repertoire_qui_contient_libOpenNI2.so"
+ *       @endcode
+ *       Puis ensuite, de taper :
+ *       @code
+ *       source "$HOME"/.bashrc
+ *       @endcode
+ * 
+ * Si cela fonctionne, un <b>immense milliers de mercis</b> à @b Ashwin de CodeYarns.
+ * 
+ * @subsection ss_id_OpenCV Installer OpenCV 3.1.0.
+ * On impose bien entendu la version 3.1.0 comme version commune.@n
+ * Ainsi, il suffit de se rendre à cette <a href="http://opencv.org/downloads.html">adresse</a> et de suivre la procédure indiquée, c'est simple en fait.
+ *     - Télécharger l'archive 3.1.0 pour linux.
+ *     - Chercher sur ce merveilleux site <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html">la doc</a> pour installer OpenCV.
+ * 
+ * 
+ * @subsection ss_id_finaly Configurer sa cible pour le Makefile
+ * Si jamais l'installation s'est bien passée, il va falloir, dans le Makefile fourni, remplir les valeurs
+ * des 3 variables correspondant à votre cible (Charles --> charles, Alexandre ---> alex, etc).
+ * Et ensuite, it is over, le projet est terminé...wait non on a meme pas commencé (joie).
+ * 
+ * @subsection ss_id_compiler Compiler sur nos machines.
+ * Remplacer moi par votre nom/alias (ils sont dans le Makefile).
+ * @code
+ * make location=moi
  * @endcode
  * 
  * Il est possible d'écraser certaines variables du @b Makefile, par exemple si on veut compiler sans les warnings :
@@ -20,8 +88,7 @@
  * make WARNINGS=
  * @endcode
  * 
- * 
- * @subsection ss_id_compile2 [DEV-TD8] : Compiler en TD8
+ * @subsection ss_id_compile2 Compiler en TD8
  * Eh oui, il y a une section à part entière pour cela, compiler chez Mr.Guillou va justement consister à
  * écraser une variable du @b Makefile, il va falloir spécifier que l'on se trouve en TD8, et qu'il faudra donc charger
  * les dépendances sans utiliser des trucs pratiques comme @b pkg-config our autre :
@@ -40,18 +107,26 @@
  * Placer vous face à la caméra à une bonne distance, et bouger !
  * 
  * @author Laurent   BARDOUX   p1108365
- * @author Mehdi     GHESH     p
- * @author Charles   SULTAN    p
- * @author Alexandre BELAIZI   p
+ * @author Mehdi     GHESH     p1209574
+ * @author Charles   SULTAN    p1207507
+ * @author Alexandre BELAIZI   pXXXXXXX
  * @version 1.0
  */
 #include <cstdlib>
 #include "CLmanager.hpp"
-#include "OpenNI.h"
-#include "NiTE.h"
+#include <OpenNI.h>
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
+    openni::Device device;
+    /*if (device.open(uri) != openni::STATUS_OK)
+    {
+        std::stringstream error;
+        error << "Failed to open device : " << openni::OpenNI::getExtendedError();
+        closeOpenNIWithException(error.str());
+    }*/
+    
+    
     return EXIT_SUCCESS;
 }

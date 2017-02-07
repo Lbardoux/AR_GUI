@@ -1,6 +1,6 @@
 # AUTEURS
 # Laurent   BARDOUX p1108365
-# Mehdi     GHESH   p
+# Mehdi     GHESH   p1209574
 # Charles   SULTAN  p
 # Alexandre BELAIZI p
 
@@ -12,7 +12,7 @@
 # On est sur des ordis normaux : make
 
 
-.PHONY: doc tar help decompress
+.PHONY: doc tar help decompress link_openni
 
 CXX      := g++
 WARNINGS := -Wall -Wextra
@@ -26,12 +26,11 @@ DOC       := doc
 INCLUDES  := includes
 LIBS      := libs
 XMLLOADER := $(LIBS)/XMLLoader
-OPENNI2   := $(LIBS)/OpenNI2
-NITE2     := $(LIBS)/NiTE2
+OPENNI2   := 
 
-LDLIBS   := -L$(INCLUDES)/ -L$(XMLLOADER)/ -L$(NITE2)/Redist/  -L$(OPENNI2)/Redist/
-LDFLAGS  := -I$(INCLUDES)/ -L$(XMLLOADER)/ -I$(NITE2)/Include/ -I$(OPENNI2)/Include/
-location := regular
+LDLIBS   := -L$(OBJ)/ -lOpenNI2
+LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/
+location := td8
 README   := ReadMe.html
 
 ifeq ($(location), td8)
@@ -43,20 +42,32 @@ ifeq ($(location), td8)
                -L"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Apicamera/build" \
                -L"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Calibration/build" -L"/Locals/OpenCV-2.4.10/lib/" \
                -lopencv_contrib -lapicamera -lcameraFILE -lcameraOPENCV -lcalibration \
-               -lpthread -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor \
+               -lpthread -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor\
                -rpath="/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Apicamera/build:/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Calibration/build:"
 	LDFLAGS += -I"/Shared/TP_VTDVR/LIRIS-VISION" -I"/Locals/OpenCV-2.4.10/include" -I"/Locals/OpenCV-2.4.10/include/opencv" \
                -I"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks"
-else
+else ifeq ($(location), laurent)
 	LDLIBS  += -L/usr/local/lib -lopencv_shape -lopencv_stitching -lopencv_objdetect -lopencv_superres \
 	           -lopencv_videostab -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio \
 	           -lopencv_imgcodecs -lopencv_video -lopencv_photo -lopencv_ml -lopencv_imgproc -lopencv_flann -lopencv_core
 	LDFLAGS += -I/usr/local/include/opencv -I/usr/local/include
+	OPENNI2 += $(LIBS)/OpenNI-Linux-x64-2.2
+else ifeq ($(location), mehdi)
+	LDLIBS  += 
+	LDFLAGS +=
+	OPENNI2 +=
+else ifeq ($(location), charles)
+	LDLIBS  += 
+	LDFLAGS +=
+	OPENNI2 +=
+else ifeq ($(location), alex)
+	LDLIBS  += 
+	LDFLAGS +=
+	OPENNI2 +=
 endif
 
-
-LDLF := $(LDLIBS) $(LDFLAGS)
-
+LDLIBS  += -L$(shell grep "Redist" libs/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
+LDFLAGS += -I$(shell grep "Include" libs/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
 
 EXE_NAME    := AdvancedGUI
 DOXYFILE    := $(DOC)/Doxyfile
@@ -66,7 +77,7 @@ XMLOBJECTS  := $(patsubst $(XMLLOADER)/%.cpp, $(OBJ)/%.o, $(wildcard $(XMLLOADER
 all : $(EXE_NAME)
 
 $(EXE_NAME) : $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(LDLF) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
 $(OBJ)/main.o           : $(INCLUDES)/CLmanager.hpp
@@ -74,16 +85,16 @@ $(OBJ)/CLmanager.o      : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CursorListener.o : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
 
 
-
 $(OBJ)/%.o : $(SRC)/%.cpp
-	$(CXX) $(CXXFLAGS) $(LDLF) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@
 
+
+# Concerne l'installation et la gestion des dépendances (Maaaaaveeeeen, où es-tu :( ?) ################
 install : _directories decompress
 	$(MAKE) libs
 
 _directories: 
 	mkdir -p $(OBJ)
-
 
 libs : $(XMLOBJECTS)
 
@@ -93,6 +104,11 @@ $(OBJ)/XmlWriter.o : $(XMLLOADER)/XmlWriter.hpp $(XMLLOADER)/XmlBase.hpp
 $(OBJ)/tinyxml2.o  : $(XMLLOADER)/tinyxml2.h
 $(OBJ)/%.o : $(XMLLOADER)/%.cpp
 	$(CXX) $(CXXFLAGS) -I$(XMLLOADER) -c $< -o $@
+
+decompress:
+	cd $(LIBS) && tar -xzf XMLLoader.tar.gz
+
+#########################################################################################################
 
 doc:
 	doxygen $(DOXYFILE)
@@ -104,13 +120,9 @@ clean:
 
 mrproper: clean
 	rm -rf $(DOC)/html $(OBJ)/*.o $(README)
-	rm -rf $(LIBS)/NiTE2 $(LIBS)/XMLLoader $(LIBS)/OpenNI2
 
 tar:
 	tar -czf $(EXE_NAME).tar.gz $(SRC)/* $(INCLUDES)/* $(DOXYFILE) Makefile assets/* libs/*.tar.gz
-
-decompress:
-	cd $(LIBS) && tar -xzf NiTE2.tar.gz && tar -xzf XMLLoader.tar.gz && tar -xzf OpenNI2.tar.gz
 
 help:
 	clear
@@ -121,5 +133,5 @@ help:
 	@echo "\tmrproper : Applique clean, supprime la doc si elle existe, et supprime les objets des libs internes."
 	@echo "\tinstall  : Cree les repertoires qu'il faut pour l'application."
 	@echo "\n\t[all]    : Compile les sources, et on a deux possibilites ici :"
-	@echo "\t\t - On precise LOCATION=TD8 si on est dans la caverne numerique d'Alibaba."
+	@echo "\t\t - On precise location=XXX avec le bon argument."
 	@echo "\t\t - On ne met rien si on est chez nous."
