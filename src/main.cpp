@@ -47,6 +47,8 @@
  */
 #include <cstdlib>
 #include "CLmanager.hpp"
+#include "OpenNI.h"
+#include "NiTE.h"
 
 int main(int argc, char** argv)
 {
