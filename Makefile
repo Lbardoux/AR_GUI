@@ -102,13 +102,13 @@ clean:
 
 mrproper: clean
 	rm -rf $(DOC)/html $(OBJ)/*.o $(README)
-	rm -rf $(LIBS)/NiTE2 $(LIBS)/XMLLoader
+	rm -rf $(LIBS)/NiTE2 $(LIBS)/XMLLoader $(LIBS)/OpenNI2
 
 tar:
 	tar -czf $(EXE_NAME).tar.gz $(SRC)/* $(INCLUDES)/* $(DOXYFILE) Makefile assets/* libs/*.tar.gz
 
 decompress:
-	cd $(LIBS) && tar -xzf NiTE2.tar.gz && tar -xzf XMLLoader.tar.gz
+	cd $(LIBS) && tar -xzf NiTE2.tar.gz && tar -xzf XMLLoader.tar.gz && tar -xzf OpenNI2.tar.gz
 
 help:
 	clear
