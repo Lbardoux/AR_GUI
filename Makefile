@@ -26,9 +26,11 @@ DOC       := doc
 INCLUDES  := includes
 LIBS      := libs
 XMLLOADER := $(LIBS)/XMLLoader
+OPENNI2   := $(LIBS)/OpenNI2
+NITE2     := $(LIBS)/NiTE2
 
-LDLIBS   := -L$(INCLUDES)/ -L$(XMLLOADER)/ -L$(LIBS)/NiTE2/Redist
-LDFLAGS  := -I$(INCLUDES)/ -L$(XMLLOADER)/ -I$(LIBS)/NiTE2/Include
+LDLIBS   := -L$(INCLUDES)/ -L$(XMLLOADER)/ -L$(NITE2)/Redist/  -L$(OPENNI2)/Redist/
+LDFLAGS  := -I$(INCLUDES)/ -L$(XMLLOADER)/ -I$(NITE2)/Include/ -I$(OPENNI2)/Include/
 location := regular
 README   := ReadMe.html
 
