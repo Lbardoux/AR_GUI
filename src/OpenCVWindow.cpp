@@ -6,7 +6,7 @@
 #include "OpenCVWindow.hpp"
 
 
-OpenCVWindow::OpenCVWindow(void)
+OpenCVWindow::OpenCVWindow(void) : Window()
 {
     
 }
@@ -33,7 +33,7 @@ void OpenCVWindow::close(void)
 
 void OpenCVWindow::update(void)
 {
-    cv::waitKey(0);
+    
 }
 
 void OpenCVWindow::setName(const std::string& name)

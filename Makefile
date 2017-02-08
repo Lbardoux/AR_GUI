@@ -1,15 +1,8 @@
 # AUTEURS
 # Laurent   BARDOUX p1108365
 # Mehdi     GHESH   p1209574
-# Charles   SULTAN  p
+# Charles   SULTAN  p1207507
 # Alexandre BELAIZI p
-
-# Utilisation
-# Etant donné les configurations des machines de TP8, qui diffèrent bien trop des notres, il va falloir ruser.
-# Ainsi, il suffira de spécifier location=td8 si on est en TD8, et de ne rien mettre sinon.
-# Exemple :
-# On est chez Guillou :          make location=td8
-# On est sur des ordis normaux : make location=mon_nom
 
 
 .PHONY: doc tar help decompress push
@@ -31,7 +24,6 @@ NITE2     := $(LIBS)/NiTE2
 
 LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
-#location := td8
 location := $(shell whoami)
 README   := ReadMe.html
 
@@ -81,11 +73,13 @@ $(EXE_NAME) : $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
-$(OBJ)/main.o           : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/CLmanager.o      : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/CursorListener.o : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
-$(OBJ)/WindowsManager.o : $(INCLUDES)/WindowsManager.hpp
-$(OBJ)/OpenCVWindow.o   : $(INCLUDES)/OpenCVWindow.hpp
+$(OBJ)/main.o                : $(INCLUDES)/CLmanager.hpp
+$(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
+$(OBJ)/CursorListener.o      : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
+$(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
+$(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp $(OBJ)/WindowsManager.o
+$(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(OBJ)/OpenCVWindow.o
+$(OBJ)/Cv_core.o             : $(INCLUDES)/Cv_core.hpp
 
 
 $(OBJ)/%.o : $(SRC)/%.cpp

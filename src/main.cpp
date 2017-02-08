@@ -121,16 +121,52 @@
  * @version 1.0
  */
 #include <cstdlib>
+#include <opencv2/highgui/highgui.hpp>
 
 #include "WindowsManager.hpp"
 #include "CLmanager.hpp"
 #include "OpenCVWindow.hpp"
+#include "SkeletonStateWindow.hpp"
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
-    /*WindowsManager manager;
-    manager.addWindow<OpenCVWindow>(640, 640, "test");
-    manager.updateWindows();*/
+    WindowsManager manager;
+    SkeletonStateWindow window;
+    window.setName("RED = KO / GREEN = OK");
+    window.open(0u, 0u);
+    manager.addWindow(&window);
+    
+    bool process = true;
+    while(process)
+    {
+        manager.updateWindows();
+        char key = cv::waitKey(20);
+        switch(key)
+        {
+            case 'a':
+                window.setState(true);
+                break;
+            case 'q':
+                window.setState(false);
+                break;
+            case 'b':
+                process = false;
+                break;
+            default:
+                break;
+        }
+    }
+    manager.closeWindows();
+    
+    
+    /*;
+    window.setName("test");
+    window.open(640, 640);
+    window.update();
+    cv::waitKey(0);
+    cv::destroyAllWindows();*/
+    
+    
     return EXIT_SUCCESS;
 }

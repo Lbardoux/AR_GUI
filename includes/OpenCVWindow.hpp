@@ -7,8 +7,7 @@
 #ifndef OPENCVWINDOW_HPP_INCLUDED
 #define OPENCVWINDOW_HPP_INCLUDED
 
-#include <opencv2/opencv.hpp>
-//#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <string>
 #include "WindowsManager.hpp"
 
@@ -21,10 +20,10 @@ class OpenCVWindow : public Window
         ~OpenCVWindow(void);
         
         virtual void open(uint32_t width, uint32_t height) override;
-        virtual bool isGood(void) const override;
+        bool isGood(void) const override;
         virtual void close(void) override;
         virtual void update(void) override;
-        virtual void setName(const std::string& name) override;
+        void setName(const std::string& name) override;
         
         std::string name; //!< Le nom de la fenetre.
     

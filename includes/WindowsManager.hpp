@@ -56,41 +56,22 @@ class WindowsManager final
     public:
         //! @brief Crée juste le gestionnaire.
         WindowsManager(void) noexcept;
-        /**
-         * @brief Appelle la méthode close() de chaque fenetre.
-         */
+        //! @brief Appelle la méthode close() de chaque fenetre.
         ~WindowsManager(void);
-        /**
-         * @brief Va créer une fenetre de type @b W de taille <b>width</b>x<b>height</b>.
-         * @param[in] width  La taille horizontale de la fenetre.
-         * @param[in] height La taille verticale   de la fenetre.
-         * @param[in] name   Le nom voulue pour cette fenetre.
-         * @pre @b W doit définir un constructeur par défaut.
-         * @pre @b W doit etre une classe dérivée de @b Window.
-         * 
-         * La fonction appelera d'abord setName(), puis open().
-         */
-        template<typename W>
-        bool addWindow(uint32_t width, uint32_t height, const std::string& name)
-        {
-            Window* window = new W();
-            window->setName(name);
-            window->open(width, height);
-            if (window->isGood())
-            {
-                this->windows.push_back(window);
-                this->windowsNames.push_back(name);
-            }
-            return window->isGood();
-        }
-        /**
-         * @brief Appelle la méthode update pour toutes fenetre.
-         */
+        //! @brief Appelle la méthode update pour toutes les fenetres.
         void updateWindows(void);
+        /**
+         * @brief Ajoute @b window au gestionnaire.
+         * @param[in,out] window L'adresse de la fenetre à ajouter.
+         * Le gestionnaire ne désallouera rien !
+         * @return *this
+         */
+        WindowsManager& addWindow(Window* window);
+        //! @brief Ferme toutes les fenetres.
+        void closeWindows(void);
         
     private:
-        std::vector<Window*>     windows;      //!< L'ensemble des fenetres utilisées.
-        std::vector<std::string> windowsNames; //!< Les noms des fenetres, noms[0] -> fenetre[0]
+        std::vector<Window*> windows; //!< L'ensemble des fenetres utilisées.
         
         WindowsManager(const WindowsManager& other)            = delete;
         WindowsManager(WindowsManager&& other)                 = delete;
