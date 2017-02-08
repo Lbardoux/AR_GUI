@@ -21,10 +21,12 @@ namespace
     }
 }
 
-Cursor::Cursor(const Interval& hor, const Interval& ver, uint32_t x, uint32_t y) noexcept : vertical(ver),
-                                                                                            horizontal(hor),
-                                                                                            _x(x),
-                                                                                            _y(y)
+Cursor::Cursor(const Interval& hor, const Interval& ver, uint32_t x, uint32_t y, uint32_t radius) noexcept :
+    vertical(ver),
+    horizontal(hor),
+    _x(x),
+    _y(y),
+    _radius(radius)
 {
     clampInterval(this->_x, this->horizontal);
     clampInterval(this->_y, this->vertical);
@@ -49,13 +51,76 @@ void Cursor::reset(void) noexcept
 {
     this->_x             = 0u;
     this->_y             = 0u;
+    this->_radius        = 0u;
     this->vertical.min   = 0u;
     this->vertical.max   = 0u;
     this->horizontal.min = 0u;
     this->horizontal.max = 0u;
 }
 
-void Cursor::drawCursor(cv::Mat& frame)
+uint32_t Cursor::x(void) const noexcept
 {
-    matAt(frame, _x, _y) = matRedColor();
+    return this->_x;
 }
+
+uint32_t Cursor::y(void) const noexcept
+{
+    return this->_y;
+}
+
+uint32_t Cursor::radius(void) const noexcept
+{
+    return this->_radius;
+}
+
+Cursor& Cursor::x(uint32_t value) noexcept
+{
+    this->_x = value;
+    clampInterval(this->_x, this->horizontal);
+    return *this;
+}
+
+Cursor& Cursor::y(uint32_t value) noexcept
+{
+    this->_y = value;
+    clampInterval(this->_y, this->vertical);
+    return *this;
+}
+
+Cursor& Cursor::radius(uint32_t value) noexcept
+{
+    this->_radius = value;
+    return *this;
+}
+
+void Cursor::drawCursor(cv::Mat& frame, const mat_data_t& color)
+{
+    Interval bornesX, bornesY;
+
+    // frame.cols; // x
+    if(this->_x < this->_radius)
+        bornesX.min = 0;
+    else
+        bornesX.min = this->_x - this->_radius;
+    if(this->_x + this->_radius >= frame.cols)
+        bornesX.max = frame.cols - 1;
+    else
+        bornesX.max = 0;
+    
+    // frame.rows; // y
+    if(this->_y < this->_radius)
+        bornesY.min = 0;
+    else
+        bornesY.min = this->_x - this->_radius;
+    if(this->_y + this->_radius >= frame.rows)
+        bornesY.max = frame.rows - 1;
+    else
+        bornesY.max = 0;
+
+    for(uint32_t x = bornesX.min; x < bornesX.max; ++x)
+        for(uint32_t y = bornesY.min; y < bornesY.max; ++y)
+            matAt(frame, x, y) = color;
+}
+
+
+

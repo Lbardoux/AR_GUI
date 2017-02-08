@@ -1,4 +1,9 @@
+# Pour tout le monde
 libs/
 obj/
 doc/
+ReadMe.html
+AdvancedGUI
+
+# Pour ceux qui utilisent clang_complete
 .clang_complete

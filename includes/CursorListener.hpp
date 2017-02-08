@@ -36,12 +36,13 @@ class Cursor final
          * 
          * On peut également définir sa position ((0,0) par défaut), et tout overflow par rapport
          * aux intervalles seront corrigés.
-         * @param[in] hor L'intervalle des valeurs pour @b x.
-         * @param[in] ver L'intervalle des valeurs pour @b y.
-         * @param[in] x   La position x initiale du curseur.
-         * @param[in] y   La position y initiale du curseur.
+         * @param[in] hor     L'intervalle des valeurs pour @b x.
+         * @param[in] ver     L'intervalle des valeurs pour @b y.
+         * @param[in] x       La position x initiale du curseur.
+         * @param[in] y       La position y initiale du curseur.
+         * @param[in] radius  Rayon du curseur à afficher
          */
-        Cursor(const Interval& hor, const Interval& ver, uint32_t x=0u, uint32_t y=0u) noexcept;
+        Cursor(const Interval& hor, const Interval& ver, uint32_t x=0u, uint32_t y=0u, uint32_t radius=0u) noexcept;
         /**
          * @brief Construit un nouveau curseur en copiant @b other.
          * @param[in] other Le curseur à copier.
@@ -56,17 +57,22 @@ class Cursor final
         //! @brief Remet tout à zéro.
         ~Cursor(void) noexcept;
         
-        uint32_t x(void)    const noexcept;
-        uint32_t y(void)    const noexcept;
-        Cursor& x(uint32_t value) noexcept;
-        Cursor& y(uint32_t value) noexcept;
+        uint32_t x(void)         const noexcept;
+        uint32_t y(void)         const noexcept;
+        uint32_t radius(void)    const noexcept;
+        Cursor& x(uint32_t value)      noexcept;
+        Cursor& y(uint32_t value)      noexcept;
+        Cursor& radius(uint32_t value) noexcept;
+
+
 
         /**
-         * @date       08-Feb-2017
-         * @brief      Dessine un curseur.
-         * @param      frame  Le cadre
+         * @date          08-Feb-2017
+         * @brief         Dessine un curseur.
+         * @param[in,out] frame  Le cadre
+         * @param[in]     color  Couleur du curseur
          */
-        void drawCursor(cv::Mat& frame);
+        void drawCursor(cv::Mat& frame, const mat_data_t& color = matRedColor());
         
         
         
@@ -75,6 +81,19 @@ class Cursor final
         Interval horizontal; //!< Un buffer pour stocker l'intervalle de définition horizontal (en x).
         uint32_t _x;         //!< La position horizontale sur l'image (@b x eme colonne).
         uint32_t _y;         //!< La position verticale   sur l'image (@b y eme ligne).
+        /**
+         * Rayon du cursor pour l'affichage.
+         * Rayon de taille 1 -->
+         * +-------------------------> _x
+         * |    ***
+         * |    ***           *
+         * |    ***
+         * |
+         * | _radius=1    _radius=0
+         * v
+         * _y
+         */
+        uint32_t _radius;    //!< Rayon du cursor pour l'affichage. Un rayon de 1 correspond à 1 pixel
         
         /**
          * @brief remet toutes les valeurs à zéro.
