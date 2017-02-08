@@ -27,9 +27,10 @@ INCLUDES  := includes
 LIBS      := libs
 XMLLOADER := $(LIBS)/XMLLoader
 OPENNI2   := 
+NITE2     := $(LIBS)/NiTE2
 
-LDLIBS   := -L$(OBJ)/ -lOpenNI2
-LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/
+LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist
+LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
 location := td8
 README   := ReadMe.html
 

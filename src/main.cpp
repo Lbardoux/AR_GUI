@@ -59,12 +59,24 @@
  * 
  * Si cela fonctionne, un <b>immense milliers de mercis</b> à @b Ashwin de CodeYarns.
  * 
- * @subsection ss_id_OpenCV Installer OpenCV 3.1.0.
+ * @subsection ss_id_OpenCV Installer OpenCV 3.1.0
  * On impose bien entendu la version 3.1.0 comme version commune.@n
  * Ainsi, il suffit de se rendre à cette <a href="http://opencv.org/downloads.html">adresse</a> et de suivre la procédure indiquée, c'est simple en fait.
  *     - Télécharger l'archive 3.1.0 pour linux.
  *     - Chercher sur ce merveilleux site <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html">la doc</a> pour installer OpenCV.
  * 
+ * 
+ * @subsection ss_id_nite2 Installer NiTE2
+ * Et on repart sur des magouilles !@n
+ * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dnas @b libs/.
+ * Puis, à partir de là, retourner modifier votre .bashrc en ajoutant la ligne suivante :
+ * @code
+ * export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"chemin_jusqua_libNiTE2.so"
+ * @endcode
+ * Puis faite pour la seconde fois :
+ * @code
+ * source .bashrc
+ * @endcode
  * 
  * @subsection ss_id_finaly Configurer sa cible pour le Makefile
  * Si jamais l'installation s'est bien passée, il va falloir, dans le Makefile fourni, remplir les valeurs
@@ -72,9 +84,11 @@
  * Et ensuite, it is over, le projet est terminé...wait non on a meme pas commencé (joie).
  * 
  * @subsection ss_id_compiler Compiler sur nos machines.
- * Remplacer moi par votre nom/alias (ils sont dans le Makefile).
+ * <b style="font-color : #FF0000;">Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
+ * 
+ * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
  * @code
- * make location=moi
+ * make location=nom
  * @endcode
  * 
  * Il est possible d'écraser certaines variables du @b Makefile, par exemple si on veut compiler sans les warnings :
@@ -94,7 +108,7 @@
  * En premier lieu, il nous faut une caméra de profondeur branchée sur un port USB.
  * Puis, il suffit ensuite de taper la commande suivante <b>dans le répertoire où se trouve le binaire</b> :
  * @code
- * ./advancedGUI
+ * ./AdvancedGUI
  * @endcode
  * 
  * @subsection ss_id_guignol Utiliser l'application
@@ -108,7 +122,8 @@
  */
 #include <cstdlib>
 #include "CLmanager.hpp"
-#include <OpenNI.h>
+#include "OpenNI.h"
+#include "NiTE.h"
 
 int main(int argc, char** argv)
 {
@@ -120,7 +135,7 @@ int main(int argc, char** argv)
         error << "Failed to open device : " << openni::OpenNI::getExtendedError();
         closeOpenNIWithException(error.str());
     }*/
-    
+    nite::Point3f point;
     
     return EXIT_SUCCESS;
 }
