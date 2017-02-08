@@ -58,9 +58,9 @@ else ifeq ($(location), mehdi)
 	LDFLAGS +=
 	OPENNI2 +=
 else ifeq ($(location), charles)
-	LDLIBS  += 
-	LDFLAGS +=
-	OPENNI2 +=
+	LDLIBS  += `pkg-config opencv --libs`
+	LDFLAGS += `pkg-config opencv --cflags`
+	OPENNI2 += $(LIBS)/OpenNI-Linux-x64-2.2
 else ifeq ($(location), alex)
 	LDLIBS  += 
 	LDFLAGS +=
