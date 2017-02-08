@@ -26,17 +26,18 @@ DOC       := doc
 INCLUDES  := includes
 LIBS      := libs
 XMLLOADER := $(LIBS)/XMLLoader
-OPENNI2   := 
+OPENNI2   := $(LIBS)/OpenNI-Linux-x64-2.2
 NITE2     := $(LIBS)/NiTE2
 
 LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
-location := td8
+#location := td8
+location := $(shell whoami)
 README   := ReadMe.html
 
 COMMIT := "Commit par defaut fait par un fainéant"
 
-ifeq ($(location), td8)
+ifeq ($(location), student)
 	LDLIBS  += -L"/Locals/OpenCV-2.4.10/lib" -L"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Apicamera/build" \
                -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video \
                -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib \
@@ -49,26 +50,25 @@ ifeq ($(location), td8)
                -rpath="/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Apicamera/build:/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Calibration/build:"
 	LDFLAGS += -I"/Shared/TP_VTDVR/LIRIS-VISION" -I"/Locals/OpenCV-2.4.10/include" -I"/Locals/OpenCV-2.4.10/include/opencv" \
                -I"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks"
-else ifeq ($(location), laurent)
+else ifeq ($(location), bardoux)
 	LDLIBS  += `pkg-config opencv --libs`
 	LDFLAGS += `pkg-config opencv --cflags`
-	OPENNI2 += $(LIBS)/OpenNI-Linux-x64-2.2
 else ifeq ($(location), mehdi)
-	LDLIBS  += 
-	LDFLAGS +=
-	OPENNI2 +=
-else ifeq ($(location), charles)
-	LDLIBS  += `pkg-config opencv --libs`
-	LDFLAGS += `pkg-config opencv --cflags`
-	OPENNI2 += $(LIBS)/OpenNI-Linux-x64-2.2
+	LDLIBS  += -L/home/mehdi/master/m2/embarquee/opencv-2.4.13/build/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_ml -lopencv_video \
+               -lopencv_features2d -lopencv_calib3d -lopencv_objdetect -lopencv_contrib -lopencv_legacy -lopencv_flann
+	LDFLAGS += -I/home/mehdi/master/m2/embarquee/opencv-2.4.13/include -I/home/mehdi/master/m2/embarquee/opencv-2.4.13/include/opencv2 \
+               -I/home/mehdi/master/m2/embarquee/opencv-2.4.13/build $(addprefix -I, $(shell find /home/mehdi/master/m2/embarquee/opencv-2.4.13/modules/ -name "include"))
 else ifeq ($(location), alex)
 	LDLIBS  += 
-	LDFLAGS +=
-	OPENNI2 +=
+	LDFLAGS += 
+else
+	# Cas de Charles, par défaut.
+	LDLIBS  += `pkg-config opencv --libs`
+	LDFLAGS += `pkg-config opencv --cflags`
 endif
 
-LDLIBS  += -L$(shell grep "Redist" libs/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
-LDFLAGS += -I$(shell grep "Include" libs/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
+LDLIBS  += -L$(shell grep "Redist" $(LIBS)/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
+LDFLAGS += -I$(shell grep "Include" $(LIBS)/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
 
 EXE_NAME    := AdvancedGUI
 DOXYFILE    := $(DOC)/Doxyfile
