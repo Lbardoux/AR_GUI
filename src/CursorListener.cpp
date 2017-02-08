@@ -93,7 +93,18 @@ Cursor& Cursor::radius(uint32_t value) noexcept
     return *this;
 }
 
-void Cursor::drawCursor(cv::Mat& frame, const mat_data_t& color)
+Cursor& Cursor::operator=(const Cursor& cursor)
+{
+    this->vertical   = cursor.vertical;
+    this->horizontal = cursor.horizontal;
+    this->_x         = cursor._x;
+    this->_y         = cursor._y;
+    this->_radius    = cursor._radius;
+
+    return *this;
+}
+
+void Cursor::draw(cv::Mat& frame, const mat_data_t& color)
 {
     Interval bornesX, bornesY;
 

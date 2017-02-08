@@ -64,15 +64,15 @@ class Cursor final
         Cursor& y(uint32_t value)      noexcept;
         Cursor& radius(uint32_t value) noexcept;
 
-
+        Cursor& operator=(const Cursor& cursor);
 
         /**
          * @date          08-Feb-2017
          * @brief         Dessine un curseur.
-         * @param[in,out] frame  Le cadre
+         * @param[in,out] frame  La frame
          * @param[in]     color  Couleur du curseur
          */
-        void drawCursor(cv::Mat& frame, const mat_data_t& color = matRedColor());
+        void draw(cv::Mat& frame, const mat_data_t& color = matRedColor());
         
         
         
