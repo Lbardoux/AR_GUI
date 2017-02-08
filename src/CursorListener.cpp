@@ -5,6 +5,7 @@
 
 #include "CursorListener.hpp"
 #include "clamp.hpp"
+#include "Cv_core.hpp"
 
 
 namespace
@@ -52,4 +53,9 @@ void Cursor::reset(void) noexcept
     this->vertical.max   = 0u;
     this->horizontal.min = 0u;
     this->horizontal.max = 0u;
+}
+
+void Cursor::drawCursor(cv::Mat& frame)
+{
+    matAt(frame, _x, _y) = matRedColor();
 }

@@ -8,6 +8,7 @@
 #define CURSORLISTENER_HPP_INCLUDED
 
 #include <cstdint> // Pour les uint*, permettant de choisir le nombre d'octets que l'on veut.
+#include "Cv_core.hpp"
 
 
 /**
@@ -59,6 +60,13 @@ class Cursor final
         uint32_t y(void)    const noexcept;
         Cursor& x(uint32_t value) noexcept;
         Cursor& y(uint32_t value) noexcept;
+
+        /**
+         * @date       08-Feb-2017
+         * @brief      Dessine un curseur.
+         * @param      frame  Le cadre
+         */
+        void drawCursor(cv::Mat& frame);
         
         
         

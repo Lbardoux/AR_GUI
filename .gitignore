@@ -1,3 +1,4 @@
 libs/
 obj/
 doc/
+.clang_complete
