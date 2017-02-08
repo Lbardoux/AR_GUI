@@ -72,7 +72,7 @@ class Cursor final
          * @param[in,out] frame  La frame
          * @param[in]     color  Couleur du curseur
          */
-        void draw(cv::Mat& frame, const mat_data_t& color = matRedColor());
+        void draw(cv::Mat& frame, const mat_data_t& color = matRedColor()) const noexcept;
         
         
         

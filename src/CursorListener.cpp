@@ -104,7 +104,7 @@ Cursor& Cursor::operator=(const Cursor& cursor)
     return *this;
 }
 
-void Cursor::draw(cv::Mat& frame, const mat_data_t& color)
+void Cursor::draw(cv::Mat& frame, const mat_data_t& color) const noexcept
 {
     Interval bornesX, bornesY;
 
