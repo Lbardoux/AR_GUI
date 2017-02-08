@@ -1,3 +1,9 @@
+/**
+ * @file SetCursor.hpp
+ * @brief Classe regroupant un ensemble de Cursor
+ * @author Mehdi GHESH p1209574
+ * @version 1.0
+ */
 #ifndef _SET_CURSOR_HPP__
 #define _SET_CURSOR_HPP__ 
 
