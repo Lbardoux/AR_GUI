@@ -48,12 +48,6 @@
  *       En remplaçant les X par les bons nombres (auto-complétion, toussa toussa).
  *     - Ensuite, le contenu du fichier OpenNIDevEnvironment va permettre de configurer les options -I et -L.
  *       Cette partie étant spécifique, elle sera refaite via le Makefile lors de chaque compilation.
- *       Du coup, il va falloir bricoler un peu :
- *       @code
- *       chown votre_nom(tab_marche_bien) OpenNIDevEnvironment
- *       chmod u+x OpenNIDevEnvironment
- *       sed -i '1 i#!/bin/sh' OpenNIDevEnvironment
- *       @endcode
  *     - Et enfin, il suffit d'ajouter dans votre .bashrc :
  *       @code
  *       export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"chemin_jusqua_repertoire_qui_contient_libOpenNI2.so"
