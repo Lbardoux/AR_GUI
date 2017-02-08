@@ -82,6 +82,7 @@ $(EXE_NAME) : $(OBJECTS)
 $(OBJ)/main.o           : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CLmanager.o      : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CursorListener.o : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
+$(OBJ)/WindowsManager.o : $(INCLUDES)/WindowsManager.hpp
 
 
 $(OBJ)/%.o : $(SRC)/%.cpp
