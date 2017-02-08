@@ -12,7 +12,7 @@
 # On est sur des ordis normaux : make
 
 
-.PHONY: doc tar help decompress link_openni
+.PHONY: doc tar help decompress push
 
 CXX      := g++
 WARNINGS := -Wall -Wextra
@@ -33,6 +33,8 @@ LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
 location := td8
 README   := ReadMe.html
+
+COMMIT := "Commit par defaut fait par un fainéant"
 
 ifeq ($(location), td8)
 	LDLIBS  += -L"/Locals/OpenCV-2.4.10/lib" -L"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks/Apicamera/build" \
@@ -132,6 +134,12 @@ help:
 	@echo "\tclean    : Nettoie les objets de compilation seulement."
 	@echo "\tmrproper : Applique clean, supprime la doc si elle existe, et supprime les objets des libs internes."
 	@echo "\tinstall  : Cree les repertoires qu'il faut pour l'application."
+	@echo "\tpush     : Permet de add/commit/push en meme temps. Attention, il est impossible de préciser des noms"
 	@echo "\n\t[all]    : Compile les sources, et on a deux possibilites ici :"
 	@echo "\t\t - On precise location=XXX avec le bon argument."
 	@echo "\t\t - On ne met rien si on est chez nous."
+
+push:
+	git add $(SRC)/* $(INCLUDES)/* assets/* Makefile README.md
+	git commit -m "$(COMMIT)"
+	git push
