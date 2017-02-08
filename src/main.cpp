@@ -68,7 +68,7 @@
  * 
  * @subsection ss_id_nite2 Installer NiTE2
  * Et on repart sur des magouilles !@n
- * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dnas @b libs/.
+ * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dans @b libs/.
  * Puis, à partir de là, retourner modifier votre .bashrc en ajoutant la ligne suivante :
  * @code
  * export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"chemin_jusqua_libNiTE2.so"
@@ -84,7 +84,7 @@
  * Et ensuite, it is over, le projet est terminé...wait non on a meme pas commencé (joie).
  * 
  * @subsection ss_id_compiler Compiler sur nos machines.
- * <b style="font-color : #FF0000;">Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
+ * <b>Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
  * 
  * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
  * @code
@@ -121,21 +121,16 @@
  * @version 1.0
  */
 #include <cstdlib>
+
+#include "WindowsManager.hpp"
 #include "CLmanager.hpp"
-#include "OpenNI.h"
-#include "NiTE.h"
+#include "OpenCVWindow.hpp"
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
-    openni::Device device;
-    /*if (device.open(uri) != openni::STATUS_OK)
-    {
-        std::stringstream error;
-        error << "Failed to open device : " << openni::OpenNI::getExtendedError();
-        closeOpenNIWithException(error.str());
-    }*/
-    nite::Point3f point;
-    
+    /*WindowsManager manager;
+    manager.addWindow<OpenCVWindow>(640, 640, "test");
+    manager.updateWindows();*/
     return EXIT_SUCCESS;
 }

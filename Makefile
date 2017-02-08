@@ -9,7 +9,7 @@
 # Ainsi, il suffira de spécifier location=td8 si on est en TD8, et de ne rien mettre sinon.
 # Exemple :
 # On est chez Guillou :          make location=td8
-# On est sur des ordis normaux : make
+# On est sur des ordis normaux : make location=mon_nom
 
 
 .PHONY: doc tar help decompress push
@@ -29,7 +29,7 @@ XMLLOADER := $(LIBS)/XMLLoader
 OPENNI2   := 
 NITE2     := $(LIBS)/NiTE2
 
-LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist
+LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
 location := td8
 README   := ReadMe.html
@@ -85,13 +85,13 @@ $(OBJ)/main.o           : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CLmanager.o      : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CursorListener.o : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
 $(OBJ)/WindowsManager.o : $(INCLUDES)/WindowsManager.hpp
+$(OBJ)/OpenCVWindow.o   : $(INCLUDES)/OpenCVWindow.hpp
 
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@
 
 
-# Concerne l'installation et la gestion des dépendances (Maaaaaveeeeen, où es-tu :( ?) ################
 install : _directories decompress
 	$(MAKE) libs
 

@@ -8,7 +8,6 @@
 #ifndef WINDOWSMANAGER_HPP_INCLUDED
 #define WINDOWSMANAGER_HPP_INCLUDED
 
-#include <opencv2/highgui/highgui.hpp>
 #include <vector>
 #include <string>
 #include <cstdint>
@@ -61,7 +60,6 @@ class WindowsManager final
          * @brief Appelle la méthode close() de chaque fenetre.
          */
         ~WindowsManager(void);
-        
         /**
          * @brief Va créer une fenetre de type @b W de taille <b>width</b>x<b>height</b>.
          * @param[in] width  La taille horizontale de la fenetre.
@@ -69,22 +67,26 @@ class WindowsManager final
          * @param[in] name   Le nom voulue pour cette fenetre.
          * @pre @b W doit définir un constructeur par défaut.
          * @pre @b W doit etre une classe dérivée de @b Window.
+         * 
+         * La fonction appelera d'abord setName(), puis open().
          */
         template<typename W>
         bool addWindow(uint32_t width, uint32_t height, const std::string& name)
         {
             Window* window = new W();
+            window->setName(name);
             window->open(width, height);
             if (window->isGood())
             {
                 this->windows.push_back(window);
                 this->windowsNames.push_back(name);
-                window->setName(name);
             }
             return window->isGood();
         }
-        
-        
+        /**
+         * @brief Appelle la méthode update pour toutes fenetre.
+         */
+        void updateWindows(void);
         
     private:
         std::vector<Window*>     windows;      //!< L'ensemble des fenetres utilisées.
