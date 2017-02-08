@@ -47,10 +47,8 @@ ifeq ($(location), td8)
 	LDFLAGS += -I"/Shared/TP_VTDVR/LIRIS-VISION" -I"/Locals/OpenCV-2.4.10/include" -I"/Locals/OpenCV-2.4.10/include/opencv" \
                -I"/Shared/TP_VTDVR/LIRIS-VISION/ModulesAndBricks"
 else ifeq ($(location), laurent)
-	LDLIBS  += -L/usr/local/lib -lopencv_shape -lopencv_stitching -lopencv_objdetect -lopencv_superres \
-	           -lopencv_videostab -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio \
-	           -lopencv_imgcodecs -lopencv_video -lopencv_photo -lopencv_ml -lopencv_imgproc -lopencv_flann -lopencv_core
-	LDFLAGS += -I/usr/local/include/opencv -I/usr/local/include
+	LDLIBS  += `pkg-config opencv --libs`
+	LDFLAGS += `pkg-config opencv --cflags`
 	OPENNI2 += $(LIBS)/OpenNI-Linux-x64-2.2
 else ifeq ($(location), mehdi)
 	LDLIBS  += 
