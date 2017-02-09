@@ -68,7 +68,7 @@
  * 
  * @subsection ss_id_nite2 Installer NiTE2
  * Et on repart sur des magouilles !@n
- * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dnas @b libs/.
+ * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dans @b libs/.
  * Puis, à partir de là, retourner modifier votre .bashrc en ajoutant la ligne suivante :
  * @code
  * export LD_LIBRARY_PATH="$LD_LIBRARY_PATH":"chemin_jusqua_libNiTE2.so"
@@ -84,7 +84,7 @@
  * Et ensuite, it is over, le projet est terminé...wait non on a meme pas commencé (joie).
  * 
  * @subsection ss_id_compiler Compiler sur nos machines.
- * <b style="font-color : #FF0000;">Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
+ * <b>Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
  * 
  * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
  * @code
@@ -121,21 +121,52 @@
  * @version 1.0
  */
 #include <cstdlib>
+#include <opencv2/highgui/highgui.hpp>
+
+#include "WindowsManager.hpp"
 #include "CLmanager.hpp"
-#include "OpenNI.h"
-#include "NiTE.h"
+#include "OpenCVWindow.hpp"
+#include "SkeletonStateWindow.hpp"
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
-    openni::Device device;
-    /*if (device.open(uri) != openni::STATUS_OK)
+    WindowsManager manager;
+    SkeletonStateWindow window;
+    window.setName("RED = KO / GREEN = OK");
+    window.open(0u, 0u);
+    manager.addWindow(&window);
+    
+    bool process = true;
+    while(process)
     {
-        std::stringstream error;
-        error << "Failed to open device : " << openni::OpenNI::getExtendedError();
-        closeOpenNIWithException(error.str());
-    }*/
-    nite::Point3f point;
+        manager.updateWindows();
+        char key = cv::waitKey(20);
+        switch(key)
+        {
+            case 'a':
+                window.setState(true);
+                break;
+            case 'q':
+                window.setState(false);
+                break;
+            case 'b':
+                process = false;
+                break;
+            default:
+                break;
+        }
+    }
+    manager.closeWindows();
+    
+    
+    /*;
+    window.setName("test");
+    window.open(640, 640);
+    window.update();
+    cv::waitKey(0);
+    cv::destroyAllWindows();*/
+    
     
     return EXIT_SUCCESS;
 }

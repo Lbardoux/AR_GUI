@@ -1,3 +1,10 @@
+# Pour tout le monde
 libs/
 obj/
 doc/
+!doc/Doxyfile
+ReadMe.html
+AdvancedGUI
+
+# Pour ceux qui utilisent clang_complete
+.clang_complete
