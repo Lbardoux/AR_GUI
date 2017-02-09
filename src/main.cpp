@@ -166,7 +166,65 @@ int main(int argc, char** argv)
     window.update();
     cv::waitKey(0);
     cv::destroyAllWindows();*/
-    
-    
+
     return EXIT_SUCCESS;
 }
+
+
+//
+//Main de Charles
+//
+/*
+#include "Player.hpp"
+#include <iostream>
+
+int main(int argc, char** argv)
+{
+    //Initialisation de OpenNI
+    openni::Status status = openni::OpenNI::initialize();
+    if(status != openni::STATUS_OK)
+    {
+        printf("Failed to initialize OpenNI\n%s\n", openni::OpenNI::getExtendedError());
+        return status;
+    }
+    std::cout<<"(1/4) OpenNI initialisé"<<std::endl;
+
+    //Ouvre n'importe quelle caméra
+    const char* deviceUri = openni::ANY_DEVICE;
+    openni::Device device;
+    status = device.open(deviceUri);
+    if (status != openni::STATUS_OK)
+    {
+        printf("Failed to open device\n%s\n", openni::OpenNI::getExtendedError());
+        return status;
+    }
+    std::cout<<"(2/4) Caméra initialisée"<<std::endl;
+
+    //Initialisation de nite
+    nite::NiTE::initialize();
+    std::cout<<"(3/4) NiTE initialisé"<<std::endl;
+
+    //Création du tracker
+    nite::UserTracker * user_tracker = new nite::UserTracker;
+    if(user_tracker->create(&device) != nite::STATUS_OK)
+    {
+        printf("Failed to create tracker\n");
+        return openni::STATUS_ERROR;
+    }
+    std::cout<<"(4/4) Tracker initialisé"<<std::endl;
+
+    //Création du squelette
+    Player player(*user_tracker);
+
+    //Exemple
+    while(true)
+    {
+        player.update();
+        nite::Point3f  position = player.getPositionOf(HEAD);
+        std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;    
+    }
+}
+*/
+
+
+
