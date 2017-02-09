@@ -4,8 +4,8 @@
  * @author Charles Sultan p1207507
  * @version 1.0
  */
-#ifndef _NITE_USER_VIEWER_H_
-#define _NITE_USER_VIEWER_H_
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
 
 #include "NiTE.h"
 
