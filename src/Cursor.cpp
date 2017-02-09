@@ -1,9 +1,9 @@
 /**
- * @file CursorListener.cpp
+ * @file Cursor.cpp
  */
 
 
-#include "CursorListener.hpp"
+#include "Cursor.hpp"
 #include "clamp.hpp"
 #include "Cv_core.hpp"
 
@@ -19,6 +19,16 @@ namespace
     {
         clamp(v, inter.min, inter.max);
     }
+}
+
+Cursor::Cursor() noexcept :
+    vertical({0,0}),
+    horizontal({0,0}),
+    _x(0),
+    _y(0),
+    _radius(0)
+{
+    
 }
 
 Cursor::Cursor(const Interval& hor, const Interval& ver, uint32_t x, uint32_t y, uint32_t radius) noexcept :
@@ -113,7 +123,7 @@ void Cursor::draw(cv::Mat& frame, const mat_data_t& color) const noexcept
         bornesX.min = 0;
     else
         bornesX.min = this->_x - this->_radius;
-    if(this->_x + this->_radius >= frame.cols)
+    if(this->_x + this->_radius >= static_cast<uint32_t>(frame.cols))
         bornesX.max = frame.cols - 1;
     else
         bornesX.max = 0;
@@ -123,7 +133,7 @@ void Cursor::draw(cv::Mat& frame, const mat_data_t& color) const noexcept
         bornesY.min = 0;
     else
         bornesY.min = this->_x - this->_radius;
-    if(this->_y + this->_radius >= frame.rows)
+    if(this->_y + this->_radius >= static_cast<uint32_t>(frame.rows))
         bornesY.max = frame.rows - 1;
     else
         bornesY.max = 0;

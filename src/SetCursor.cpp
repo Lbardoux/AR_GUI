@@ -53,5 +53,5 @@ mapCursor_t::iterator SetCursor::end()
 
 void SetCursor::update(cv::Mat& frame)
 {
-	std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::const_iterator& it) { it->second.first.draw(frame, it->second.second); });
+	std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::value_type& val) { val.second.first.draw(frame, val.second.second); });
 }

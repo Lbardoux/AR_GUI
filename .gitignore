@@ -2,6 +2,7 @@
 libs/
 obj/
 doc/
+!doc/Doxyfile
 ReadMe.html
 AdvancedGUI
 

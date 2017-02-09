@@ -1,5 +1,5 @@
 /**
- * @file CursorListener.hpp
+ * @file Cursor.hpp
  * @brief Interface pour les éléments qui vont devoir intéragir avec un Cursor.
  * @author Laurent BARDOUX p1108365
  * @version 1.0
@@ -31,6 +31,11 @@ struct Interval final
 class Cursor final
 {
     public:
+        /**
+         * @date       09-Feb-2017
+         * @brief      Constructeur par défaut
+         */
+        Cursor() noexcept;
         /**
          * @brief Construit un curseur en définissant son intervalle de définition.
          * 
@@ -83,7 +88,7 @@ class Cursor final
         uint32_t _y;         //!< La position verticale   sur l'image (@b y eme ligne).
         /**
          * Rayon du cursor pour l'affichage.
-         * Rayon de taille 1 -->
+         * @code
          * +-------------------------> _x
          * |    ***
          * |    ***           *
@@ -92,6 +97,7 @@ class Cursor final
          * | _radius=1    _radius=0
          * v
          * _y
+         * @endcode
          */
         uint32_t _radius;    //!< Rayon du cursor pour l'affichage. Un rayon de 1 correspond à 1 pixel
         
@@ -99,8 +105,6 @@ class Cursor final
          * @brief remet toutes les valeurs à zéro.
          */
         void reset(void) noexcept;
-        
-        Cursor(void) = delete;
     
 };
 

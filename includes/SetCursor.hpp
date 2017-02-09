@@ -9,7 +9,7 @@
 
 #include <map>
 #include "Cv_core.hpp"
-#include "CursorListener.hpp"
+#include "Cursor.hpp"
 
 // Todo : Ajouter le nombre de valeurs dans l'enum de Charles
 enum Charles_enum_type{EMPTY};
