@@ -75,7 +75,7 @@ $(EXE_NAME) : $(OBJECTS)
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
 $(OBJ)/main.o                : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/CursorListener.o      : $(INCLUDES)/CursorListener.hpp $(INCLUDES)/clamp.hpp
+$(OBJ)/Cursor.o              : $(INCLUDES)/Cursor.hpp $(INCLUDES)/clamp.hpp
 $(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
 $(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp $(OBJ)/WindowsManager.o
 $(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(OBJ)/OpenCVWindow.o
