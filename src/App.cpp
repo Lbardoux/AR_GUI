@@ -21,7 +21,7 @@ App::~App(void) noexcept
 
 void App::mainLoop(void)
 {
-	this->
+	//this->
 	
 	
 	
