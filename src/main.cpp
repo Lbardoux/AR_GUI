@@ -100,6 +100,21 @@
  * @subsection ss_id_guignol Utiliser l'application
  * Placer vous face à la caméra à une bonne distance, et bouger !
  * 
+ * @subsection ss_id_git_commands Quelques commandes GIT
+ * Pour oublier les changements fait sur un ensemble de fichier et faire en sorte de pouvoir <b><code>git pull</code></b>
+ * qui pourrait poser problème, faire :
+ * @code
+ * git checkout -- file1 file2 ...
+ * @endcode
+ * Si par contre vous voulez conserver vos modifications sur certains fichiers, vous devez faire :
+ * @code
+ * git stash
+ * git pull
+ * git stash pop
+ * @endcode
+ * Normalement cela devrait remettre vos fichiers modifiés en l'état, avec peut être des résolutions de conflits
+ * à faire par vos soins.
+ * 
  * @author Laurent   BARDOUX   p1108365
  * @author Mehdi     GHESH     p1209574
  * @author Charles   SULTAN    p1207507
@@ -169,6 +184,7 @@ int main(int argc, char** argv)
 }
 
 
+
 //
 //Main de Charles
 //
@@ -226,3 +242,15 @@ int main(int argc, char** argv)
 
 
 
+//
+// (Fait par la) Main de Mehdi
+//
+
+// #include "Camera.hpp"
+// int main(int argc, char const *argv[])
+// {
+//     Camera cam;
+
+//     cam.init();
+//     return 0;
+// }
