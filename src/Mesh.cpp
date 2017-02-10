@@ -1,8 +1,11 @@
+/**
+ * @file
+ */
 #include "Mesh.hpp"
-/*
-Mesh::Mesh(char * path)
+
+Mesh::Mesh(const char * path)
 {
-    std::cout<<"Chargement du fichier OBJ : "<<path<<std::endl;
+    /*std::cout<<"Chargement du fichier OBJ : "<<path<<std::endl;
 
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
@@ -84,12 +87,12 @@ Mesh::Mesh(char * path)
         m_normals .push_back(normal);
     }
 
-    initVAO();
+    initVAO();*/
 }
 
 void Mesh::initVAO()
 {
-	GLuint vertex_buffer;
+	/*GLuint vertex_buffer;
     GLuint normal_buffer;
     GLuint texture_buffer;
 
@@ -130,13 +133,12 @@ void Mesh::initVAO()
     }
 
     glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 }
 
-void Mesh::Draw() const
+void Mesh::draw() const
 {
-	glBindVertexArray(m_vao);
+	/*glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-    glBindVertexArray(0);
+    glBindVertexArray(0);*/
 }
-*/

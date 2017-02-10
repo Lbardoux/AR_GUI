@@ -7,8 +7,9 @@
 #ifndef _CLOTHE_H_
 #define _CLOTHE_H_
 
-//#include "Player.hpp"
+#include "Player.hpp"
 #include "Mesh.hpp"
+#include "Mat.hpp"
 
 /**
  * @class Clothe
@@ -24,7 +25,7 @@ public:
 	 * @param[in] 	member2 la deuxième articulation à laquelle est attaché le vêtement
 	 * @param[in] 	mesh le mesh du vêtement
      */
-	//Clothe(Player & player, PlayerMember member1, PlayerMember member2, const Mesh & mesh);
+	Clothe(Player & player, PlayerMember member1, PlayerMember member2, const Mesh & mesh);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -34,12 +35,12 @@ public:
 	/**
      * @brief Affiche le vêtement.
      */
-	void Draw();
+	void draw() const;
 
 private:
-	/*Player & 		m_player; 
-	PlayerMember 	m_member1, m_member2;
-	const Mesh &	m_mesh;*/
+	Player & 		m_player; 				//!< Le joueur.
+	PlayerMember 	m_member1, m_member2; 	//!< Les deux membres auquel est attaché le vêtement.
+	const Mesh &	m_mesh;					//!< Le mesh.
 };
 
 #endif

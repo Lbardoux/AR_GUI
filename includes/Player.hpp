@@ -8,6 +8,7 @@
 #define _PLAYER_H_
 
 #include <NiTE.h>
+#include "Vec.hpp"
 
 /**
  * @enum PlayerMember
@@ -54,9 +55,16 @@ public:
 	/**
      * @brief 		Renvoi la position de l'articulation
      * @param[in] 	member l'articulation dont on souhaite connaitre la position.
-	 * @return		Vrai si un seul joueur a été detecté et qu'il est visible, faux sinon.
+	 * @return		La position correspondant à l'articulation. Le position (0 0 0) si l'articulation n'était pas visible. 
      */
 	nite::Point3f getPositionOf(PlayerMember member) const;
+
+	/**
+     * @brief 		Renvoi le point correspondant à l'articulation
+     * @param[in] 	member l'articulation dont on souhaite connaitre la position.
+	 * @return		Le point correspondant à l'articulation. Le point (0 0 0) si l'articulation n'était pas visible. 
+     */
+	Point getPointOf(PlayerMember member) const;
 	
 
 private:

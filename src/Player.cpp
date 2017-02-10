@@ -46,6 +46,12 @@ bool Player::isVisible() const
 	return (m_user->isVisible() && one_player_visible);
 }
 
+Point Player::getPointOf(PlayerMember member) const
+{
+	nite::Point3f point = getPositionOf(member);
+	return Point(point.x, point.y, point.z);
+}
+
 nite::Point3f Player::getPositionOf(PlayerMember member) const
 {
 	if(!isVisible() || !one_player_visible) return nite::Point3f();
@@ -84,6 +90,6 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
 
 nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
-	return m_user->getSkeleton().getJoint(member).getPosition();
+	nite::Point3f point = m_user->getSkeleton().getJoint(member).getPosition();
 }
 

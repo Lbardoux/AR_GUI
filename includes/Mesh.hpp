@@ -7,22 +7,14 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
+#define USING_OPENGL
+
 #include <vector>
 #include <iostream>
 #include <array>
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-
-struct vec2
-{
-	float x, y;
-};
-
-struct vec3
-{
-	float x, y, z;
-};
 
 /**
  * @class Mesh
@@ -34,7 +26,7 @@ public:
 	/**
      * TODO
      */
-	Mesh(char * path);
+	Mesh(const char * path);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -44,7 +36,7 @@ public:
 	/**
      * @brief Affiche le mesh.
      */
-	void Draw() const;
+	void draw() const;
 
 private:
 	void initVAO();
