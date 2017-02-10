@@ -10,12 +10,12 @@
 #include <map>
 #include "Cv_core.hpp"
 #include "Cursor.hpp"
+#include "Player.hpp"
 
 // Todo : Ajouter le nombre de valeurs dans l'enum de Charles
-enum Charles_enum_type{EMPTY};
 
 typedef std::pair<Cursor, mat_data_t> coloredCursor_t; //!< Encapsulation d'un curseur et de sa couleur
-typedef std::map<Charles_enum_type, coloredCursor_t> mapCursor_t; //!< Map contenant un ensemble de curseurs colorés
+typedef std::map<PlayerMember, coloredCursor_t> mapCursor_t; //!< Map contenant un ensemble de curseurs colorés
 
 class SetCursor final
 {
@@ -33,7 +33,7 @@ public:
 	 * @param[in]  color   Couleur du curseur
 	 * @post       Le curseur du type demandé aura les nouvelles valeurs
 	 */
-	void addCursor(Charles_enum_type type, const Cursor& cursor, const mat_data_t& color=matRedColor());
+	void addCursor(PlayerMember type, const Cursor& cursor, const mat_data_t& color=matRedColor());
 
 	/**
 	 * @date       08-Feb-2017
@@ -42,7 +42,7 @@ public:
 	 * @param[in]  cursor  Nouvelle valeur du curseur
 	 * @pre        Le type demandé a déjà été ajouté
 	 */
-	void updateCursor(Charles_enum_type type, const Cursor& cursor);
+	void updateCursor(PlayerMember type, const Cursor& cursor);
 
 	/**
 	 * @date       08-Feb-2017
@@ -51,7 +51,7 @@ public:
 	 * @param[in]  color  Nouvelle couleur du curseur
 	 * @pre        Le type demandé a déjà été ajouté
 	 */
-	void updateColor(Charles_enum_type type, const mat_data_t& color);
+	void updateColor(PlayerMember type, const mat_data_t& color);
 
 	/**
 	 * @date       08-Feb-2017
@@ -59,14 +59,14 @@ public:
 	 * @param[in]  type  Type du curseur
 	 * @return     Le curseur
 	 */
-	const Cursor& getCursor(Charles_enum_type type) const;
+	const Cursor& getCursor(PlayerMember type) const;
 	/**
 	 * @date       08-Feb-2017
 	 * @brief      Récupère le curseur en lecture/écriture pour le type demandé
 	 * @param[in]  type  Type du curseur
 	 * @return     Le curseur
 	 */
-	Cursor& getCursor(Charles_enum_type type);
+	Cursor& getCursor(PlayerMember type);
 
 	mapCursor_t::const_iterator begin() const;
 	mapCursor_t::iterator begin();
@@ -78,7 +78,14 @@ public:
 	 * @brief      Affichage d'un ensemble de curseur dans la frame
 	 * @param      frame  La frame
 	 */
-	void update(cv::Mat& frame);
+	void draw(cv::Mat& frame);
+
+	/**
+	 * @date       09-Feb-2017
+	 * @brief      Mets à jour les positions des curseurs
+	 * @param[in]  player  Squelette qui contient les informations des positions
+	 */
+	void update(const Player& player);
 
 private:
 	mapCursor_t _cursors; //!< Ensemble des cursors

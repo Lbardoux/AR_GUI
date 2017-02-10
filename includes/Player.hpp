@@ -30,7 +30,7 @@ public:
 	/**
      * @brief 		Construit un nouveau player 
      * @param[in] 	user_tracker le tracker préallablement initialisé avec la bibliothèque NiTE.
-					Veuillez faire attention  que user_tracker->create(&device) soit bien égal à nite::STATUS_OK.
+	 * @pre 		Veuillez faire attention  que user_tracker->create(&device) soit bien égal à nite::STATUS_OK.
      */
 	Player(nite::UserTracker & user_tracker);
 	/**
@@ -49,14 +49,14 @@ public:
      * @brief 	Renvoi vrai si le joueur est visible.
 	 * @return	Vrai si un seul joueur a été detecté et qu'il est visible, faux sinon.
      */
-	bool isVisible();
+	bool isVisible() const;
 
 	/**
      * @brief 		Renvoi la position de l'articulation
      * @param[in] 	member l'articulation dont on souhaite connaitre la position.
 	 * @return		Vrai si un seul joueur a été detecté et qu'il est visible, faux sinon.
      */
-	nite::Point3f getPositionOf(PlayerMember member);
+	nite::Point3f getPositionOf(PlayerMember member) const;
 	
 
 private:
@@ -65,7 +65,7 @@ private:
      * @param[in] 	member l'articulation dont on souhaite connaitre la position.
 	 * @return		Vrai si un seul joueur a été detecté et qu'il est visible, faux sinon.
      */
-	nite::Point3f getPositionOf(nite::JointType member);
+	nite::Point3f getPositionOf(nite::JointType member) const;
 
     nite::UserTracker & 	m_user_tracker;		//!< Le tracker.
     const nite::UserData * 	m_user;				//!< Le joueur detecté. 

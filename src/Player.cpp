@@ -38,12 +38,12 @@ bool Player::update()
 	return true;
 }
 
-bool Player::isVisible()
+bool Player::isVisible() const
 {
 	return (m_user->isVisible() && one_player_visible);
 }
 
-nite::Point3f Player::getPositionOf(PlayerMember member)
+nite::Point3f Player::getPositionOf(PlayerMember member) const
 {
 	if(!isVisible() || !one_player_visible) return nite::Point3f();
 	switch(member)
@@ -79,7 +79,7 @@ nite::Point3f Player::getPositionOf(PlayerMember member)
 	}
 }
 
-nite::Point3f Player::getPositionOf(nite::JointType member)
+nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
 	return m_user->getSkeleton().getJoint(member).getPosition();
 }
