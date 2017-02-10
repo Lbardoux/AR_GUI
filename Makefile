@@ -7,7 +7,13 @@
 
 .PHONY: doc tar help decompress push
 
-CXX      := g++
+# Option pour la verbosité du makefile lors de la compilation des sources
+VERBOSE  := 1
+CXX_V	 := g++
+CC_0	  = @echo "Compiling $<..."; $(CXX_V)
+CC_1	 := $(CXX_V)
+
+CXX       = $(CC_$(VERBOSE))
 WARNINGS := -Wall -Wextra
 STD      := -std=c++11
 TARGET   := -g

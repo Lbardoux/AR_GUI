@@ -54,7 +54,7 @@ public:
 
 	/**
 	 * @date       10-Feb-2017
-	 * @brief      Action liée au Widget
+	 * @brief      Action liée au Widget. C'est elle qui est appelée lorsque le Widget est activé
 	 */
 	virtual void action();
 
