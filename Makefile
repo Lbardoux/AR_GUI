@@ -80,6 +80,7 @@ $(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
 $(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp $(OBJ)/WindowsManager.o
 $(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(OBJ)/OpenCVWindow.o
 $(OBJ)/Cv_core.o             : $(INCLUDES)/Cv_core.hpp
+$(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hpp $(INCLUDES)/KeyboardMapping.hpp
 
 
 $(OBJ)/%.o : $(SRC)/%.cpp

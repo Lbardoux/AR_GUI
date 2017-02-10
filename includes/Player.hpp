@@ -10,7 +10,7 @@
 #include <NiTE.h>
 
 /**
- * @struct PlayerMember
+ * @enum PlayerMember
  * @brief Enumère toutes les articulations d'un joueur
  */
 enum PlayerMember { HEAD = 0, NECK, TORSO, 
@@ -34,7 +34,7 @@ public:
      */
 	Player(nite::UserTracker & user_tracker);
 	/**
-     * @brief Déstructeur par défaut.
+     * @brief Destructeur par défaut.
      */
 	~Player() = default;
 
