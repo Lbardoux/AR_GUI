@@ -474,7 +474,7 @@ namespace mtl
 			 * @brief Load the configuration file (for gcc only) if it exists, else create it next to the
 			 * binary file.
 			 */
-			CONSTRUCTOR void _loadConfiguration(void)
+			CONSTRUCTOR inline void _loadConfiguration(void)
 			{
 				std::ifstream config(mtl::log::__details::_filename());
 				if (config.good())
