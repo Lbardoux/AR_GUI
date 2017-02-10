@@ -1,6 +1,8 @@
 /**
  * @file main.cpp
  * @mainpage
+ * @section s_id_depot Lien vers le projet
+ * <a href="https://github.com/Lbardoux/AR_GUI">Lien vers GitHub</a>
  * @section    s_id_usage Utilisation
  * @subsection ss_id_compile Installer tout ça.
  * Salut camarade développeur ! Alors comme ça tu veux compiler ce truc ?@n
@@ -10,6 +12,8 @@
  *    - @b <a href="http://openni.ru/openni-sdk/">OpenNI</a>
  *    - @b <a href="http://openni.ru/files/nite/">Nite</a>
  *    - @b tinyxml2 et son wrapper XmlLoader.
+ *    - @b mtlkit.
+ *    - @b logs
  * 
  * 
  * @subsection ss_id_base Le plus facile d'abord !
@@ -78,37 +82,19 @@
  * source .bashrc
  * @endcode
  * 
- * @subsection ss_id_finaly Configurer sa cible pour le Makefile
- * Si jamais l'installation s'est bien passée, il va falloir, dans le Makefile fourni, remplir les valeurs
- * des 3 variables correspondant à votre cible (Charles --> charles, Alexandre ---> alex, etc).
- * Et ensuite, it is over, le projet est terminé...wait non on a meme pas commencé (joie).
- * 
  * @subsection ss_id_compiler Compiler sur nos machines.
  * <b>Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
  * 
  * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
  * @code
- * make location=nom
- * @endcode
- * 
- * Il est possible d'écraser certaines variables du @b Makefile, par exemple si on veut compiler sans les warnings :
- * @code
- * make WARNINGS=
- * @endcode
- * 
- * @subsection ss_id_compile2 Compiler en TD8
- * Eh oui, il y a une section à part entière pour cela, compiler chez Mr.Guillou va justement consister à
- * écraser une variable du @b Makefile, il va falloir spécifier que l'on se trouve en TD8, et qu'il faudra donc charger
- * les dépendances sans utiliser des trucs pratiques comme @b pkg-config our autre :
- * @code
- * make location=td8
+ * make
  * @endcode
  * 
  * @subsection ss_id_usage Lancer le programme
  * En premier lieu, il nous faut une caméra de profondeur branchée sur un port USB.
  * Puis, il suffit ensuite de taper la commande suivante <b>dans le répertoire où se trouve le binaire</b> :
  * @code
- * ./AdvancedGUI
+ * ./AdvancedGUI gl|cv
  * @endcode
  * 
  * @subsection ss_id_guignol Utiliser l'application
@@ -117,7 +103,6 @@
  * @author Laurent   BARDOUX   p1108365
  * @author Mehdi     GHESH     p1209574
  * @author Charles   SULTAN    p1207507
- * @author Alexandre BELAIZI   pXXXXXXX
  * @version 1.0
  */
 #include <cstdlib>

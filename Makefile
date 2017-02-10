@@ -8,10 +8,10 @@
 .PHONY: doc tar help decompress push
 
 # Option pour la verbosité du makefile lors de la compilation des sources
-VERBOSE  := 1
-CXX_V	 := g++
-CC_0	  = @echo "Compiling $<..."; $(CXX_V)
-CC_1	 := $(CXX_V)
+VERBOSE  := 0
+CXX_V    := g++
+CC_0      = @echo "Compiling $<..."; $(CXX_V)
+CC_1     := $(CXX_V)
 
 CXX       = $(CC_$(VERBOSE))
 WARNINGS := -Wall -Wextra
@@ -76,11 +76,10 @@ OBJECTS       := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(wildcard $(SRC)/*.cpp))
 XMLOBJECTS    := $(patsubst $(XMLLOADER)/%.cpp, $(OBJ)/%.o, $(wildcard $(XMLLOADER)/*.cpp))
 MTLKITOBJECTS := $(patsubst $(MTLKIT)/%.cpp, $(OBJ)/%.o, $(wildcard $(MTLKIT)/*.cpp))
 
-OBJECTS += $(XMLOBJECTS) $(MTLKITOBJECTS)
 
 all : $(EXE_NAME)
 
-$(EXE_NAME) : $(OBJECTS)
+$(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
 	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
