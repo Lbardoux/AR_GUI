@@ -17,7 +17,8 @@ enum PlayerMember { HEAD = 0, NECK, TORSO,
 					LEFT_SHOULDER, LEFT_ELBOW, LEFT_HAND, 
 					RIGHT_SHOULDER, RIGHT_ELBOW, RIGHT_HAND, 
 					LEFT_HIP, LEFT_KNEE,
-					RIGHT_HIP, RIGHT_KNEE }; 
+					RIGHT_HIP, RIGHT_KNEE,
+					NB_PLAYER_MEMBER };  // L'enum NB_PLAYER_MEMBER doit etre en dernier, comme ça on peut les compter 
 
 /**
  * @class Player
