@@ -134,10 +134,10 @@ int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
 	App appli;
-    SkeletonStateWindow window;
+    /*SkeletonStateWindow window;
     window.setName("RED = KO / GREEN = OK");
     window.open(0u, 0u);
-    appli.getWindowsManager().addWindow(&window);
+    appli.getWindowsManager().addWindow(&window);*/
     
 	appli.mainLoop();
 	

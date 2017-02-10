@@ -10,6 +10,7 @@
 #include "Cv_core.hpp"
 #include "KeyboardMapping.hpp"
 #include "WindowsManager.hpp"
+#include "SkeletonStateWindow.hpp"
 
 
 /**
@@ -40,9 +41,10 @@ class App final
 		
 		
 	private:
-		KeyboardMapping<char, std::function<void(void)>> keyboard; //!< Les actions pour le clavier.
-		WindowsManager                                   windows;  //!< Les fenetres de l'application.
-		bool                                             process;  //!< Etat de l'application (true on continue, false on quitte).
+		KeyboardMapping<char, std::function<void(void)>> keyboard;     //!< Les actions pour le clavier.
+		WindowsManager                                   windows;      //!< Les fenetres de l'application.
+		SkeletonStateWindow                              programState; //!< La fenetre qui affiche l'état du programme.
+		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
 		
 		
 		/**

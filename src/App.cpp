@@ -5,7 +5,6 @@
 
 #include "App.hpp"
 
-
 App::App(void) noexcept : keyboard(), windows(), process(true)
 {
 	this->initLibs();
@@ -45,7 +44,8 @@ WindowsManager& App::getWindowsManager(void) noexcept
 void App::initInputs(void)
 {
 	this->keyboard.addAction('q', [this](void){this->process = false;});
-	
+	this->keyboard.addAction('e', [this](void){this->programState.setState(true);});
+	this->keyboard.addAction('d', [this](void){this->programState.setState(false);});
 }
 
 void App::initLibs(void)
@@ -55,5 +55,7 @@ void App::initLibs(void)
 
 void App::initComponents(void)
 {
-	
+	this->programState.setName("RED = KO / GREEN = OK");
+	this->programState.open(0u, 0u);
+	this->windows.addWindow(&this->programState);
 }
