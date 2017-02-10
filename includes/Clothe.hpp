@@ -34,7 +34,7 @@ public:
 	/**
      * @brief Affiche le vêtement.
      */
-	void Affiche();
+	void Draw();
 
 private:
 	/*Player & 		m_player; 
