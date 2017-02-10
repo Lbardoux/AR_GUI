@@ -21,9 +21,10 @@ LIBS      := libs
 XMLLOADER := $(LIBS)/XMLLoader
 OPENNI2   := $(LIBS)/OpenNI-Linux-x64-2.2
 NITE2     := $(LIBS)/NiTE2
+MTLKIT    := $(LIBS)/mtlkit
 
-LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2
-LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include
+LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image
+LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include -I$(MTLKIT)
 location := $(shell whoami)
 README   := ReadMe.html
 
@@ -62,10 +63,11 @@ endif
 LDLIBS  += -L$(shell grep "Redist" $(LIBS)/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
 LDFLAGS += -I$(shell grep "Include" $(LIBS)/OpenNI-Linux-x64-2.2/OpenNIDevEnvironment | cut -d' ' -f2 | cut -d'=' -f2)
 
-EXE_NAME    := AdvancedGUI
-DOXYFILE    := $(DOC)/Doxyfile
-OBJECTS     := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(wildcard $(SRC)/*.cpp))
-XMLOBJECTS  := $(patsubst $(XMLLOADER)/%.cpp, $(OBJ)/%.o, $(wildcard $(XMLLOADER)/*.cpp))
+EXE_NAME      := AdvancedGUI
+DOXYFILE      := $(DOC)/Doxyfile
+OBJECTS       := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(wildcard $(SRC)/*.cpp))
+XMLOBJECTS    := $(patsubst $(XMLLOADER)/%.cpp, $(OBJ)/%.o, $(wildcard $(XMLLOADER)/*.cpp))
+MTLKITOBJECTS := $(patsubst $(MTLKIT)/%.cpp, $(OBJ)/%.o, $(wildcard $(MTLKIT)/*.cpp))
 
 all : $(EXE_NAME)
 
@@ -93,14 +95,17 @@ install : _directories decompress
 _directories: 
 	mkdir -p $(OBJ)
 
-libs : $(XMLOBJECTS)
+libs : $(XMLOBJECTS) $(MTLKITOBJECTS)
 
 $(OBJ)/XmlBase.o   : $(XMLLOADER)/XmlBase.hpp   $(XMLLOADER)/tinyxml2.h  $(OBJ)/tinyxml2.o
 $(OBJ)/XmlLoader.o : $(XMLLOADER)/XmlLoader.hpp $(XMLLOADER)/XmlBase.hpp
 $(OBJ)/XmlWriter.o : $(XMLLOADER)/XmlWriter.hpp $(XMLLOADER)/XmlBase.hpp
 $(OBJ)/tinyxml2.o  : $(XMLLOADER)/tinyxml2.h
 $(OBJ)/%.o : $(XMLLOADER)/%.cpp
-	$(CXX) $(CXXFLAGS) -I$(XMLLOADER) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -I$(XMLLOADER) -o $@
+
+$(OBJ)/%.o : $(MTLKIT)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -I$(MTLKIT) -I$(XMLLOADER) -lGL -lGLEW -lSDL2 -lSDL2_image -o $@
 
 decompress:
 	cd $(LIBS) && tar -xzf XMLLoader.tar.gz
