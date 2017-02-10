@@ -4,8 +4,11 @@
 
 
 #include "App.hpp"
+#include "GlCore.hpp"
+#include "GlContext.hpp"
+#include "Pipeline.hpp"
 
-App::App(void) noexcept : keyboard(), windows(), process(true)
+App::App(void) noexcept : process(true)
 {
 	this->initLibs();
 	this->initInputs();
@@ -18,6 +21,11 @@ App::~App(void) noexcept
 	
 }
 
+void App::quit(void)
+{
+	GlContext::endGL();
+}
+
 void App::mainLoop(void)
 {
 	this->process = true;
@@ -27,7 +35,6 @@ void App::mainLoop(void)
 		this->keyboard.checkInputs(25);
 	}
 	this->windows.closeWindows();
-	
 }
 
 
@@ -50,6 +57,9 @@ void App::initInputs(void)
 
 void App::initLibs(void)
 {
+	GlContext::initGL(640, 480);
+	GlContext::windowCaption("OpenGL window");
+	Pipeline::fromXML("assets/PipelineConfig.xml");
 	
 }
 

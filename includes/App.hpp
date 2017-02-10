@@ -34,6 +34,10 @@ class App final
 		 * @brief Met en place la boucle principale du programme.
 		 */
 		void mainLoop(void);
+		/**
+		 * @brief Vide tout.
+		 */
+		void quit(void);
 		
 		
 		KeyboardMapping<char, std::function<void(void)>>& getKeyboard(void) noexcept;

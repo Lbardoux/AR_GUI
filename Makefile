@@ -22,9 +22,10 @@ XMLLOADER := $(LIBS)/XMLLoader
 OPENNI2   := $(LIBS)/OpenNI-Linux-x64-2.2
 NITE2     := $(LIBS)/NiTE2
 MTLKIT    := $(LIBS)/mtlkit
+LOGS      := $(LIBS)/logs
 
 LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image
-LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include -I$(MTLKIT)
+LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include -I$(MTLKIT)/ -I$(LOGS)
 location := $(shell whoami)
 README   := ReadMe.html
 
