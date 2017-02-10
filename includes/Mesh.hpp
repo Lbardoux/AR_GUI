@@ -7,6 +7,23 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
+#include <vector>
+#include <iostream>
+#include <array>
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+
+struct vec2
+{
+	float x, y;
+};
+
+struct vec3
+{
+	float x, y, z;
+};
+
 /**
  * @class Mesh
  * @brief Cette structure permet de d'afficher un mesh.
@@ -17,7 +34,7 @@ public:
 	/**
      * TODO
      */
-	Mesh(/*TODO*/);
+	Mesh(char * path);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -27,9 +44,15 @@ public:
 	/**
      * @brief Affiche le mesh.
      */
-	void Affiche(/*Une matrice*/);
+	void Draw() const;
 
 private:
+	void initVAO();
+/*
+	std::vector<vec3> 	m_vertices;
+	std::vector<vec2> 	m_uvs;
+	std::vector<vec3> 	m_normals;
+	GLuint 				m_vao;*/
 };
 
 #endif

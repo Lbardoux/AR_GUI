@@ -3,7 +3,7 @@
 /*Clothe(Player & player, PlayerMember member1, PlayerMember member2, const Mesh & mesh) : m_player(player), m_member1(member1), m_member2(member1), m_mesh(mesh)
 {}
 
-void Clothe::Affiche()
+void Clothe::Draw()
 {
 	nite::Point3f position1 = m_player.getPositionOf(m_member1);
 	nite::Point3f position2 = m_player.getPositionOf(m_member2);
