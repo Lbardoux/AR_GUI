@@ -70,6 +70,8 @@ OBJECTS       := $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(wildcard $(SRC)/*.cpp))
 XMLOBJECTS    := $(patsubst $(XMLLOADER)/%.cpp, $(OBJ)/%.o, $(wildcard $(XMLLOADER)/*.cpp))
 MTLKITOBJECTS := $(patsubst $(MTLKIT)/%.cpp, $(OBJ)/%.o, $(wildcard $(MTLKIT)/*.cpp))
 
+OBJECTS += $(XMLOBJECTS) $(MTLKITOBJECTS)
+
 all : $(EXE_NAME)
 
 $(EXE_NAME) : $(OBJECTS)

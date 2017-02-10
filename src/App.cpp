@@ -23,7 +23,9 @@ App::~App(void) noexcept
 
 void App::quit(void)
 {
+#ifdef USING_OPENGL
 	GlContext::endGL();
+#endif
 }
 
 void App::mainLoop(void)
@@ -57,9 +59,11 @@ void App::initInputs(void)
 
 void App::initLibs(void)
 {
+#ifdef USING_OPENGL
 	GlContext::initGL(640, 480);
 	GlContext::windowCaption("OpenGL window");
 	Pipeline::fromXML("assets/PipelineConfig.xml");
+#endif
 	
 }
 

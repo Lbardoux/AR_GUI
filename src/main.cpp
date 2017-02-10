@@ -122,6 +122,7 @@
  */
 #include <cstdlib>
 
+#include "logs.hpp"
 #include "CLmanager.hpp"
 #include "App.hpp"
 
@@ -129,8 +130,11 @@
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
+	mtl::log::info("Ligne de commande valide");
 	App appli;
+	mtl::log::info("Creation de l'application reussie");
 	appli.mainLoop();
+	mtl::log::info("Terminaison en cours");
 	appli.quit();
     return EXIT_SUCCESS;
 }
