@@ -27,7 +27,7 @@ void SkeletonStateWindow::open(UNUSED(uint32_t width), UNUSED(uint32_t height))
 {
     this->valid = cv::imread(IMAGES_DIR "valid.png", cv::IMREAD_COLOR);
     this->error = cv::imread(IMAGES_DIR "error.png", cv::IMREAD_COLOR);
-	mtl::log::info("Chargement de" IMAGES_DIR "valid.png et " IMAGES_DIR "error.png");
+	mtl::log::info("Chargement de " IMAGES_DIR "valid.png et " IMAGES_DIR "error.png");
 }
 
 void SkeletonStateWindow::close(void)

@@ -21,7 +21,7 @@ namespace
         std::size_t pos = line.find("%0%");
         if (pos != std::string::npos)
         {
-            line.replace(pos, argv0.length(), argv0);
+            line.replace(pos, 3, argv0);
         }
         return line;
     }

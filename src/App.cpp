@@ -52,9 +52,11 @@ WindowsManager& App::getWindowsManager(void) noexcept
 
 void App::initInputs(void)
 {
+#ifndef USING_OPENGL
 	this->keyboard.addAction('q', [this](void){this->process = false;});
 	this->keyboard.addAction('e', [this](void){this->programState.setState(true);});
 	this->keyboard.addAction('d', [this](void){this->programState.setState(false);});
+#endif
 }
 
 void App::initLibs(void)
@@ -69,7 +71,9 @@ void App::initLibs(void)
 
 void App::initComponents(void)
 {
+#ifndef USING_OPENGL
 	this->programState.setName("RED = KO / GREEN = OK");
 	this->programState.open(0u, 0u);
 	this->windows.addWindow(&this->programState);
+#endif
 }

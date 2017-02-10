@@ -121,21 +121,51 @@
  * @version 1.0
  */
 #include <cstdlib>
+#include <string>
 
 #include "logs.hpp"
 #include "CLmanager.hpp"
 #include "App.hpp"
+#include "GlCore.hpp"
+#include "GlContext.hpp"
+#include "Pipeline.hpp"
+#include "Loop.hpp"
+
+bool met_ton_code_la_charle(void)
+{
+	
+	
+	
+	
+	return false; // continue l'execution
+}
+
 
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
 	mtl::log::info("Ligne de commande valide");
-	App appli;
-	mtl::log::info("Creation de l'application reussie");
-	appli.mainLoop();
-	mtl::log::info("Terminaison en cours");
-	appli.quit();
+	if (std::string(argv[1]) == "cv")
+	{
+		mtl::log::info("Lancement avec OpenCV");
+		App appli;
+		mtl::log::info("Creation de l'application reussie");
+		appli.mainLoop();
+		mtl::log::info("Terminaison en cours");
+		appli.quit();
+	}
+	else
+	{
+		GlContext::initGL(640, 480);
+		GlContext::windowCaption("OpenGL window");
+		Pipeline::fromXML("assets/PipelineConfig.xml");
+		
+		renderLoop(30, met_ton_code_la_charle);
+		
+		GlContext::endGL();
+	}
+	
     return EXIT_SUCCESS;
 }
 

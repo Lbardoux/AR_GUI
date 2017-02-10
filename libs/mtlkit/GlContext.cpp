@@ -5,6 +5,7 @@
 
 #include "GlCore.hpp"
 #include "GlContext.hpp"
+#include "Events.hpp"
 
 
 GlContext::Window* GlContext::WINDOW = nullptr;
@@ -115,6 +116,7 @@ void GlContext::initGL(int32_t width, int32_t height, int32_t minorVersion, int3
 	initWindow(&GlContext::WINDOW, width, height);
 	initContext(GlContext::WINDOW, GlContext::CONTEXT, minorVersion, majorVersion);
 	initGLEW(GlContext::CONTEXT);
+	EventManager::init();
 }
 
 namespace // clean at the end, after destructors.

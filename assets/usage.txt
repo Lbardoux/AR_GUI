@@ -1,9 +1,9 @@
-NB_ARGUMENT 0
+NB_ARGUMENT 1
 [Usage]
-%0% 
+%0% gl|cv
 
 [Available arguments]
-	Coming soon :D
+	1st : gl pour lancer l'application avec openGL only, cv pour la partie openCV
 END
 
 # A partir de là, ça ne compte plus.
