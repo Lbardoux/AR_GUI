@@ -42,6 +42,16 @@ Cursor::Cursor(const Interval& hor, const Interval& ver, uint32_t x, uint32_t y,
     clampInterval(this->_y, this->vertical);
 }
 
+Cursor::Cursor(const nite::Point3f& vec) noexcept :
+    vertical({0,0}),
+    horizontal({0,0}),
+    _x(vec.x),
+    _y(vec.y),
+    _radius(0)
+{
+
+}
+
 Cursor::Cursor(const Cursor& other) noexcept : Cursor(other.horizontal, other.vertical, other._x, other._y)
 {
     

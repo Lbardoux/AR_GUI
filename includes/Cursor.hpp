@@ -9,6 +9,7 @@
 
 #include <cstdint> // Pour les uint*, permettant de choisir le nombre d'octets que l'on veut.
 #include "Cv_core.hpp"
+#include <NiTE.h>
 
 
 /**
@@ -48,6 +49,12 @@ class Cursor final
          * @param[in] radius  Rayon du curseur à afficher
          */
         Cursor(const Interval& hor, const Interval& ver, uint32_t x=0u, uint32_t y=0u, uint32_t radius=0u) noexcept;
+        /**
+         * @date       10-Feb-2017
+         * @brief      Constructeur à partir d'un Point3f de Nite
+         * @param[in]  vec   Le vecteur
+         */
+        Cursor(const nite::Point3f& vec) noexcept;
         /**
          * @brief Construit un nouveau curseur en copiant @b other.
          * @param[in] other Le curseur à copier.
