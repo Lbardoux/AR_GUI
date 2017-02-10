@@ -21,14 +21,18 @@ App::~App(void) noexcept
 
 void App::mainLoop(void)
 {
-	//this->
-	
-	
+	this->process = true;
+	while(this->process)
+	{
+		this->windows.updateWindows();
+		this->keyboard.checkInputs(25);
+	}
+	this->windows.closeWindows();
 	
 }
 
 
-KeyboardMapping& App::getKeyboard(void) noexcept
+KeyboardMapping<char, std::function<void(void)>>& App::getKeyboard(void) noexcept
 {
 	return this->keyboard;
 }
@@ -40,7 +44,7 @@ WindowsManager& App::getWindowsManager(void) noexcept
 
 void App::initInputs(void)
 {
-	this->keyboard->addAction('q', [&process](void){process = false;});
+	this->keyboard.addAction('q', [this](void){this->process = false;});
 	
 }
 

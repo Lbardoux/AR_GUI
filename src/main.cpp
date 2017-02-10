@@ -127,17 +127,21 @@
 #include "CLmanager.hpp"
 #include "OpenCVWindow.hpp"
 #include "SkeletonStateWindow.hpp"
+#include "App.hpp"
+
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
-    WindowsManager manager;
+	App appli;
     SkeletonStateWindow window;
     window.setName("RED = KO / GREEN = OK");
     window.open(0u, 0u);
-    manager.addWindow(&window);
+    appli.getWindowsManager().addWindow(&window);
     
-    bool process = true;
+	appli.mainLoop();
+	
+    /*bool process = true;
     while(process)
     {
         manager.updateWindows();
@@ -157,7 +161,7 @@ int main(int argc, char** argv)
                 break;
         }
     }
-    manager.closeWindows();
+    manager.closeWindows();*/
     
     
     /*;

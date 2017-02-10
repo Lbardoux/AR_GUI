@@ -7,8 +7,10 @@
 #define APP_HPP_INCLUDED
 
 #include <functional>
+#include "Cv_core.hpp"
 #include "KeyboardMapping.hpp"
 #include "WindowsManager.hpp"
+
 
 /**
  * @class App
@@ -33,7 +35,7 @@ class App final
 		void mainLoop(void);
 		
 		
-		KeyboardMapping& getKeyboard(void) noexcept;
+		KeyboardMapping<char, std::function<void(void)>>& getKeyboard(void) noexcept;
 		WindowsManager& getWindowsManager(void) noexcept;
 		
 		
