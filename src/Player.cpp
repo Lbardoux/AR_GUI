@@ -1,3 +1,6 @@
+/**
+ * @file
+ */
 #include "Player.hpp"
 
 Player::Player(nite::UserTracker & user_tracker) : m_user_tracker(user_tracker)
