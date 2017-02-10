@@ -5,7 +5,7 @@
 
 Mesh::Mesh(const char * path)
 {
-    /*std::cout<<"Chargement du fichier OBJ : "<<path<<std::endl;
+    std::cout<<"Chargement du fichier OBJ : \'"<<path<<"\' ... ";
 
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
@@ -28,7 +28,7 @@ Mesh::Mesh(const char * path)
         if ( strcmp( lineHeader, "v" ) == 0 )
         {
             vec3 vertex;
-            assert(fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z ));
+            assert(fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z));
             temp_vertices.push_back(vertex);
         }
         else if ( strcmp( lineHeader, "vt" ) == 0 )
@@ -74,6 +74,7 @@ Mesh::Mesh(const char * path)
 
     for(unsigned int i=0; i<vertexIndices.size(); i++)
     {
+        
         unsigned int vertexIndex = vertexIndices[i];
         unsigned int uvIndex = uvIndices[i];
         unsigned int normalIndex = normalIndices[i];
@@ -87,58 +88,68 @@ Mesh::Mesh(const char * path)
         m_normals .push_back(normal);
     }
 
-    initVAO();*/
+    initVAO();
+
+    std::cout<<"Fait"<<std::endl;
 }
 
 void Mesh::initVAO()
 {
-	/*GLuint vertex_buffer;
-    GLuint normal_buffer;
-    GLuint texture_buffer;
-
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
-    glGenBuffers(1, &vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    glGenBuffers(1, &m_vertex_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(vec3), &m_vertices[0], GL_STATIC_DRAW);
 
-    glGenBuffers(1, &normal_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, normal_buffer);
+    glGenBuffers(1, &m_normal_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_normal_buffer);
     glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(vec3), &m_normals[0], GL_STATIC_DRAW);
 
-    if (uvs.size() > 0)
+    if (m_uvs.size() > 0)
     {
-        glGenBuffers(1, &texture_buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, texture_buffer);
+        glGenBuffers(1, &m_texture_buffer);
+        glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer);
         glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(vec2), &m_uvs[0], GL_STATIC_DRAW);
     }
 
     GLint attribute = 0;
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
     glVertexAttribPointer(attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attribute);
 
     attribute = 1;
-    glBindBuffer(GL_ARRAY_BUFFER, normal_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_normal_buffer);
     glVertexAttribPointer(attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(attribute);
 
-    if (uvs.size() > 0)
+    if (m_uvs.size() > 0)
     {
         attribute = 2;
-        glBindBuffer(GL_ARRAY_BUFFER, texture_buffer);
+        glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer);
         glVertexAttribPointer(attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(attribute);
     }
 
     glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Mesh::draw() const
+void Mesh::draw(ShaderProgram & programm, Transform & model, Transform & view, Transform & projection) const
 {
-	/*glBindVertexArray(m_vao);
+    Transform mv = model * view;
+    Transform mvp = model * view * projection;
+
+    GLint mvp_location =  glGetUniformLocation(programm, "MVP");
+    GLint mv_location  =  glGetUniformLocation(programm, "MV");
+    GLint n_location   =  glGetUniformLocation(programm, "N");
+
+    glUniformMatrix4fv(programm, mvp_location, false, mvp.buffer());
+    glUniformMatrix4fv(programm, mv_location, false, mv.buffer());
+    glUniformMatrix4fv(programm, n_location, false, mv.normal().buffer());
+
+
+	glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-    glBindVertexArray(0);*/
+    glBindVertexArray(0);
 }

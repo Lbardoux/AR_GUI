@@ -10,6 +10,7 @@
 #include "Player.hpp"
 #include "Mesh.hpp"
 #include "Mat.hpp"
+#include "ShaderProgram.hpp"
 
 /**
  * @class Clothe
@@ -33,9 +34,12 @@ public:
 	~Clothe() = default;
 
 	/**
-     * @brief Affiche le vêtement.
+     * @brief Affiche le mesh.
+     * @param[in] programm le shader
+   	 * @param[in] view la matrice vue
+     * @param[in] projection la matrice projection
      */
-	void draw() const;
+	void draw(ShaderProgram & programm, Transform & view, Transform & projection) const;
 
 private:
 	Player & 		m_player; 				//!< Le joueur.

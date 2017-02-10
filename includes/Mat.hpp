@@ -31,7 +31,7 @@ struct Transform
     //! renvoie le vecteur transforme.
     Vector operator() ( const Vector& v ) const;
     //! renvoie le point/vecteur homogene transforme.
-    vec4 operator() ( const vec4& v ) const;
+    //vec4 operator() ( const vec4& v ) const;
     
     //! renvoie la transposee de la matrice.
     Transform transpose( ) const;

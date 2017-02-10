@@ -477,8 +477,8 @@ std::ostream& operator<<(std::ostream& os, const Vecf<TT, V>& v)
 	return os;
 }
 
-typedef Vecf<float,    2>  vec2; //!< To manipulate a  float  vec2.
-typedef Vecf<float,    3>  vec3; //!< To manipulate a  float  vec3.
+//typedef Vecf<float,    2>  vec2; //!< To manipulate a  float  vec2.
+//typedef Vecf<float,    3>  vec3; //!< To manipulate a  float  vec3.
 typedef Vecf<float,    4>  vec4; //!< To manipulate a  float  vec4.
 typedef Vecf<double,   2> dvec2; //!< To manipulate a  double vec2.
 typedef Vecf<double,   3> dvec3; //!< To manipulate a  double vec3.
@@ -490,9 +490,9 @@ typedef Vecf<uint32_t, 2> uvec2; //!< To manipulate an uint   vec2.
 typedef Vecf<uint32_t, 3> uvec3; //!< To manipulate an uint   vec3.
 typedef Vecf<uint32_t, 4> uvec4; //!< To manipulate an uint   vec4.
 
-typedef vec2    Texcoords; //!< To manipulate something more clear than a vec2.
-typedef vec3    Vertex;    //!< To manipulate something more clear than a vec3.
-typedef vec3    Normal;    //!< To manipulate something more clear than a vec3.
+//typedef vec2    Texcoords; //!< To manipulate something more clear than a vec2.
+//typedef vec3    Vertex;    //!< To manipulate something more clear than a vec3.
+//typedef vec3    Normal;    //!< To manipulate something more clear than a vec3.
 typedef vec4    Color;     //!< To manipulate something more clear than a vec4.
 
 #endif

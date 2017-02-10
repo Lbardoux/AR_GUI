@@ -115,14 +115,22 @@
 #include "GlContext.hpp"
 #include "Pipeline.hpp"
 #include "Loop.hpp"
+#include "Shader.hpp"
+#include "Mesh.hpp"
 
-bool met_ton_code_la_charle(void)
+bool met_ton_code_la_charles(ShaderProgram & programm, Mesh & mesh)
 {
-	
-	
-	
-	
-	return false; // continue l'execution
+    Pipeline::clear(true, true);
+
+    programm.use();
+    
+    Transform model = Translation(0, 0, 10);
+    Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+    Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);
+    mesh.draw(programm, model, view, projection);
+    
+
+    return false; // continue l'execution
 }
 
 
@@ -130,27 +138,33 @@ bool met_ton_code_la_charle(void)
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
-	mtl::log::info("Ligne de commande valide");
-	if (std::string(argv[1]) == "cv")
-	{
-		mtl::log::info("Lancement avec OpenCV");
-		App appli;
-		mtl::log::info("Creation de l'application reussie");
-		appli.mainLoop();
-		mtl::log::info("Terminaison en cours");
-		appli.quit();
-	}
-	else
-	{
-		GlContext::initGL(640, 480);
-		GlContext::windowCaption("OpenGL window");
-		Pipeline::fromXML("assets/PipelineConfig.xml");
-		
-		renderLoop(30, met_ton_code_la_charle);
-		
-		GlContext::endGL();
-	}
-	
+    mtl::log::info("Ligne de commande valide");
+    if (std::string(argv[1]) == "cv")
+    {
+        mtl::log::info("Lancement avec OpenCV");
+        App appli;
+        mtl::log::info("Creation de l'application reussie");
+        appli.mainLoop();
+        mtl::log::info("Terminaison en cours");
+        appli.quit();
+    }
+    else
+    {
+        GlContext::initGL(640, 480);
+        GlContext::windowCaption("OpenGL window");
+        Pipeline::fromXML("assets/PipelineConfig.xml");
+
+        Mesh mesh("assets/objs/cube.obj");
+
+        VertexShader vertex("assets/shaders/vertex.cpp");
+        FragmentShader fragment("assets/shaders/fragment.cpp");
+        ShaderProgram programm({vertex, fragment});
+
+        renderLoop(30, met_ton_code_la_charles, programm, mesh);
+        
+        GlContext::endGL();
+    }
+    
     return EXIT_SUCCESS;
 }
 

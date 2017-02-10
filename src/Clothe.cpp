@@ -7,7 +7,7 @@ Clothe::Clothe(Player & player, PlayerMember member1, PlayerMember member2, cons
 	m_player(player), m_member1(member1), m_member2(member2), m_mesh(mesh)
 {}
 
-void Clothe::draw() const
+void Clothe::draw(ShaderProgram & programm, Transform & view, Transform & projection) const
 {
 	Point position1 = m_player.getPointOf(m_member1);
 	Point position2 = m_player.getPointOf(m_member2);
@@ -16,5 +16,5 @@ void Clothe::draw() const
 
 	float scale = length(p1_p2) * 1.0;
 	Transform model = Scale(scale, scale, scale) /* Rotate(angle(p1_P2))*/ * Translation(v_translate);
-	m_mesh.draw();
+	m_mesh.draw(programm, model, view, projection);
 }

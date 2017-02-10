@@ -13,8 +13,12 @@
 #include <iostream>
 #include <array>
 #include <assert.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string.h>
+#include "Vec.hpp"
+#include "GlCore.hpp"
+#include "Mat.hpp"
+#include "ShaderProgram.hpp"
 
 /**
  * @class Mesh
@@ -24,7 +28,8 @@ class Mesh
 {
 public:
 	/**
-     * TODO
+     * @brief Construit le mesh
+     * @param[in] path le chemin vers le fichier .obj 
      */
 	Mesh(const char * path);
 
@@ -35,16 +40,23 @@ public:
 
 	/**
      * @brief Affiche le mesh.
+     * @param[in] programm le shader
+     * @param[in] model la matrice modele
+   	 * @param[in] view la matrice vue
+     * @param[in] projection la matrice projection
      */
-	void draw() const;
+	void draw(ShaderProgram & programm, Transform & model, Transform & view, Transform & projection) const;
 
 private:
 	void initVAO();
-/*
-	std::vector<vec3> 	m_vertices;
-	std::vector<vec2> 	m_uvs;
-	std::vector<vec3> 	m_normals;
-	GLuint 				m_vao;*/
+
+	GLuint 				m_vertex_buffer;	//!< Le buffer de points.
+    GLuint 				m_normal_buffer;	//!< Le buffer des normales.
+    GLuint 				m_texture_buffer;	//!< Le buffer des textures.
+	std::vector<vec3> 	m_vertices;			//!< Les coordonnées des points.
+	std::vector<vec3> 	m_normals;			//!< Les normales.
+	std::vector<vec2> 	m_uvs;				//!< Les coordonnées de textures.
+	GLuint 				m_vao;				//!< Le VAO.
 };
 
 #endif

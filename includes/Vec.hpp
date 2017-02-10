@@ -12,7 +12,7 @@
 //! declarations anticipees.
 struct vec2;
 struct vec3;
-struct vec4;
+//struct vec4;
 struct Vector;
 
 //! representation d'un point 3d.
@@ -118,7 +118,7 @@ struct vec3
 
 
 //! vecteur generique 4d, ou 3d homogene, utilitaire.
-struct vec4
+/*struct vec4
 {
     //! constructeur par defaut.
     vec4( const float _x= 0, const float _y= 0, const float _z= 0, const float _w= 0 ) : x(_x), y(_y), z(_z), w(_w) {}
@@ -133,7 +133,7 @@ struct vec4
     explicit vec4( const Vector& v );    // l'implementation se trouve en fin de fichier.
 
     float x, y, z, w;
-};
+};*/
 
 
 // implementation des constructeurs explicites.
@@ -146,8 +146,8 @@ inline Vector::Vector( const Point& a ) : x(a.x), y(a.y), z(a.z) {}
 inline vec3::vec3( const Point& a ) : x(a.x), y(a.y), z(a.z) {}
 inline vec3::vec3( const Vector& v ) : x(v.x), y(v.y), z(v.z) {}
 
-inline vec4::vec4( const Point& a ) : x(a.x), y(a.y), z(a.z), w(1.f) {}
-inline vec4::vec4( const Vector& v ) : x(v.x), y(v.y), z(v.z), w(0.f) {}
+//inline vec4::vec4( const Point& a ) : x(a.x), y(a.y), z(a.z), w(1.f) {}
+//inline vec4::vec4( const Vector& v ) : x(v.x), y(v.y), z(v.z), w(0.f) {}
 
 #include <iostream>
 

@@ -90,6 +90,6 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
 
 nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
-	nite::Point3f point = m_user->getSkeleton().getJoint(member).getPosition();
+	return m_user->getSkeleton().getJoint(member).getPosition();
 }
 
