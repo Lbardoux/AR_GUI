@@ -3,6 +3,9 @@
  */
 #include <algorithm>
 #include <utility>
+#include <functional>
+#include <iterator>
+#include <cmath>
 
 #include "Matrix.hpp"
 
@@ -34,6 +37,16 @@ Matrix::~Matrix(void) noexcept
 	this->buffer.fill(0.0f);
 }
 
+float& Matrix::at(int x, int y) noexcept
+{
+	return this->buffer.at(y*4 + x);
+}
+
+const float& Matrix::at(int x, int y) const noexcept
+{
+	return this->buffer.at(y*4 + x);
+}
+
 Matrix::Matrix(const Matrix& other) noexcept
 {
 	std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
@@ -46,50 +59,127 @@ Matrix::Matrix(Matrix&& other) noexcept
 
 Matrix& Matrix::operator=(const Matrix& other) noexcept
 {
-	
+	std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
 	return *this;
 }
 
 Matrix& Matrix::operator=(Matrix&& other) noexcept
 {
-	
+	std::swap(this->buffer, other.buffer);
 	return *this;
 }
 
 Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
 {
 	Matrix result;
-	
+	for(int ym1=0;ym1<4;++ym1)
+	{
+		for(int xm2=0;xm2<4;++xm2)
+		{
+			for(int ym2=0;ym2<4;++ym2)
+			{
+				result.at(xm2, ym1) += m1.at(ym2, ym1) * m2.at(xm2, ym2);
+			}
+		}
+	}
 	return result;
+}
+
+Matrix& Matrix::operator*=(float v) noexcept
+{
+	*this = (*this)*v;
+	return *this;
+}
+
+Matrix& Matrix::operator/=(float v) noexcept
+{
+	*this = (*this)/v;
+	return *this;
 }
 
 Matrix& Matrix::operator*=(const Matrix& other) noexcept
 {
+	*this = (*this) * other;
+	return *this;
+}
 
-	return *this;	
+Matrix identity(void)
+{
+	return Matrix(1.0f, 0.0f, 0.0f, 0.0f,
+				  0.0f, 1.0f, 0.0f, 0.0f,
+				  0.0f, 0.0f, 1.0f, 0.0f,
+				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Matrix rotationX(float angle)
 {
-	return Matrix();
+	return Matrix(1.0f, 0.0f,            0.0f,             0.0f,
+				  0.0f, std::cos(angle), -std::sin(angle), 0.0f,
+				  0.0f, std::sin(angle), std::cos(angle),  0.0f,
+				  0.0f, 0.0f,            0.0f,             1.0f);
 }
 
 Matrix rotationY(float angle)
 {
-	return Matrix();
+	return Matrix(std::cos(angle),  0.0f, std::sin(angle), 0.0f,
+				  0.0f,             1.0f, 0.0f,            0.0f,
+				  -std::sin(angle), 0.0f, std::cos(angle), 0.0f,
+				  0.0f,             0.0f, 0.0f,            1.0f);
 }
 
 Matrix rotationZ(float angle)
 {
-	return Matrix();
+	return Matrix(std::cos(angle), -std::sin(angle), 0.0f, 0.0f,
+				  std::sin(angle), std::cos(angle),  0.0f, 0.0f,
+				  0.0f,            0.0f,             1.0f, 0.0f,
+				  0.0f,            0.0f,             0.0f, 1.0f);
 }
 
 Matrix translation(float x, float y, float z)
 {
-	return Matrix();
+	return Matrix(1.0f, 0.0f, 0.0f, x,
+				  0.0f, 0.0f, 0.0f, y,
+				  0.0f, 0.0f, 0.0f, z,
+				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Matrix scale(float s)
+Matrix scale(float x, float y, float z)
 {
-	return Matrix();
+	return Matrix(x,    0.0f, 0.0f, 0.0f,
+				  0.0f, y,    0.0f, 0.0f,
+				  0.0f, 0.0f, z,    0.0f,
+				  0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+Matrix operator*(const Matrix& m, float v) noexcept
+{
+    Matrix result;
+    std::transform(m.buffer.begin(), m.buffer.end(), result.buffer.begin(), [&v](float value){return value*v;});
+    return result;
+}
+
+Matrix operator*(float v, const Matrix& m) noexcept
+{
+    return m*v;
+}
+
+Matrix operator/(const Matrix& m, float v) noexcept
+{
+    Matrix result;
+    std::transform(m.buffer.begin(), m.buffer.end(), result.buffer.begin(), [&v](float value){return value*v;});
+    return result;
+}
+
+std::ostream& operator<<(std::ostream& out, const Matrix& m)
+{
+    for(int i=0;i<4;++i)
+    {
+        out << "[ ";
+        for(int j=0;j<4;++j)
+        {
+            out << m.at(j, i) << ' ';
+        }
+        out << ']' << std::endl;
+    }
+    return out;
 }

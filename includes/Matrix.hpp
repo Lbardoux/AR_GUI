@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <array>
+#include <iostream>
 
 
 /**
@@ -52,7 +53,38 @@ class Matrix final
 		 * @return *this.
 		 */
 		Matrix& operator*=(const Matrix& other) noexcept;
+		/**
+		 * @brief Applique le scalaire @b v sur *this
+		 * @param[in] v Le scalaire par lequel multiplier.
+		 * @return *this.
+		 */
+		Matrix& operator*=(float v) noexcept;
+		/**
+		 * @brief Applique le scalaire @b v sur *this
+		 * @param[in] v Le scalaire par lequel diviser.
+		 * @return *this.
+		 */
+		Matrix& operator/=(float v) noexcept;
+		/**
+		 * @brief Renvoi une référence modifiable sur l'élément positionné sur la ligne @b y et la colonne @b x.
+		 * @param[in] x Le numéro de colonne, entre 0 et 3 inclus.
+		 * @param[in] y Le numéro de ligne  , entre 0 et 3 inclus.
+		 * @return Une référence modifiable sur cet élément.
+		 */
+		float& at(int x, int y) noexcept;
+		/**
+		 * @brief Renvoi une référence sur l'élément positionné sur la ligne @b y et la colonne @b x.
+		 * @param[in] x Le numéro de colonne, entre 0 et 3 inclus.
+		 * @param[in] y Le numéro de ligne  , entre 0 et 3 inclus.
+		 * @return Une référence  sur cet élément.
+		 */
+		const float& at(int x, int y) const noexcept;
 		
+		friend std::ostream& operator<<(std::ostream& out, const Matrix& m);
+		friend Matrix operator/(const Matrix& m, float v) noexcept;
+		friend Matrix operator*(float v, const Matrix& m) noexcept;
+		friend Matrix operator*(const Matrix& m, float v) noexcept;
+		friend Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept;
 		
 	private:
 		std::array<float, 16> buffer; //!< Le conteneur de la matrice.
@@ -66,6 +98,38 @@ class Matrix final
  * @return La matrice résultante du calcul.
  */
 Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept;
+
+/**
+ * @brief Multiplication de @b m par un scalaire @b v.
+ * @param[in] m La matrice à multiplier.
+ * @param[in] v Le scalaire par lequel multiplier.
+ * @return Une nouvelle matrice qui embarque le résultat.
+ */
+Matrix operator*(const Matrix& m, float v) noexcept;
+
+/**
+ * @brief Multiplication de @b m par un scalaire @b v en inversant les values.
+ * @param[in] m La matrice à multiplier.
+ * @param[in] v Le scalaire par lequel multiplier.
+ * @return Une nouvelle matrice qui embarque le résultat.
+ */
+Matrix operator*(float v, const Matrix& m) noexcept;
+
+/**
+ * @brief Divise @b m par un scalaire @b v.
+ * @param[in] m La matrice à diviser.
+ * @param[in] v Le scalaire par lequel diviser.
+ * @return Une nouvelle matrice qui contient le résultat.
+ */
+Matrix operator/(const Matrix& m, float v) noexcept;
+
+/**
+ * @brief Affiche @m sur @b out.
+ * @param[in,out] out Le flux sur lequel afficher.
+ * @param[in]     m   La matrice a afficher.
+ * @return out
+ */
+std::ostream& operator<<(std::ostream& out, const Matrix& m);
 
 /**
  * @brief Crée une matrice de rotation selon l'axe X.
@@ -99,10 +163,18 @@ Matrix translation(float x, float y, float z);
 
 /**
  * @brief Crée une matrice de mise à l'échelle.
- * @param[in] s La taille d'augmentation voulue.
+ * @param[in] x La taille d'augmentation voulue pour l'axe x.
+ * @param[in] y La taille d'augmentation voulue pour l'axe y.
+ * @param[in] z La taille d'augmentation voulue pour l'axe z.
  * @return La matrice résultat.
  */
-Matrix scale(float s);
+Matrix scale(float x, float y, float z);
+
+/**
+ * @brief Construit une matrice identité.
+ * @return cette fameuse matrice.
+ */
+Matrix identity(void);
 
 #endif
 
