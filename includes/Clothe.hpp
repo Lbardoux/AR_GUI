@@ -10,7 +10,6 @@
 #include "Player.hpp"
 #include "Mesh.hpp"
 #include "Matrix.hpp"
-#include "ShaderProgram.hpp"
 
 /**
  * @class Clothe

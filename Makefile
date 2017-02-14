@@ -82,15 +82,24 @@ $(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
 	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
-$(OBJ)/main.o                : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/Cursor.o              : $(INCLUDES)/Cursor.hpp $(INCLUDES)/clamp.hpp
-$(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
-$(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp $(OBJ)/WindowsManager.o
-$(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(OBJ)/OpenCVWindow.o
-$(OBJ)/Cv_core.o             : $(INCLUDES)/Cv_core.hpp
-$(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hpp $(INCLUDES)/KeyboardMapping.hpp
 
+
+$(OBJ)/main.o                : 
+$(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(INCLUDES)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
+$(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp
+$(OBJ)/Player.o              : $(INCLUDES)/Player.hpp $(MTLKIT)/ShaderProgram.hpp
+$(OBJ)/SetCursor.o           : $(INCLUDES)/SetCursor.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Cv_core.hpp
+$(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/Cv_core.hpp $(INCLUDES)/logs.hpp
+$(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
+$(OBJ)/Widget.o              : $(INCLUDES)/Widget.hpp $(INCLUDES)/Cv_core.hpp $(INCLUDES)/Cursor.hpp
+$(OBJ)/Cv_core.o             : $(INCLUDES)/Cv_core.hpp
+$(OBJ)/Clothe.o              : $(INCLUDES)/Clothe.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Mesh.hpp $(INCLUDES)/Matrix.hpp
+$(OBJ)/Cursor.o              : $(INCLUDES)/Cursor.hpp $(INCLUDES)/clamp.hpp $(INCLUDES)/Cv_core.hpp
+$(OBJ)/Matrix.o              : $(INCLUDES)/Matrix.hpp $(MTLKIT)/vec.hpp
+$(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hpp $(INCLUDES)/KeyboardMapping.hpp $(INCLUDES)/Cv_core.hpp \
+                               $(INCLUDES)/SkeletonStateWindow.hpp
+$(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
+$(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@
@@ -104,6 +113,7 @@ _directories:
 
 libs : $(XMLOBJECTS) $(MTLKITOBJECTS)
 
+#dépendances pour XmlLoader/Writer
 $(OBJ)/XmlBase.o   : $(XMLLOADER)/XmlBase.hpp   $(XMLLOADER)/tinyxml2.h  $(OBJ)/tinyxml2.o
 $(OBJ)/XmlLoader.o : $(XMLLOADER)/XmlLoader.hpp $(XMLLOADER)/XmlBase.hpp
 $(OBJ)/XmlWriter.o : $(XMLLOADER)/XmlWriter.hpp $(XMLLOADER)/XmlBase.hpp
@@ -111,6 +121,12 @@ $(OBJ)/tinyxml2.o  : $(XMLLOADER)/tinyxml2.h
 $(OBJ)/%.o : $(XMLLOADER)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -I$(XMLLOADER) -o $@
 
+# Dépendances pour MTLKIT
+$(OBJ)/Events.o          : $(MTLKIT)/keymap.hpp        $(MTLKIT)/Events.hpp
+$(OBJ)/GlContext.o       : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/GlContext.hpp       $(MTLKIT)/Events.hpp
+$(OBJ)/Pipeline.o        : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/Pipeline_traits.hpp $(MTLKIT)/vec.hpp    $(XMLLOADER)/XmlLoader.hpp $(MTLKIT)/Pipeline.hpp
+$(OBJ)/Pipeline_traits.o : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/Pipeline_traits.hpp
+$(OBJ)/ShaderProgram.o   : $(MTLKIT)/ShaderProgram.hpp $(MTLKIT)/GlCore.hpp
 $(OBJ)/%.o : $(MTLKIT)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -I$(MTLKIT) -I$(XMLLOADER) -lGL -lGLEW -lSDL2 -lSDL2_image -o $@
 
