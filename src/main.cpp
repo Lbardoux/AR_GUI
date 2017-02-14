@@ -140,9 +140,9 @@ bool met_ton_code_la_charles(Mesh & mesh)
     /*Transform model = Translation(-3, -2, 10);
     Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
     Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);*/
-    Transform model = translationMatrix(-3, -2, 10);
-    Transform view;
-    Transform projection;
+    Transform model = translationMatrix(0, 0, 0);
+    Transform view = translationMatrix(0, 0, 0);
+    Transform projection = translationMatrix(0, 0, 0);
     mesh.draw(model, view, projection);
     
 

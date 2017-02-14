@@ -143,8 +143,8 @@ Matrix rotationZMatrix(float angle)
 Matrix translationMatrix(float x, float y, float z)
 {
 	return Matrix(1.0f, 0.0f, 0.0f, x,
-				  0.0f, 0.0f, 0.0f, y,
-				  0.0f, 0.0f, 0.0f, z,
+				  0.0f, 1.0f, 0.0f, y,
+				  0.0f, 0.0f, 1.0f, z,
 				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
@@ -191,5 +191,5 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m)
 
 const float* Matrix::getBuffer() const noexcept
 {
-	return &(this->buffer[0]);
+	return this->buffer.data();
 }
