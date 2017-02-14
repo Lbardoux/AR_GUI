@@ -3,7 +3,7 @@
  */
 #include "Mesh.hpp"
 
-Mesh::Mesh(const char * path)
+Mesh::Mesh(const char * path, ShaderProgram & program) : m_program(program)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path<<"\' ... ";
 
@@ -98,61 +98,117 @@ Mesh::Mesh(const char * path)
 
 void Mesh::initVAO()
 {
-    glGenVertexArrays(1, &m_vao);
-    glBindVertexArray(m_vao);
+    std::size_t vbo_vertex_size = m_vertices.size() * sizeof(vec3);
+    std::size_t vbo_normal_size = m_normals.size() * sizeof(vec3);    
+    std::size_t vbo_texture_size = m_uvs.size() * sizeof(vec2);
+    std::cout<<m_vertices.size()<<std::endl;
+    std::cout<<m_normals.size()<<std::endl;
+    std::cout<<m_uvs.size()<<std::endl;
 
-    glGenBuffers(1, &m_vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(vec3), &m_vertices[0], GL_STATIC_DRAW);
+    const float * vbo_vertex_content = &m_vertices.front()[0];
+    const float * vbo_normal_content = &m_normals.front()[0];
+    const float * vbo_texture_content = &m_uvs.front()[0];
 
-    glGenBuffers(1, &m_normal_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_normal_buffer);
-    glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(vec3), &m_normals[0], GL_STATIC_DRAW);
-
-    if (m_uvs.size() > 0)
-    {
-        glGenBuffers(1, &m_texture_buffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer);
-        glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(vec2), &m_uvs[0], GL_STATIC_DRAW);
-    }
-
-    GLint attribute = 0;
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
-    glVertexAttribPointer(attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(attribute);
-
-    attribute = 1;
-    glBindBuffer(GL_ARRAY_BUFFER, m_normal_buffer);
-    glVertexAttribPointer(attribute, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(attribute);
-
-    if (m_uvs.size() > 0)
-    {
-        attribute = 2;
-        glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer);
-        glVertexAttribPointer(attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(attribute);
-    }
-
-    glBindVertexArray(0);
+    //On vérifie que notre buffer n'est pas déjà alloué, si c'est le cas, on libere l'espace
+    if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
+    //On alloue un espace mémoire pour le vbo
+    glGenBuffers(1, &m_vbo);
+    //On bind le vbo afin de l'utiliser
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+        //On alloue un espace mémoire pour toutes les données du buffer: nos vertex et nos normals
+        glBufferData(GL_ARRAY_BUFFER, vbo_vertex_size + vbo_normal_size + vbo_texture_size, 0, GL_STATIC_DRAW);
+        //On remplie le buffer avec nos vertex, on remplie de: 0 à vertex_buffer_size()
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vbo_vertex_size, vbo_vertex_content);        
+        //On remplie le buffer avec nos normals, on remplie de: vertex_buffer_size() à normal_buffer_size()  
+        glBufferSubData(GL_ARRAY_BUFFER, vbo_vertex_size, vbo_normal_size, vbo_normal_content);
+        //On remplie avec les coordonnées de texture
+        glBufferSubData(GL_ARRAY_BUFFER, vbo_vertex_size + vbo_normal_size, vbo_texture_size, vbo_texture_content);
+        //On cherche les zones ou se trouves les "in variables"
+        GLint position_location = glGetAttribLocation(m_program, "position");
+        GLint normal_location   = glGetAttribLocation(m_program, "normal");
+        GLint texture_location  = glGetAttribLocation(m_program, "vertexUV");
+    //On débind le vbo
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //On vérifie que notre array n'est pas déjà alloué, si c'est le cas, on libère l'espace
+    if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
+    //On crée notre vao
+    glGenVertexArrays(1, &m_vao);
+    //On bind le vao, afin de l'utiliser
+    glBindVertexArray(m_vao);
+        //On bind le vbo afin de l'utiliser
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+            //On link nos données "vertex" (qui commence à partir de "0") du buffer à la "in variable" "position" 
+            glVertexAttribPointer(position_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+            glEnableVertexAttribArray(0);
+            //On link nos données "normal" (qui commence à partir de "vertex_buffer_size()") du buffer à la "in variable" "normal"
+            glVertexAttribPointer(normal_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size));
+            glEnableVertexAttribArray(1);
+            //On link nos données "texture"
+            glVertexAttribPointer(texture_location, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size + vbo_normal_size));
+            glEnableVertexAttribArray(2);
+        //On débind le vbo
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //On débind le vao
+    glBindVertexArray(0);
 }
 
-void Mesh::draw(ShaderProgram & programm, Transform & model, Transform & view, Transform & projection) const
+#include <set>
+int location( const GLuint program, const char *uniform )
 {
-//    Transform mvp = model * view * projection;
-//    Transform mv = model * view;
+    if(program == 0) 
+        return -1;
+    
+    // recuperer l'identifiant de l'uniform dans le program
+    GLint location= glGetUniformLocation(program, uniform);
+    if(location < 0)
+    {
+        char error[1024]= { 0 };
+    #ifdef GL_VERSION_4_3
+        {
+            char label[1024];
+            glGetObjectLabel(GL_PROGRAM, program, sizeof(label), NULL, label);
+            
+            sprintf(error, "uniform( %s, '%s' ): not found.", label, uniform); 
+        }
+    #else
+        sprintf(error, "uniform('%s'): not found.", uniform); 
+    #endif
+        
+        
+        return -1; 
+    }
+    
+#ifndef GK_RELEASE
+    // verifier que le program est bien en cours d'utilisation, ou utiliser glProgramUniform, mais c'est gl 4
+    GLuint current;
+    glGetIntegerv(GL_CURRENT_PROGRAM, (GLint *) &current);
+    if(current != program)
+    {
+        printf("invalid shader program %u...\n", current);
+        glUseProgram(program);
+    }
+#endif
+    
+    return location;
+}
 
-//    GLint mvp_location =  glGetUniformLocation(programm, "MVP");
-//    GLint mv_location  =  glGetUniformLocation(programm, "MV");
-//    GLint n_location   =  glGetUniformLocation(programm, "N");
+void Mesh::draw(Transform & model, Transform & view, Transform & projection) const
+{
+    Transform mv = model * view;
+    Transform mvp = model * view * projection;
 
-//    glUniformMatrix4fv(programm, mvp_location, false, mvp.buffer());
-//    glUniformMatrix4fv(programm, mv_location, false, mv.buffer());
-//    glUniformMatrix4fv(programm, n_location, false, mv.normal().buffer());
+    //GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
+    //GLint mv_location  =  glGetUniformLocation(m_program, "MV");
+    //GLint n_location   =  glGetUniformLocation(m_program, "N");
 
+    //glUniformMatrix4fv(m_program, mvp_location, false, mvp.buffer());
+    //glUniformMatrix4fv(m_program, mv_location, false, mv.buffer());
+    //glUniformMatrix4fv(m_program, n_location, false, mv.normal().buffer());
+    
+    glUniformMatrix4fv( location(m_program, "MVP"), 1, GL_TRUE, mvp.getBuffer());
 
-//	glBindVertexArray(m_vao);
-//    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-//    glBindVertexArray(0);
+    glBindVertexArray(m_vao);
+    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());  
+    glBindVertexArray(0);
 }

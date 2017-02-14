@@ -1,7 +1,7 @@
 <PipelineConfig>
     <depth>
         <!-- true or false -->
-        <enableDepthTest>true</enableDepthTest>
+        <enableDepthTest>false</enableDepthTest>
         <!--
         Possible values :
             - less
@@ -20,7 +20,7 @@
 
     <clearColor>
         <!-- These values will be interpreted as float. -->
-        <red_f>0.0</red_f>
+        <red_f>1.0</red_f>
         <green_f>0.0</green_f>
         <blue_f>0.0</blue_f>
         <alpha_f>1.0</alpha_f>

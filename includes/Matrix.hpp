@@ -80,6 +80,8 @@ class Matrix final
 		 * @return Une référence  sur cet élément.
 		 */
 		const float& at(int x, int y) const noexcept;
+
+		const float* getBuffer() const noexcept;
 		
 		friend std::ostream& operator<<(std::ostream& out, const Matrix& m);
 		friend Matrix operator/(const Matrix& m, float v) noexcept;

@@ -20,6 +20,10 @@
 #include "Matrix.hpp"
 #include "ShaderProgram.hpp"
 
+#ifndef BUFFER_OFFSET
+    #define BUFFER_OFFSET(offset) ((char*)NULL + (offset))
+#endif
+
 /**
  * @class Mesh
  * @brief Cette structure permet de d'afficher un mesh.
@@ -30,8 +34,9 @@ public:
 	/**
      * @brief Construit le mesh
      * @param[in] path le chemin vers le fichier .obj 
+     * @param[in] program le shader
      */
-	Mesh(const char * path);
+	Mesh(const char * path, ShaderProgram & program);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -39,24 +44,22 @@ public:
 	~Mesh() = default;
 
 	/**
-     * @brief Affiche le mesh.
-     * @param[in] programm le shader
+     * @brief Affiche le mesh.r
      * @param[in] model la matrice modele
    	 * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
-	void draw(ShaderProgram & programm, Transform & model, Transform & view, Transform & projection) const;
+	void draw(Transform & model, Transform & view, Transform & projection) const;
 
 private:
 	void initVAO();
 
-	GLuint 				m_vertex_buffer;	//!< Le buffer de points.
-    GLuint 				m_normal_buffer;	//!< Le buffer des normales.
-    GLuint 				m_texture_buffer;	//!< Le buffer des textures.
-	std::vector<vec3> 	m_vertices;			//!< Les coordonnées des points.
-	std::vector<vec3> 	m_normals;			//!< Les normales.
-	std::vector<vec2> 	m_uvs;				//!< Les coordonnées de textures.
-	GLuint 				m_vao;				//!< Le VAO.
+	GLuint              m_program;  //!< Le shader   
+    GLuint              m_vao;      //!< Le VAO.
+    GLuint              m_vbo;      //!< Le VBO.
+    std::vector<vec3>   m_vertices; //!< Les coordonnées des points.
+    std::vector<vec3>   m_normals;  //!< Les normales.
+    std::vector<vec2>   m_uvs;      //!< Les coordonnées de textures.
 };
 
 #endif

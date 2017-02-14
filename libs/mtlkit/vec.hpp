@@ -206,7 +206,7 @@ struct Vecf final
 		double normL2(bool withSquareRoot = true) const noexcept
 		{
 			double value = 0.0;
-			for(int i=0;i<N;++i)
+			for(unsigned int i=0;i<N;++i)
 			{
 				value += this->values[i]*this->values[i];
 			}

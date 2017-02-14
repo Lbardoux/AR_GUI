@@ -188,3 +188,8 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m)
     }
     return out;
 }
+
+const float* Matrix::getBuffer() const noexcept
+{
+	return &(this->buffer[0]);
+}

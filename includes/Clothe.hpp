@@ -34,11 +34,10 @@ public:
 
 	/**
      * @brief Affiche le mesh.
-     * @param[in] programm le shader
    	 * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
-	void draw(ShaderProgram & programm, Transform & view, Transform & projection) const;
+	void draw(Transform & view, Transform & projection) const;
 
 private:
 	Player & 		m_player; 				//!< Le joueur.
