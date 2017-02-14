@@ -1,0 +1,284 @@
+/**
+ * @page id_page_xmlloader XmlLoader 1.0
+ * @section id_intro    Introduction
+ * This class is design to assist my developments while using TinyXML2.<br />
+ * Highly inspired by Boost, It will hide address processing and completely
+ * shallow TinyXML2 for basic usage of reading XML files.<br />
+ * @section id_about    About TinyXML2
+ * TinyXML2 is a fast XML parser for C/C++ application.<br />
+ * Made by Lee Thomason and every of his contributors.
+ *
+ * For further information about TinyXML2, check out the documentation below:<br />
+ * http://www.grinninglizard.com/tinyxml2docs/
+ * @section id_examples Examples
+ * @subsection id_how   How it works ?
+ * At the beginning, let's talk about the concept of XmlLoader.
+ * First of all, this class works with 2 aspects :
+ *    - \b Node,    Which act like an anchor to travel on the XML tree.
+ *         For example :
+ *         @code
+ *         <nodes> <!-- Here, nodes represents where you stand on the tree .-->
+ *         	<nodeInt> 50 </nodeInt>
+ *         </nodes>
+ *         @endcode
+ *         On that case, By standing on nodes, you're allow to access to nodeInt.
+ *    - \b Element, Which act like a readable XML element<br />
+ *         For examples :
+ *         @code
+ *         <element value="50" />
+ *         <!-- or -->
+ *         <element2>50</element2>
+ *         <!-- or either a mix between these examples -->
+ *         <bigElement attribut="foo">bar</bigElement>
+ *         @endcode
+ * 
+ * <br />
+ * Then, you must know one thing :<br />
+ * Except for the loading part of the xml file, (which throws std::string exception if there were any trouble), XmlLoader<br />
+ * will always return a \b sentinel, a default value for the type you required.<br />
+ * Each time you did a wrong maneuvre, it will report a warning on \b std::cerr.
+ * @code
+ * [WARNING] : issue with ...
+ * @endcode
+ * @subsection id_ex1 Reading a simple XML file
+ * With this example, I will show up how to get values of different types with XmlLoader.<br />
+ * Let's try to parse the following XML file, which I'll refer to as \b "test.xml".
+ * @code
+ * <everyTypes>
+ * 	<float>25.856</float>
+ * 	<double>0.751</double>
+ * 	<int>-75</int>
+ * 	<unsignedInt value="25" />
+ * 	
+ * 	<!-- A funny aspect is that "false|true" work as well as "0|1". -->
+ * 	<bool value="1" />
+ * 	<string>I do like XML, really</string>
+ * </everyTypes>
+ * @endcode
+ * First of all, we need to create a XmlLoader instance to work with.<br />
+ * The only available way is by providing the xml filename to the constructor :
+ * @code
+ * XmlLoader loader("test.xml");
+ * @endcode
+ * Ok, as soon as this statement is over, we have a XmlLoader with the first node set on the root of the file 
+ * (on \b <everyTypes>, to be more precise).<br />
+ * But, in order to get any element, we need to tell our \b loader to get this element by name, by using the element() method.
+ * @code
+ * loader.element("float");
+ * @endcode
+ * And finally read the \b text value on this element (By \b text, I mean the number enclosed on the <float></float>), and of course we desire a float value:<br />
+ * That's why we \b must precise the type we want with the template argument, by choosing one of those :
+ *    - float.
+ *    - double.
+ *    - int.
+ *    - unsigned int.
+ *    - bool.
+ *    - std::string.<br />
+ *
+ * @code
+ * std::cout << "float value is " << loader.text<float>() << std::endl;
+ * @endcode
+ * As an output :
+ * @code
+ * float value is 25.856
+ * @endcode
+ * And so on for \b double and \b int :
+ * @code
+ * loader.element("double");
+ * std::cout << "double value is " << loader.text<double>() << std::endl;
+ * loader.element("int");
+ * std::cout << "int    value is " << loader.text<int>()    << std::endl;
+ * @endcode
+ * But it's kinda boring isn't it ?<br />
+ * That's why you could chain moving operations, and at the end the reading operation, as below :
+ * @code
+ * std::cout << "double value is " << loader.element("double").text<double>() << std::endl;
+ * loader.element("int");
+ * std::cout << "int    value is " << loader.element("int").text<int>()    << std::endl;
+ * @endcode
+ * As an output :
+ * @code
+ * double value is 0.751
+ * int    value is -75
+ * @endcode
+ * For \b unsignedInt and \b bool tags, we shall use the \b attribute() method this time, by specifying the attribute name<br />
+ * we want to get. It works the same way, by giving value type as template argument of \b attribute()
+ * @code
+ * std::cout << "bool value is " << loader.element("bool").attribute<bool>("value") << std::endl;
+ * @endcode
+ * As an output :
+ * @code
+ * bool value is 1
+ * @endcode
+ * That conclude this first tutorial, you could get the complete code below :
+ * @code
+ * #include <iostream>
+ * #include <string>
+ * #include "XmlLoader.hpp"
+ * 
+ * int main(void)
+ * {
+ * 	XmlLoader loader("test.xml");
+ * 	std::cout << "float        value is " << loader.element("float").text<float>()        << std::endl;
+ * 	std::cout << "double       value is " << loader.element("double").text<double>()      << std::endl;
+ * 	std::cout << "int          value is " << loader.element("int").text<int>()            << std::endl;
+ * 	std::cout << "string       value is " << loader.element("string").text<std::string>() << std::endl;
+ * 	
+ * 	std::cout << "unsigned int value is " << loader.element("unsignedInt").attribute<unsigned int>("value") << std::endl;
+ * 	std::cout << "bool         value is " << loader.element("bool").attribute<bool>("value")                << std::endl;
+ * 	// That's it
+ * 	
+ * 	return 0;
+ * }
+ * @endcode
+ *
+ * @subsection id_depth Reading a simple sequence of elements with the same name.
+ * By now, let's work with this XML file, named \b "test2.xml" .
+ * @code
+ * <trackbars>
+ * 	<trackbar max="255" name="name1" />
+ * 	<trackbar max="128" name="name2" />
+ * 	<trackbar max="12"  name="name3" />
+ * 	<trackbar max="45"  name="name4" />
+ * </trackbars>
+ * @endcode
+ * Obviously, this time, we couldn't use the \b node() statement to get each \b trackbar.<br />
+ * That's why we have a way to iterate through this kind of situation, with \b forEachElementNamed().<br />
+ * It works like this, you provide the name of the element (here, "trackbar") and then a functor or a lambda.
+ * @code
+ * XmlLoader loader("test2.xml");
+ * loader.forEachElementNamed("trackbar", [&loader](void){
+ * 	std::cout << "Trackbar : max = " << loader.attribute<int>("max");
+ * 	std::cout << " named "           << loader.attribute<std::string>("name") << std::endl;
+ * });
+ * @endcode
+ * Which produce as output.
+ * @code
+ * Trackbar : max = 255 named name1
+ * Trackbar : max = 128 named name2
+ * Trackbar : max = 12 named name3
+ * Trackbar : max = 45 named name4
+ * @endcode
+ * If you want to try that by yourself :
+ * @code
+ * #include <iostream>
+ * #include <string>
+ * #include "XmlLoader.hpp"
+ *
+ * 
+ * int main(void)
+ * {
+ * 	XmlLoader loader("test2.xml");
+ * 	loader.forEachElementNamed("trackbar", [&loader](void){
+ * 		std::cout << "Trackbar : max = " << loader.attribute<int>("max");
+ * 		std::cout << " named "           << loader.attribute<std::string>("name") << std::endl;
+ * 	});
+ * 	return 0;
+ * }
+ * @endcode
+ * 
+ * @subsection id_depth_att A sequence with elements within
+ * This time, let's suppose \b "test3.xml" .
+ * @code
+ * <trackbars>
+ * 	<trackbar>
+ * 		<name>myTrackbar</name>
+ * 		<max>255</max>
+ * 	</trackbar>
+ * 	<trackbar>
+ * 		<name>myTrackbar2</name>
+ * 		<max>45</max>
+ * 	</trackbar>
+ * </trackbars>
+ * @endcode
+ * Here, we have to consider \b trackbar as a \b node. So we'll use \b forEachNodeNamed().<br />
+ * Inside that function, you're able to navigate over the internal tree, as long as you ensure :
+ *    - You go back where the function start at each iteration
+ *      @code
+ *      /*
+ *       * <root>
+ *       * 	<b><c><d>test1</d></c></b>
+ *       * 	<b><c><d>test2</d></c></b>
+ *       * 	<b><c><d>test3</d></c></b>
+ *       * </root>
+ *       */
+ *      loader.forEachNodeNamed("b", [&loader](void){
+ *      	// Here we navigate to the node "c"
+ *      	std::cout << loader.node("c").element("d").text<std::string>() << std::endl;
+ *      	
+ *      	// So, in order to prevent issue, we have to go back where we start with prev().
+ *      	loader.prev();
+ *      	
+ *      	/*
+ *      	 * node("c") : <b> --> <c>
+ *      	 * But because we iterate through <b>, we have to come back to <b>
+ *      	 * prev()    : <b> <-- <c>
+ *      	 */
+ *      });
+ *      @endcode
+ *
+ * So without wasting anymore time, an example :
+ * @code
+ * loader.forEachNodeNamed("trackbar", [&loader](void){
+ * 	std::cout << loader.element("name").text<std::string>() << std::endl;
+ * 	std::cout << loader.element("max").text<std::string>() << std::endl;
+ * });
+ * @endcode
+ * Which produce as output :
+ * @code
+ * myTrackbar
+ * 255
+ * myTrackbar2
+ * 45
+ * @endcode
+ * As usual, if you want to try out by yourself :
+ * @code
+ * #include <iostream>
+ * #include <string>
+ * #include "XmlLoader.hpp"
+ *
+ * 
+ * int main(void)
+ * {
+ * 	XmlLoader loader("test3.xml");
+ * 	loader.forEachNodeNamed("trackbar", [&loader](void){
+ * 		std::cout << loader.element("name").text<std::string>() << std::endl;
+ * 		std::cout << loader.element("max").text<std::string>() << std::endl;
+ * 	});
+ * 	return 0;
+ * }
+ * @endcode
+ * 
+ * @section id_using    Using and Installing
+ * In order to use XmlLoader, you obviously need TinyXML2 :
+ *    - tinyxml2.cpp
+ *    - tinyxml2.h
+ * 
+ * And additionally, the XmlLoader sources:
+ *    - XmlLoader.cpp
+ *    - XmlLoader.hpp
+ *
+ * Then, you'll need to compile these files with those lines :
+ * @code
+ * # Because it won't work without that standard (delete, etc).
+ * REQUIRED_OPTION=-std=c++11
+ *
+ * XmlLoader.o : XmlLoader.hpp tinyxml2.h
+ * tinyxml2.o  : tinyxml2.h
+ *
+ * # Even if TinyXML2 is working for C and C++, XmlLoader doesn't, so
+ * # g++ or any C++ compiler is required.
+ * %.o : %.cpp
+ * 	g++ -o $@ -c $< $(REQUIRED_OPTION)
+ *
+ * @endcode
+ * Of course, you could include these files on your project(s) by adding those lines into your own Makefile.
+ * @section id_doc      Documentation
+ * The documentation is build with Doxygen.
+ * @section id_license  License
+ * This "software" is provided without any express or implied warranty.<br />
+ * In no event will the author be held liable for any damages arising from the use of this "software".<br />
+ * About TinyXML2 License, once again, I highly recommend to look at the documentation, at the License section.
+ * @section id_contri   Contributors
+ * Thanks very much to everyone who participate to TinyXML2 !
+ */
