@@ -11,6 +11,7 @@
 #include "KeyboardMapping.hpp"
 #include "WindowsManager.hpp"
 #include "SkeletonStateWindow.hpp"
+#include "CameraWindow.hpp"
 
 
 /**
@@ -49,7 +50,7 @@ class App final
 		WindowsManager                                   windows;      //!< Les fenetres de l'application.
 		SkeletonStateWindow                              programState; //!< La fenetre qui affiche l'état du programme.
 		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
-		
+		CameraWindow 									 cameraW;      //!< Fenetre de la camera
 		
 		/**
 		 * @brief Fais le mapping des évènements claviers.

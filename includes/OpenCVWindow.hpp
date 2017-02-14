@@ -7,7 +7,7 @@
 #ifndef OPENCVWINDOW_HPP_INCLUDED
 #define OPENCVWINDOW_HPP_INCLUDED
 
-#include <opencv2/highgui/highgui.hpp>
+#include "Cv_core.hpp"
 #include <string>
 #include "WindowsManager.hpp"
 

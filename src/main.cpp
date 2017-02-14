@@ -133,55 +133,55 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 
-bool met_ton_code_la_charles(ShaderProgram & programm, Mesh & mesh)
-{
-    Pipeline::clear(true, true);
+// bool met_ton_code_la_charles(ShaderProgram & programm, Mesh & mesh)
+// {
+//     Pipeline::clear(true, true);
 
-    programm.use();
+//     programm.use();
     
-    Transform model = Translation(0, 0, 10);
-    Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-    Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);
-    mesh.draw(programm, model, view, projection);
+//     Transform model = Translation(0, 0, 10);
+//     Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+//     Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);
+//     mesh.draw(programm, model, view, projection);
     
 
-    return false; // continue l'execution
-}
+//     return false; // continue l'execution
+// }
 
 
 
-int main(int argc, char** argv)
-{
-    checkCommandLine(argc, argv);
-    mtl::log::info("Ligne de commande valide");
-    if (std::string(argv[1]) == "cv")
-    {
-        mtl::log::info("Lancement avec OpenCV");
-        App appli;
-        mtl::log::info("Creation de l'application reussie");
-        appli.mainLoop();
-        mtl::log::info("Terminaison en cours");
-        appli.quit();
-    }
-    else
-    {
-        GlContext::initGL(640, 480);
-        GlContext::windowCaption("OpenGL window");
-        Pipeline::fromXML("assets/PipelineConfig.xml");
+// int main(int argc, char** argv)
+// {
+//     checkCommandLine(argc, argv);
+//     mtl::log::info("Ligne de commande valide");
+//     if (std::string(argv[1]) == "cv")
+//     {
+//         mtl::log::info("Lancement avec OpenCV");
+//         App appli;
+//         mtl::log::info("Creation de l'application reussie");
+//         appli.mainLoop();
+//         mtl::log::info("Terminaison en cours");
+//         appli.quit();
+//     }
+//     else
+//     {
+//         GlContext::initGL(640, 480);
+//         GlContext::windowCaption("OpenGL window");
+//         Pipeline::fromXML("assets/PipelineConfig.xml");
 
-        Mesh mesh("assets/objs/cube.obj");
+//         Mesh mesh("assets/objs/cube.obj");
 
-        VertexShader vertex("assets/shaders/vertex.cpp");
-        FragmentShader fragment("assets/shaders/fragment.cpp");
-        ShaderProgram programm({vertex, fragment});
+//         VertexShader vertex("assets/shaders/vertex.cpp");
+//         FragmentShader fragment("assets/shaders/fragment.cpp");
+//         ShaderProgram programm({vertex, fragment});
 
-        renderLoop(30, met_ton_code_la_charles, programm, mesh);
+//         renderLoop(30, met_ton_code_la_charles, programm, mesh);
         
-        GlContext::endGL();
-    }
+//         GlContext::endGL();
+//     }
     
-    return EXIT_SUCCESS;
-}
+//     return EXIT_SUCCESS;
+// }
 
 
 
@@ -246,11 +246,19 @@ int main(int argc, char** argv)
 // (Fait par la) Main de Mehdi
 //
 
-// #include "Camera.hpp"
-// int main(int argc, char const *argv[])
-// {
-//     Camera cam;
+#include "Camera.hpp"
+int main(int argc, char const *argv[])
+{
+    // Camera cam;
 
-//     cam.init();
-//     return 0;
-// }
+    // cam.init();
+
+
+    
+    App app;
+
+    app.mainLoop();
+
+    app.quit();
+    return 0;
+}

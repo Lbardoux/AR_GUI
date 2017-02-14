@@ -17,7 +17,7 @@
 
 /**
  * @struct Camera
- * @brief Gère la caméra et les 2 canals associés.
+ * @brief Gère la caméra et les 2 canaux associés.
  */
 struct Camera final
 {
@@ -31,6 +31,16 @@ struct Camera final
          * @throw std::runtime_error Si un problème survient lors de l'initialisation.
          */
         void init(const char* uri = openni::ANY_DEVICE);
+        /**
+         * @date       14-Feb-2017
+         * @brief      Démarre les flux
+         * @param[in]  width   Largeur de la sortie du flux voulu
+         * @param[in]  height  Hauteur de la sortie du flux voulu
+         * @post       Si la hauteur et la largeur pour le flux sont
+         *             disponibles, alors ils sont mis en place, sinon les
+         *             paramètres par défaut sont laissés
+         */	
+        void start(int width, int height);
         //! @brief Détruit la caméra et tout le tintouin.
         ~Camera(void);
         /**
@@ -72,7 +82,19 @@ struct Camera final
         cv::Mat               depthMat;   //!< Ce qu'il faut afficher.
         cv::Mat               colorMat;   //!< Ce qu'il faut afficher.
 
-};
+        /**
+         * @date       14-Feb-2017
+         * @brief      Fonction qui recherche les différents modes vidéos C'est
+         *             avec son résultat que l'on sera capable de changer la
+         *             taille des vidéos reçues
+         * @param[in]  width       Largeur du flux voulu
+         * @param[in]  height      Hauteur du flux voulu
+         * @param[in]  sensorType  Type du sensor sur lequel on veut les infos
+         * @param      videoMode   VideoMode dans lequel on stocke ce qu'on a trouvé
+         * @return     True si on a trouvé le mode voulu, False sinon
+         */
+        bool findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode);
 
+};
 
 #endif
