@@ -143,19 +143,24 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
     Pipeline::clear(true, true);
 
     //Epaule 1
-    Point p1(3, 5, 0);
-    const Transform model1 = scaleMatrix(0.1, 0.1, 0.1) * translationMatrix(p1);
+    /*Point p1(0.3, 0.5, 0);
+    const Transform model1 = translationMatrix(p1) * scaleMatrix(0.1, 0.1, 0.1);
     const Transform view = translationMatrix(0, 0, 0);
     const Transform projection = translationMatrix(0, 0, 0);
     mesh.draw(model1, view, projection);
 
     //Epaule 2
-    Point p2(-3, 0, 0);
-    const Transform model2 = scaleMatrix(0.1, 0.1, 0.1) * translationMatrix(p2);
+    Point p2(-0.3, 0, 0);
+    const Transform model2 = translationMatrix(p2) * scaleMatrix(0.1, 0.1, 0.1);
     mesh.draw(model2, view, projection);
 
     //Vetement
-    clothe.draw(p1, p2, view, projection);
+    clothe.draw(p1, p2, view, projection);*/
+
+    const Transform model1 = translationMatrix(0, -0.5, 0) * scaleMatrix(0.1, 0.1, 0.1);
+    const Transform view = translationMatrix(0, 0, 0);
+    const Transform projection = translationMatrix(0, 0, 0);
+    mesh.draw(model1, view, projection);
 
     return false;
 }
@@ -185,7 +190,7 @@ int main(int argc, char** argv)
         FragmentShader fragment("assets/shaders/fragment.cpp");
         ShaderProgram program({vertex, fragment});
 
-        Mesh mesh("assets/objs/cube.obj", program);
+        Mesh mesh("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program);
 
         nite::UserTracker * user_tracker = new nite::UserTracker;	//Très mal initialisé, 
     	Player player(*user_tracker);								//juste pour faire plaisir au compilo

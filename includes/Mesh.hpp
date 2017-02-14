@@ -33,10 +33,11 @@ class Mesh
 public:
 	/**
      * @brief Construit le mesh
-     * @param[in] path le chemin vers le fichier .obj 
+     * @param[in] path_to_obj le chemin vers le fichier .obj 
+     * @param[in] path_yo_texture le chemin vers le fichier de texture (doit être un fichier BMP)
      * @param[in] program le shader
      */
-	Mesh(const char * path, ShaderProgram & program);
+	Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -52,7 +53,16 @@ public:
 	void draw(const Transform & model, const Transform & view, const Transform & projection) const;
 
 private:
+    /**
+     * @brief      Initialise la VAO
+     */
 	void initVAO();
+
+    /**
+     * @brief      Initialise la texture
+     * @param[in]  path  Le chemin vers le fichier contenant la texture (doit être un fichier BMP)
+     */
+    void init_texture(const char * path);
 
 	GLuint              m_program;  //!< Le shader   
     GLuint              m_vao;      //!< Le VAO.
@@ -60,6 +70,7 @@ private:
     std::vector<vec3>   m_vertices; //!< Les coordonnées des points.
     std::vector<vec3>   m_normals;  //!< Les normales.
     std::vector<vec2>   m_uvs;      //!< Les coordonnées de textures.
+    GLuint              m_texture;  //!< La texture
 };
 
 #endif

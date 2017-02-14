@@ -3,16 +3,16 @@
  */
 #include "Mesh.hpp"
 
-Mesh::Mesh(const char * path, ShaderProgram & program) : m_program(program)
+Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program) : m_program(program)
 {
-    std::cout<<"Chargement du fichier OBJ : \'"<<path<<"\' ... ";
+    std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
 
     std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
     std::vector<vec2> temp_uvs;
     std::vector<vec3> temp_normals;
 
-    FILE * file = fopen(path, "r");
+    FILE * file = fopen(path_to_obj, "r");
     if(file == NULL)
     {
         std::cout<<"Impossible d'ouvrir le fichier"<<std::endl;
@@ -92,6 +92,7 @@ Mesh::Mesh(const char * path, ShaderProgram & program) : m_program(program)
     }
 
     initVAO();
+    init_texture(path_to_texture);
 
     std::cout<<"Fait"<<std::endl;
 }
@@ -150,26 +151,110 @@ void Mesh::initVAO()
     glBindVertexArray(0);
 }
 
+void Mesh::init_texture(const char * path)
+{
+    printf("Reading image %s\n", path);
+
+    // Data read from the header of the BMP file
+    unsigned char header[54];
+    unsigned int dataPos;
+    unsigned int imageSize;
+    unsigned int width, height;
+    // Actual RGB data
+    unsigned char * data;
+
+    // Open the file
+    FILE * file = fopen(path,"rb");
+    if (!file) {
+        printf("Not exist\n");
+        assert(false);
+    }
+
+    // If less than 54 bytes are read, problem
+    if ( fread(header, 1, 54, file)!=54 ){
+        printf("Not a correct BMP file (1)\n");
+        assert(false);
+    }
+    // A BMP files always begins with "BM"
+    if ( header[0]!='B' || header[1]!='M' ){
+        printf("Not a correct BMP file (2)\n");
+        assert(false);
+    }
+    // Make sure this is a 24bpp file
+    if ( *(int*)&(header[0x1E])!=0  )         {printf("Not a correct BMP file (3)\n");    assert(false);}
+    if ( *(int*)&(header[0x1C])!=24 )         {printf("Not a correct BMP file (4)\n");    assert(false);}
+
+    // Read the information about the image
+    dataPos    = *(int*)&(header[0x0A]);
+    imageSize  = *(int*)&(header[0x22]);
+    width      = *(int*)&(header[0x12]);
+    height     = *(int*)&(header[0x16]);
+
+    // Some BMP files are misformatted, guess missing information
+    if (imageSize==0)    imageSize=width*height*3; // 3 : one byte for each Red, Green and Blue component
+    if (dataPos==0)      dataPos=54; // The BMP header is done that way
+
+    // Create a buffer
+    data = new unsigned char [imageSize];
+
+    // Read the actual data from the file into the buffer
+    fread(data,1,imageSize,file);
+
+    // Everything is in memory now, the file wan be closed
+    fclose (file);
+
+    // Create one OpenGL texture
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+
+    // "Bind" the newly created texture : all future texture functions will modify this texture
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    // Give the image to OpenGL
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+    // OpenGL has now copied the data. Free our own version
+    delete [] data;
+
+    // ... nice trilinear filtering.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    // Return the ID of the texture we just created
+    m_texture = textureID;
+}
+
 void Mesh::draw(const Transform & model, const Transform & view, const Transform & projection) const
 {
+    glEnable(GL_TEXTURE_2D);
+
+    //Matrices
     Transform mv = model * view;
     Transform mvp = model * view * projection;
-
+    GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
+    GLint mv_location  =  glGetUniformLocation(m_program, "MV");
+    GLint n_location   =  glGetUniformLocation(m_program, "N");
+    glUniformMatrix4fv(mvp_location, 1, GL_TRUE, mvp.getBuffer());
+    glUniformMatrix4fv(mv_location, 1, GL_TRUE, mv.getBuffer());
+    glUniformMatrix4fv(n_location, 1, GL_TRUE, mv.getBuffer());
     /*for(int i = 0; i < 16; i++)
     {
         std::cout<<model.getBuffer()[i]<<std::endl;
     }
     std::cout<<std::endl<<std::endl;*/
 
-    GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
-    GLint mv_location  =  glGetUniformLocation(m_program, "MV");
-    //GLint n_location   =  glGetUniformLocation(m_program, "N");
+    //Texture
+    GLint texture_location = glGetUniformLocation(m_program, "u_texture");
+    glUniform1i(texture_location, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_texture);
 
-    glUniformMatrix4fv(mvp_location, 1, GL_TRUE, mvp.getBuffer());
-    glUniformMatrix4fv(mv_location, 1, GL_TRUE, mv.getBuffer());
-    //glUniformMatrix4fv(n_location, 1, GL_TRUE, mv.normal().getBuffer());
-
+    //Triangles
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());  
     glBindVertexArray(0);
 }
+
