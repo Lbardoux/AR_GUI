@@ -132,19 +132,30 @@
 #include "Loop.hpp"
 #include "Shader.hpp"
 #include "Mesh.hpp"
+#include "Player.hpp"
+#include "Clothe.hpp"
 
-bool met_ton_code_la_charles(Mesh & mesh)
+/*Transform model = Translation(-3, -2, 10);
+Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);*/
+bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
 {
     Pipeline::clear(true, true);
-    
-    /*Transform model = Translation(-3, -2, 10);
-    Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-    Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);*/
-    Transform model = translationMatrix(0, 0, 0);
-    Transform view = translationMatrix(0, 0, 0);
-    Transform projection = translationMatrix(0, 0, 0);
-    mesh.draw(model, view, projection);
-    
+
+    //Epaule 1
+    Point p1(3, 5, 0);
+    const Transform model1 = scaleMatrix(0.1, 0.1, 0.1) * translationMatrix(p1);
+    const Transform view = translationMatrix(0, 0, 0);
+    const Transform projection = translationMatrix(0, 0, 0);
+    mesh.draw(model1, view, projection);
+
+    //Epaule 2
+    Point p2(-3, 5, 0);
+    const Transform model2 = scaleMatrix(0.1, 0.1, 0.1) * translationMatrix(p2);
+    //mesh.draw(model2, view, projection);
+
+    //Vetement
+    clothe.draw(p1, p2, view, projection);
 
     return false; // continue l'execution
 }
@@ -166,7 +177,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        GlContext::initGL(640, 480);
+        GlContext::initGL(1000, 600);
         GlContext::windowCaption("OpenGL window");
         Pipeline::fromXML("assets/PipelineConfig.xml");
 
@@ -176,8 +187,13 @@ int main(int argc, char** argv)
 
         Mesh mesh("assets/objs/cube.obj", program);
 
+        nite::UserTracker * user_tracker = new nite::UserTracker;	//Très mal initialisé, 
+    	Player player(*user_tracker);								//juste pour faire plaisir au compilo
+
+        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
+
         program.use();
-        renderLoop(30, met_ton_code_la_charles, mesh);
+        renderLoop(30, met_ton_code_la_charles, mesh, player, clothe);
         
         GlContext::endGL();
     }

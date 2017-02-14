@@ -335,7 +335,7 @@ Vecf<T, N> center(const Vecf<T, N>& v1, const Vecf<T, N>& v2) noexcept
     Vecf<T, N> result;
     for(uint32_t i=0;i<N;++i)
 	{
-		result.values[i] = (v2.values[i] - v1.values[i])/2.0f;
+		result.values[i] = ((v2.values[i]-v1.values[i])/2 + v1.values[i]);//(v2.values[i] - v1.values[i])/2.0f;
 	}
     return result;
 }

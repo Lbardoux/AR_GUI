@@ -25,7 +25,7 @@ public:
 	 * @param[in] 	member2 la deuxième articulation à laquelle est attaché le vêtement
 	 * @param[in] 	mesh le mesh du vêtement
      */
-	Clothe(Player & player, PlayerMember member1, PlayerMember member2, const Mesh & mesh);
+	Clothe(const Player & player, PlayerMember member1, PlayerMember member2, const Mesh & mesh);
 
 	/**
      * @brief Déstructeur par défaut.
@@ -37,11 +37,16 @@ public:
    	 * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
-	void draw(Transform & view, Transform & projection) const;
+	void draw(const Transform & view, const Transform & projection) const;
+
+	/**
+	 * @brief DEBUG
+	*/
+	void draw(const Point & p1, const Point & p2, const Transform & view, const Transform & projection) const;
 
 private:
-	Player & 		m_player; 				//!< Le joueur.
-	PlayerMember 	m_member1, m_member2; 	//!< Les deux membres auquel est attaché le vêtement.
+	const Player & 	m_player; 				//!< Le joueur.
+	PlayerMember 	m_member1, m_member2; 	//!< Les deux membres auquels est attaché le vêtement.
 	const Mesh &	m_mesh;					//!< Le mesh.
 };
 

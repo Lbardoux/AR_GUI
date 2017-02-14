@@ -49,7 +49,7 @@ public:
    	 * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
-	void draw(Transform & model, Transform & view, Transform & projection) const;
+	void draw(const Transform & model, const Transform & view, const Transform & projection) const;
 
 private:
 	void initVAO();

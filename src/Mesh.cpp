@@ -101,9 +101,6 @@ void Mesh::initVAO()
     std::size_t vbo_vertex_size = m_vertices.size() * sizeof(vec3);
     std::size_t vbo_normal_size = m_normals.size() * sizeof(vec3);    
     std::size_t vbo_texture_size = m_uvs.size() * sizeof(vec2);
-    std::cout<<m_vertices.size()<<std::endl;
-    std::cout<<m_normals.size()<<std::endl;
-    std::cout<<m_uvs.size()<<std::endl;
 
     const float * vbo_vertex_content = &m_vertices.front()[0];
     const float * vbo_normal_content = &m_normals.front()[0];
@@ -153,60 +150,24 @@ void Mesh::initVAO()
     glBindVertexArray(0);
 }
 
-#include <set>
-int location( const GLuint program, const char *uniform )
-{
-    if(program == 0) 
-        return -1;
-    
-    // recuperer l'identifiant de l'uniform dans le program
-    GLint location= glGetUniformLocation(program, uniform);
-    if(location < 0)
-    {
-        char error[1024]= { 0 };
-    #ifdef GL_VERSION_4_3
-        {
-            char label[1024];
-            glGetObjectLabel(GL_PROGRAM, program, sizeof(label), NULL, label);
-            
-            sprintf(error, "uniform( %s, '%s' ): not found.", label, uniform); 
-        }
-    #else
-        sprintf(error, "uniform('%s'): not found.", uniform); 
-    #endif
-        
-        
-        return -1; 
-    }
-    
-#ifndef GK_RELEASE
-    // verifier que le program est bien en cours d'utilisation, ou utiliser glProgramUniform, mais c'est gl 4
-    GLuint current;
-    glGetIntegerv(GL_CURRENT_PROGRAM, (GLint *) &current);
-    if(current != program)
-    {
-        printf("invalid shader program %u...\n", current);
-        glUseProgram(program);
-    }
-#endif
-    
-    return location;
-}
-
-void Mesh::draw(Transform & model, Transform & view, Transform & projection) const
+void Mesh::draw(const Transform & model, const Transform & view, const Transform & projection) const
 {
     Transform mv = model * view;
     Transform mvp = model * view * projection;
 
-    //GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
-    //GLint mv_location  =  glGetUniformLocation(m_program, "MV");
+    /*for(int i = 0; i < 16; i++)
+    {
+        std::cout<<model.getBuffer()[i]<<std::endl;
+    }
+    std::cout<<std::endl<<std::endl;*/
+
+    GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
+    GLint mv_location  =  glGetUniformLocation(m_program, "MV");
     //GLint n_location   =  glGetUniformLocation(m_program, "N");
 
-    //glUniformMatrix4fv(m_program, mvp_location, false, mvp.buffer());
-    //glUniformMatrix4fv(m_program, mv_location, false, mv.buffer());
-    //glUniformMatrix4fv(m_program, n_location, false, mv.normal().buffer());
-    
-    glUniformMatrix4fv( location(m_program, "MVP"), 1, GL_TRUE, mvp.getBuffer());
+    glUniformMatrix4fv(mvp_location, 1, GL_TRUE, mvp.getBuffer());
+    glUniformMatrix4fv(mv_location, 1, GL_TRUE, mv.getBuffer());
+    //glUniformMatrix4fv(n_location, 1, GL_TRUE, mv.normal().getBuffer());
 
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());  
