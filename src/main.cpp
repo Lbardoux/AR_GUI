@@ -150,14 +150,14 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
     mesh.draw(model1, view, projection);
 
     //Epaule 2
-    Point p2(-3, 5, 0);
+    Point p2(-3, 0, 0);
     const Transform model2 = scaleMatrix(0.1, 0.1, 0.1) * translationMatrix(p2);
-    //mesh.draw(model2, view, projection);
+    mesh.draw(model2, view, projection);
 
     //Vetement
     clothe.draw(p1, p2, view, projection);
 
-    return false; // continue l'execution
+    return false;
 }
 
 
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        GlContext::initGL(1000, 600);
+        GlContext::initGL(600, 600);
         GlContext::windowCaption("OpenGL window");
         Pipeline::fromXML("assets/PipelineConfig.xml");
 
