@@ -8,7 +8,7 @@
 #define _PLAYER_H_
 
 #include <NiTE.h>
-#include "Vec.hpp"
+#include "vec.hpp"
 
 /**
  * @enum PlayerMember

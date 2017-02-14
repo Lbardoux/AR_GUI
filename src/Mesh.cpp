@@ -27,20 +27,23 @@ Mesh::Mesh(const char * path)
             break;
         if ( strcmp( lineHeader, "v" ) == 0 )
         {
-            vec3 vertex;
-            assert(fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z));
+            float x, y, z;
+            assert(fscanf(file, "%f %f %f\n", &x, &y, &z));
+            vec3 vertex(x, y, z);
             temp_vertices.push_back(vertex);
         }
         else if ( strcmp( lineHeader, "vt" ) == 0 )
         {
-            vec2 uv;
-            assert(fscanf(file, "%f %f\n", &uv.x, &uv.y ));
+            float x, y;
+            assert(fscanf(file, "%f %f\n", &x, &y));
+            vec2 uv(x, y);
             temp_uvs.push_back(uv);
         }
         else if ( strcmp( lineHeader, "vn" ) == 0 )
         {
-            vec3 normal;
-            assert(fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z ));
+            float x, y, z;
+            assert(fscanf(file, "%f %f %f\n", &x, &y, &z));
+            vec3 normal(x, y, z);
             temp_normals.push_back(normal);
         }
         else if ( strcmp( lineHeader, "f" ) == 0 )
@@ -137,19 +140,19 @@ void Mesh::initVAO()
 
 void Mesh::draw(ShaderProgram & programm, Transform & model, Transform & view, Transform & projection) const
 {
-    Transform mv = model * view;
-    Transform mvp = model * view * projection;
+//    Transform mvp = model * view * projection;
+//    Transform mv = model * view;
 
-    GLint mvp_location =  glGetUniformLocation(programm, "MVP");
-    GLint mv_location  =  glGetUniformLocation(programm, "MV");
-    GLint n_location   =  glGetUniformLocation(programm, "N");
+//    GLint mvp_location =  glGetUniformLocation(programm, "MVP");
+//    GLint mv_location  =  glGetUniformLocation(programm, "MV");
+//    GLint n_location   =  glGetUniformLocation(programm, "N");
 
-    glUniformMatrix4fv(programm, mvp_location, false, mvp.buffer());
-    glUniformMatrix4fv(programm, mv_location, false, mv.buffer());
-    glUniformMatrix4fv(programm, n_location, false, mv.normal().buffer());
+//    glUniformMatrix4fv(programm, mvp_location, false, mvp.buffer());
+//    glUniformMatrix4fv(programm, mv_location, false, mv.buffer());
+//    glUniformMatrix4fv(programm, n_location, false, mv.normal().buffer());
 
 
-	glBindVertexArray(m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
-    glBindVertexArray(0);
+//	glBindVertexArray(m_vao);
+//    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
+//    glBindVertexArray(0);
 }

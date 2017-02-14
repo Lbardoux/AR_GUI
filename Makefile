@@ -7,7 +7,6 @@
 
 .PHONY: doc tar help decompress push
 
-# Option pour la verbosité du makefile lors de la compilation des sources
 VERBOSE  := 0
 CXX_V    := g++
 CC_0      = @echo "Compiling $<..."; $(CXX_V)
@@ -30,7 +29,7 @@ NITE2     := $(LIBS)/NiTE2
 MTLKIT    := $(LIBS)/mtlkit
 LOGS      := $(LIBS)/logs
 
-LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image
+LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image -lm
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include -I$(MTLKIT)/ -I$(LOGS)
 location := $(shell whoami)
 README   := ReadMe.html

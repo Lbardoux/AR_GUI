@@ -198,6 +198,20 @@ struct Vecf final
 			this->copy(other);
 			return *this;
 		}
+		/**
+		 * @brief Calculates the L2 norm of this vector.
+		 * @param[in] withSquareRoot If you want to apply the norm without the square root.
+		 * @return The norm as a double, for higher precision.
+		 */
+		double normL2(bool withSquareRoot = true) const noexcept
+		{
+			double value = 0.0;
+			for(int i=0;i<N;++i)
+			{
+				value += this->values[i]*this->values[i];
+			}
+			return std::sqrt(value);
+		}
 		
 	private:
 		T values[N]; //!< The container for the datatype you wanna use.
@@ -285,6 +299,7 @@ struct Vecf final
 		template<typename TT, uint32_t V> friend bool          operator==(const Vecf<TT, V>& v1, const Vecf<TT, V>& v2);
 		template<typename TT, uint32_t V> friend bool          operator!=(const Vecf<TT, V>& v1, const Vecf<TT, V>& v2);
 		template<typename TT, uint32_t V> friend std::ostream& operator<<(std::ostream& os, const Vecf<TT, V>& v);
+		template<typename TT, uint32_t V> friend Vecf<TT, V> center(const Vecf<TT, V>& v1, const Vecf<TT, V>& v2) noexcept;
 		friend struct Vecf<T, 2>;
 		friend struct Vecf<T, 3>;
 		friend struct Vecf<T, 4>;
@@ -307,6 +322,22 @@ Vecf<T, N> operator+(const Vecf<T, N>& v1, const Vecf<T, N>& v2)
 		result.values[i] = v1.values[i] + v2.values[i];
 	}
 	return result;
+}
+/**
+ * @brief Compute the center of the edge between @b v1 and @b v2.
+ * @param[in] v1 The first  point to delimitate the edge.
+ * @param[in] v2 The second point to delimitate the edge.
+ * @return The vecf which is the center of this edge.
+ */
+template<typename T, uint32_t N>
+Vecf<T, N> center(const Vecf<T, N>& v1, const Vecf<T, N>& v2) noexcept
+{
+    Vecf<T, N> result;
+    for(uint32_t i=0;i<N;++i)
+	{
+		result.values[i] = (v2.values[i] - v1.values[i])/2.0f;
+	}
+    return result;
 }
 /**
  * @brief Apply the - operator on 2 Vecf and write the result into
@@ -477,8 +508,8 @@ std::ostream& operator<<(std::ostream& os, const Vecf<TT, V>& v)
 	return os;
 }
 
-//typedef Vecf<float,    2>  vec2; //!< To manipulate a  float  vec2.
-//typedef Vecf<float,    3>  vec3; //!< To manipulate a  float  vec3.
+typedef Vecf<float,    2>  vec2; //!< To manipulate a  float  vec2.
+typedef Vecf<float,    3>  vec3; //!< To manipulate a  float  vec3.
 typedef Vecf<float,    4>  vec4; //!< To manipulate a  float  vec4.
 typedef Vecf<double,   2> dvec2; //!< To manipulate a  double vec2.
 typedef Vecf<double,   3> dvec3; //!< To manipulate a  double vec3.
@@ -490,9 +521,11 @@ typedef Vecf<uint32_t, 2> uvec2; //!< To manipulate an uint   vec2.
 typedef Vecf<uint32_t, 3> uvec3; //!< To manipulate an uint   vec3.
 typedef Vecf<uint32_t, 4> uvec4; //!< To manipulate an uint   vec4.
 
-//typedef vec2    Texcoords; //!< To manipulate something more clear than a vec2.
-//typedef vec3    Vertex;    //!< To manipulate something more clear than a vec3.
-//typedef vec3    Normal;    //!< To manipulate something more clear than a vec3.
+typedef vec2    Texcoords; //!< To manipulate something more clear than a vec2.
+typedef vec3    Vertex;    //!< To manipulate something more clear than a vec3.
+typedef vec3    Normal;    //!< To manipulate something more clear than a vec3.
+typedef vec3    Point;
+typedef vec3    Vector;
 typedef vec4    Color;     //!< To manipulate something more clear than a vec4.
 
 #endif

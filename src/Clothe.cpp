@@ -11,10 +11,11 @@ void Clothe::draw(ShaderProgram & programm, Transform & view, Transform & projec
 {
 	Point position1 = m_player.getPointOf(m_member1);
 	Point position2 = m_player.getPointOf(m_member2);
-	Vector v_translate = Vector(center(position1, position2));
-	Vector p1_p2 = Vector(position2, position1);
+	Vector v_translate = center(position1, position2);
+	//Vector p1_p2 = Vector(position2, position1);
+	Vector p1_p2 = position2 - position1;
 
-	float scale = length(p1_p2) * 1.0;
-	Transform model = Scale(scale, scale, scale) /* Rotate(angle(p1_P2))*/ * Translation(v_translate);
+	float scale = p1_p2.normL2() * 1.0;
+	Transform model = scaleMatrix(scale, scale, scale) /* Rotate(angle(p1_P2))*/ * translationMatrix(v_translate);
 	m_mesh.draw(programm, model, view, projection);
 }

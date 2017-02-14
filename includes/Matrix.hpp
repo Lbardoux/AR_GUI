@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <array>
 #include <iostream>
+#include "vec.hpp"
 
 
 /**
@@ -136,21 +137,21 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m);
  * @param[in] angle L'angle voulu.
  * @return La matrice résultat.
  */
-Matrix rotationX(float angle);
+Matrix rotationXMatrix(float angle);
 
 /**
  * @brief Crée une matrice de rotation selon l'axe Y.
  * @param[in] angle L'angle voulu.
  * @return La matrice résultat.
  */
-Matrix rotationY(float angle);
+Matrix rotationYMatrix(float angle);
 
 /**
  * @brief Crée une matrice de rotation selon l'axe Z.
  * @param[in] angle L'angle voulu.
  * @return La matrice résultat.
  */
-Matrix rotationZ(float angle);
+Matrix rotationZMatrix(float angle);
 
 /**
  * @brief Crée une matrice de translation.
@@ -159,7 +160,14 @@ Matrix rotationZ(float angle);
  * @param[in] z Le déplacement en Z.
  * @return La matrice résultat.
  */
-Matrix translation(float x, float y, float z);
+Matrix translationMatrix(float x, float y, float z);
+
+/**
+ * @brief Crée une matrice de translation.
+ * @param[in] vector Le vecteur de translation que l'on veut.
+ * @return La matrice résultat.
+ */
+Matrix translationMatrix(const Vector& v);
 
 /**
  * @brief Crée une matrice de mise à l'échelle.
@@ -168,13 +176,15 @@ Matrix translation(float x, float y, float z);
  * @param[in] z La taille d'augmentation voulue pour l'axe z.
  * @return La matrice résultat.
  */
-Matrix scale(float x, float y, float z);
+Matrix scaleMatrix(float x, float y, float z);
 
 /**
  * @brief Construit une matrice identité.
  * @return cette fameuse matrice.
  */
-Matrix identity(void);
+Matrix identityMatrix(void);
+
+
+typedef Matrix Transform;
 
 #endif
-

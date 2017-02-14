@@ -103,7 +103,7 @@ Matrix& Matrix::operator*=(const Matrix& other) noexcept
 	return *this;
 }
 
-Matrix identity(void)
+Matrix identityMatrix(void)
 {
 	return Matrix(1.0f, 0.0f, 0.0f, 0.0f,
 				  0.0f, 1.0f, 0.0f, 0.0f,
@@ -111,7 +111,12 @@ Matrix identity(void)
 				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Matrix rotationX(float angle)
+Matrix translationMatrix(const Vector& v)
+{
+	return translationMatrix(v.x(), v.y(), v.z());
+}
+
+Matrix rotationXMatrix(float angle)
 {
 	return Matrix(1.0f, 0.0f,            0.0f,             0.0f,
 				  0.0f, std::cos(angle), -std::sin(angle), 0.0f,
@@ -119,7 +124,7 @@ Matrix rotationX(float angle)
 				  0.0f, 0.0f,            0.0f,             1.0f);
 }
 
-Matrix rotationY(float angle)
+Matrix rotationYMatrix(float angle)
 {
 	return Matrix(std::cos(angle),  0.0f, std::sin(angle), 0.0f,
 				  0.0f,             1.0f, 0.0f,            0.0f,
@@ -127,7 +132,7 @@ Matrix rotationY(float angle)
 				  0.0f,             0.0f, 0.0f,            1.0f);
 }
 
-Matrix rotationZ(float angle)
+Matrix rotationZMatrix(float angle)
 {
 	return Matrix(std::cos(angle), -std::sin(angle), 0.0f, 0.0f,
 				  std::sin(angle), std::cos(angle),  0.0f, 0.0f,
@@ -135,7 +140,7 @@ Matrix rotationZ(float angle)
 				  0.0f,            0.0f,             0.0f, 1.0f);
 }
 
-Matrix translation(float x, float y, float z)
+Matrix translationMatrix(float x, float y, float z)
 {
 	return Matrix(1.0f, 0.0f, 0.0f, x,
 				  0.0f, 0.0f, 0.0f, y,
@@ -143,7 +148,7 @@ Matrix translation(float x, float y, float z)
 				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Matrix scale(float x, float y, float z)
+Matrix scaleMatrix(float x, float y, float z)
 {
 	return Matrix(x,    0.0f, 0.0f, 0.0f,
 				  0.0f, y,    0.0f, 0.0f,

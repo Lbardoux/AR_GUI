@@ -15,9 +15,9 @@
 #include <assert.h>
 #include <cstdio>
 #include <string.h>
-#include "Vec.hpp"
+#include "vec.hpp"
 #include "GlCore.hpp"
-#include "Mat.hpp"
+#include "Matrix.hpp"
 #include "ShaderProgram.hpp"
 
 /**
