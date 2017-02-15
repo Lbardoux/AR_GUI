@@ -136,31 +136,39 @@
 #include "Clothe.hpp"
 #include "Sprite.hpp"
 
-//#include <QApplication>
-
-/*Transform model = Translation(-3, -2, 10);
-Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);
-bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
-
+bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clothe & clothe, Camera & camera)
 {
     Pipeline::clear(true, true);
 
-    //Epaule 1
-    Point p1(0.3, 0.5, 0);
-    const Transform model1 = translationMatrix(p1) * scaleMatrix(0.7, 0.7, 0.7);
-    const Transform view = translationMatrix(0, 0, 0);
-    const Transform projection = translationMatrix(0, 0, 0);
-    
-    mesh.readTextureFromCamera(camera);
-    mesh.draw(model1, view, projection);
+    //Fond
+    //
+    Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
+	Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+	Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
+    fond.readTextureFromCamera(camera);
+    fond.draw(model, view, projection);
 
-    //Epaule 2
-    Point p2(-0.3, -0.5, 0);
-    const Transform model2 = translationMatrix(p2) * scaleMatrix(0.1, 0.1, 0.1);
-    //mesh.draw(model2, view, projection);
+   	//Joueur
+    //
+   	player.update();
+    //Epaule 1
+    Point position = player.getPointOf(LEFT_SHOULDER);
+    if(position.x() != 0 || position.y() != 0 || position.z() != 0)
+    {
+	    model = translationMatrix(-position.x(), position.y(), position.z()) * scaleMatrix(50, 50, 50);
+	    mesh_test.draw(model, view, projection);
+	}
+	//Epaule 2
+    position = player.getPointOf(RIGHT_SHOULDER);
+    if(position.x() != 0 || position.y() != 0 || position.z() != 0)
+    {
+	    model = translationMatrix(-position.x(), position.y(), position.z()) * scaleMatrix(50, 50, 50);
+	    mesh_test.draw(model, view, projection);
+	}
 
     //Vetement
+    model = translationMatrix(0, 0, 0) ;//* scaleMatrix(100, 100, 100);
+	mesh_test.draw(model, view, projection);
     //clothe.draw(p1, p2, view, projection);
 
     /*
@@ -169,16 +177,6 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
      * CA SERA BEAUCOUP PLUS SIMPLE A GERER ENSUITE
      * 
      */
-
-    /*player.update();
-    nite::Point3f  position = player.getPositionOf(HEAD);
-    std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;  */
-
-void cv_version(void)
-{
-	
-}
-
 
     /*const Transform model1 = translationMatrix(0, -1.0, 0) * scaleMatrix(0.15, 0.15, 0.15);
     const Transform view = translationMatrix(0, 0, 0);
@@ -228,45 +226,22 @@ int main(int argc, char** argv)
 		GlContext::windowCaption("OpenGL window");
 		Pipeline::fromXML("assets/PipelineConfig.xml");
 
-// int main(int argc, char** argv)
-// {
-//     checkCommandLine(argc, argv);
-//     mtl::log::info("Ligne de commande valide");
-//     if (std::string(argv[1]) == "cv")
-//     {
-//         mtl::log::info("Lancement avec OpenCV");
-//         App appli;
-//         mtl::log::info("Creation de l'application reussie");
-//         appli.mainLoop();
-//         mtl::log::info("Terminaison en cours");
-//         appli.quit();
-//     }
-//     else if (std::string(argv[1]) == "test")
-//     {
-//         Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-//         Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-//         std::cout << mat1*mat2 << std::endl;
-//     }
-//     else
-//     {
-//         /*GlContext::initGL(640, 480);
-//         GlContext::windowCaption("OpenGL window");
-//         Pipeline::fromXML("assets/PipelineConfig.xml");
+        VertexShader vertex("assets/shaders/vertex.cpp");
+        FragmentShader fragment("assets/shaders/fragment.cpp");
+        ShaderProgram program({vertex, fragment});
 
-//         VertexShader vertex("assets/shaders/vertex.cpp");
-//         FragmentShader fragment("assets/shaders/fragment.cpp");
-//         ShaderProgram program({vertex, fragment});
+        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program);
+        Mesh cube("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program);
+        Mesh fond("assets/objs/squarre.obj", camera, program);
 
-        //Mesh mesh("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
-        Mesh mesh("assets/objs/squarre.obj", camera, program);
-
-//         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
+        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
 
         program.use();
-        renderLoop(30, met_ton_code_la_charles, mesh, player, clothe, camera);
+        renderLoop(30, met_ton_code_la_charles, fond, cube, player, clothe, camera);
         
         GlContext::endGL();
     }
+
     Sprites::empty();
 	mtl::log::info("Vidage des sprites");
     return EXIT_SUCCESS;

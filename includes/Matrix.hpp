@@ -67,6 +67,10 @@ class Matrix final
 		 */
 		Matrix& operator/=(float v) noexcept;
 		/**
+		 * @brief Faudra que tu fasses la doc Laurent.
+		 */
+		Matrix& inverse();
+		/**
 		 * @brief Renvoi une référence modifiable sur l'élément positionné sur la ligne @b y et la colonne @b x.
 		 * @param[in] x Le numéro de colonne, entre 0 et 3 inclus.
 		 * @param[in] y Le numéro de ligne  , entre 0 et 3 inclus.
@@ -179,6 +183,15 @@ Matrix translationMatrix(const Vector& v);
  * @return La matrice résultat.
  */
 Matrix scaleMatrix(float x, float y, float z);
+
+/**
+ * @brief Faudra que tu fasses la doc Laurent.
+ */
+Matrix lookAt(const Point& from, const Point& to, const Vector& up);
+/**
+ * @brief Faudra que tu fasses la doc Laurent.
+ */
+Matrix perspective(const float fov_radian, const float aspect, const float znear, const float zfar);
 
 /**
  * @brief Construit une matrice identité.
