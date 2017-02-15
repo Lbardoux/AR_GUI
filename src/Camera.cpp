@@ -84,14 +84,14 @@ void Camera::init(const char* uri)
 
     this->initCamera(uri);
     this->initColorStream();
-    this->initDepthStream();
-    if (!this->depth.isValid() || !this->color.isValid())
+    // this->initDepthStream();
+    if (/* !this->depth.isValid() || */ !this->color.isValid())
     {
         closeOpenNIWithException("No valid streams");
     }
 }
 
-#define __DEPTH_FORMAT__ openni::PIXEL_FORMAT_DEPTH_1_MM
+// #define __DEPTH_FORMAT__ openni::PIXEL_FORMAT_DEPTH_1_MM
 bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode)
 {
 	const openni::SensorInfo* sinfo = this->device.getSensorInfo(sensorType);
@@ -123,24 +123,24 @@ bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType
 
     return true;
 }
-#undef __DEPTH_FORMAT__
+// #undef __DEPTH_FORMAT__
 
 void Camera::start(int width, int height)
 {
 	openni::VideoMode videoMode;
 	openni::Status status;
 
-	if(findVideoModes(width / 2, height / 2, openni::SENSOR_DEPTH, videoMode))
-	{
-		status = this->depth.setVideoMode(videoMode);
-		if(status != openni::STATUS_OK)
-		{
-			mtl::log::error("Unable to set VideoMode for depth stream");
-			printStatusOpenni(status);
-		}
-		else
-			mtl::log::info("Resolution sets to [", width, ',', height, "] for depth stream");
- 	}
+	// if(findVideoModes(width / 2, height / 2, openni::SENSOR_DEPTH, videoMode))
+	// {
+	// 	status = this->depth.setVideoMode(videoMode);
+	// 	if(status != openni::STATUS_OK)
+	// 	{
+	// 		mtl::log::error("Unable to set VideoMode for depth stream");
+	// 		printStatusOpenni(status);
+	// 	}
+	// 	else
+	// 		mtl::log::info("Resolution sets to [", width, ',', height, "] for depth stream");
+ // 	}
 	if(findVideoModes(width, height, openni::SENSOR_COLOR, videoMode))
 	{
 		status = this->color.setVideoMode(videoMode);
@@ -153,12 +153,12 @@ void Camera::start(int width, int height)
 			mtl::log::info("Resolution sets to [", width, ',', height, "] for color stream");
 	}
 
-	if (this->depth.start() != openni::STATUS_OK)
-    {
-    	mtl::log::error("Couldn't start depth stream:\n", openni::OpenNI::getExtendedError());
-        // printf("Couldn't start depth stream:\n%s\n", openni::OpenNI::getExtendedError());
-        this->depth.destroy();
-    }
+	// if (this->depth.start() != openni::STATUS_OK)
+ //    {
+ //    	mtl::log::error("Couldn't start depth stream:\n", openni::OpenNI::getExtendedError());
+ //        // printf("Couldn't start depth stream:\n%s\n", openni::OpenNI::getExtendedError());
+ //        this->depth.destroy();
+ //    }
     if (this->color.start() != openni::STATUS_OK)
     {
     	mtl::log::error("Couldn't start color stream:\n", openni::OpenNI::getExtendedError());
@@ -171,19 +171,19 @@ Camera::~Camera(void)
 {
     this->color.stop();
     this->color.destroy();
-    this->depth.stop();
-    this->depth.destroy();
+    // this->depth.stop();
+    // this->depth.destroy();
     this->device.close();
 }
 
 void Camera::readFrame(void)
 {
-    this->depth.readFrame(&this->depthframe);
-    // cv::Mat temp;
-    const openni::DepthPixel* depthImageBuffer = (const openni::DepthPixel*)this->depthframe.getData();
-    depthMat.create(this->depthframe.getHeight(), this->depthframe.getWidth(), CV_16UC1);
-    memcpy(depthMat.data, depthImageBuffer, this->depthframe.getHeight()*this->depthframe.getWidth()*sizeof(int16_t));
-    // cv::flip(temp, this->depthMat, 1);
+    // this->depth.readFrame(&this->depthframe);
+    // // cv::Mat temp;
+    // const openni::DepthPixel* depthImageBuffer = (const openni::DepthPixel*)this->depthframe.getData();
+    // depthMat.create(this->depthframe.getHeight(), this->depthframe.getWidth(), CV_16UC1);
+    // memcpy(depthMat.data, depthImageBuffer, this->depthframe.getHeight()*this->depthframe.getWidth()*sizeof(int16_t));
+    // // cv::flip(temp, this->depthMat, 1);
 
     this->color.readFrame(&this->colorframe);
     const openni::RGB888Pixel* rgbImageBuffer = (const openni::RGB888Pixel*)this->colorframe.getData();
@@ -204,14 +204,14 @@ void Camera::initCamera(const char* uri)
     }
 }
 
-void Camera::initDepthStream(void)
-{
-    if (this->depth.create(this->device, openni::SENSOR_DEPTH) != openni::STATUS_OK)
-    {
-    	mtl::log::error("Couldn't find depth stream:\n", openni::OpenNI::getExtendedError());
-        // printf("Couldn't find depth stream:\n%s\n", openni::OpenNI::getExtendedError());
-    }
-}
+// void Camera::initDepthStream(void)
+// {
+//     if (this->depth.create(this->device, openni::SENSOR_DEPTH) != openni::STATUS_OK)
+//     {
+//     	mtl::log::error("Couldn't find depth stream:\n", openni::OpenNI::getExtendedError());
+//         // printf("Couldn't find depth stream:\n%s\n", openni::OpenNI::getExtendedError());
+//     }
+// }
 
 void Camera::initColorStream(void)
 {
@@ -222,15 +222,15 @@ void Camera::initColorStream(void)
     }
 }
 
-const cv::Mat& Camera::depthFrame(void) const
-{
-	return this->depthMat;
-}
+// const cv::Mat& Camera::depthFrame(void) const
+// {
+// 	return this->depthMat;
+// }
 
-cv::Mat& Camera::depthFrame(void)
-{
-	return this->depthMat;
-}
+// cv::Mat& Camera::depthFrame(void)
+// {
+// 	return this->depthMat;
+// }
 
 const cv::Mat& Camera::colorFrame(void) const
 {
@@ -240,4 +240,9 @@ const cv::Mat& Camera::colorFrame(void) const
 cv::Mat& Camera::colorFrame(void)
 {
 	return this->colorMat;
+}
+
+openni::Device& Camera::getDevice()
+{
+	return this->device;
 }

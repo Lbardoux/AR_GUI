@@ -14,6 +14,7 @@
 #include <cstdint>
 #include "logs.hpp"
 
+class Player;
 
 /**
  * @struct Camera
@@ -48,38 +49,41 @@ struct Camera final
          * Cela va remplir depthMat en recalant correctement l'image.
          */
         void readFrame(void);
-		/**
-		 * @brief Récupère la frame enregistrée en lecture seule.
-		 * @return Une référence sur l'image capturée.
-		 */
-		const cv::Mat& depthFrame(void) const;
-		/**
-		 * @brief Récupère la frame enregistrée en lecture/écriture.
-		 * @return Une référence sur l'image capturée.
-		 */
-		cv::Mat& depthFrame(void);
+		// /**
+		//  * @brief Récupère la frame enregistrée en lecture seule.
+		//  * @return Une référence sur l'image capturée.
+		//  */
+		// const cv::Mat& depthFrame(void) const;
+		// /**
+		//  * @brief Récupère la frame enregistrée en lecture/écriture.
+		//  * @return Une référence sur l'image capturée.
+		//  */
+		// cv::Mat& depthFrame(void);
 		/**
 		 * @brief Récupère la frame enregistrée en lecture seule.
 		 * @return Une référence sur l'image capturée.
 		 */
 		const cv::Mat& colorFrame(void) const;
 		/**
-		 * @brief Récupère la frame enregistrée en lecture/écriture.
-		 * @return Une référence sur l'image capturée.
+		 * @date       15-Feb-2017
+		 * @brief      Récupère la frame enregistrée en lecture/écriture.
+		 * @return     Une référence sur l'image capturée.
 		 */
 		cv::Mat& colorFrame(void);
 
+		friend class Player;
+
     private:
         void initCamera(const char *uri);      //!< @brief Initialise le composant caméra.
-        void initDepthStream(void); //!< @brief Initialise le canal de profondeur.
+        // void initDepthStream(void); //!< @brief Initialise le canal de profondeur.
         void initColorStream(void); //!< @brief Initialise le canal couleur.
 
         openni::Device        device;     //!< La caméra elle-même.
-        openni::VideoStream   depth;      //!< Le canal de profondeur.
+        // openni::VideoStream   depth;      //!< Le canal de profondeur.
         openni::VideoStream   color;      //!< Le canal couleur.
-        openni::VideoFrameRef depthframe; //!< L'image capturée pour le canal profondeur.
+        // openni::VideoFrameRef depthframe; //!< L'image capturée pour le canal profondeur.
         openni::VideoFrameRef colorframe; //!< L'image capturée pour le canal couleur.
-        cv::Mat               depthMat;   //!< Ce qu'il faut afficher.
+        // cv::Mat               depthMat;   //!< Ce qu'il faut afficher.
         cv::Mat               colorMat;   //!< Ce qu'il faut afficher.
 
         /**
@@ -94,6 +98,13 @@ struct Camera final
          * @return     True si on a trouvé le mode voulu, False sinon
          */
         bool findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode);
+
+		/**
+		 * @date       15-Feb-2017
+		 * @brief      Récupère le device
+		 * @return     Le device
+		 */
+		openni::Device& getDevice();
 
 };
 

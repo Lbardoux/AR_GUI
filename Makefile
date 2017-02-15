@@ -2,7 +2,6 @@
 # Laurent   BARDOUX p1108365
 # Mehdi     GHESH   p1209574
 # Charles   SULTAN  p1207507
-# Alexandre BELAIZI p
 
 
 .PHONY: doc tar help decompress push
@@ -82,10 +81,8 @@ $(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
 	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
-
-
 $(OBJ)/main.o                : 
-$(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(INCLUDES)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
+$(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(MTLKIT)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
 $(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp
 $(OBJ)/Player.o              : $(INCLUDES)/Player.hpp $(MTLKIT)/ShaderProgram.hpp
 $(OBJ)/SetCursor.o           : $(INCLUDES)/SetCursor.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Cv_core.hpp
@@ -100,6 +97,8 @@ $(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hp
                                $(INCLUDES)/SkeletonStateWindow.hpp
 $(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
+$(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/Widget.hpp
+$(OBJ)/Sprite.o              : $(INCLUDES)/Sprite.hpp $(INCLUDES)/Cv_core.hpp
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@

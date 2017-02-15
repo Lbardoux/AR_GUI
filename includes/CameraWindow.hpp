@@ -6,6 +6,8 @@
 #include "OpenCVWindow.hpp"
 #include "Camera.hpp"
 
+class Player;
+
 class CameraWindow final : public OpenCVWindow
 {
 public:
@@ -28,8 +30,16 @@ public:
 	void close(void) override;
 	void update(void) override;
 
+	/**
+	 * @date       15-Feb-2017
+	 * @brief      Récupère la caméra
+	 * @return     La caméra
+	 */
+	Camera& getCamera();
+
 private:
 	Camera camera; //!< Camera de profondeur
+
 };
 
 #endif
