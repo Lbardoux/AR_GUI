@@ -152,14 +152,16 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
     //
    	player.update();
     //Epaule 1
-    Point position_1 = player.getPointOf(LEFT_SHOULDER);
+    //Point position_1(-100, 300, 1000);// = player.getPointOf(LEFT_SHOULDER);
+    Point position_1 = player.getPointOf(RIGHT_SHOULDER);
     if(position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0)
     {
 	    model = translationMatrix(position_1) * scaleMatrix(50, 50, 50);
 	    mesh_test.draw(model, view, projection);
 	}
 	//Epaule 2
-    Point position_2 = player.getPointOf(RIGHT_SHOULDER);
+    //Point position_2(100, 200, 1000);// = player.getPointOf(RIGHT_SHOULDER);
+	Point position_2 = player.getPointOf(LEFT_SHOULDER);
     if(position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
 	    model = translationMatrix(position_2) * scaleMatrix(50, 50, 50);
@@ -167,12 +169,10 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
 	}
 
     //Vetement
-    //model = translationMatrix(0, 0, 800) * scaleMatrix(20, 20, 20);
-	//mesh_test.draw(model, view, projection);
     if(	position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 || 
     	position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
-	    //clothe.draw(position_1, position_2, view, projection);
+	    clothe.draw(position_1, position_2, view, projection);
 	}
 
     return false;
@@ -222,7 +222,7 @@ int main(int argc, char** argv)
         FragmentShader fragment("assets/shaders/fragment.cpp");
         ShaderProgram program({vertex, fragment});
 
-        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -10, 0));
+        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
         Mesh cube("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
         Mesh fond("assets/objs/squarre.obj", camera, program);
 

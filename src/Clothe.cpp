@@ -33,20 +33,25 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
 	Matrix translation_matrix = translationMatrix(v_translate);
 
 	//Le scale
-	float scale_with_proportion = p1_p2.normL2() * 0.2;
+	float scale_with_proportion = p1_p2.normL2() * 0.52;
 	Matrix scale_matrix = scaleMatrix(scale_with_proportion, scale_with_proportion, scale_with_proportion);
 
 	//La rotation selon z
 	Vector p1_p2_z = Vector(p1_p2.x(), p1_p2.y(), 0).normalize(); 
-	float cos_angle_z = dot(p1_p2_z, Vector(0, 1, 0));
+	float cos_angle_z = dot(p1_p2_z, Vector(1, 0, 0));
 	float angle_z = acos(cos_angle_z);
+	if(position1.y() > position2.y()) angle_z = -angle_z;
 	Matrix rotation_z_matrix = rotationZMatrix(angle_z);
+	//std::cout<<angle_z<<std::endl;
 
 	//La rotation selon x
-	/*Vector p1_p2_x = Vector(0, p1_p2.y(), 0); 
-	float angle_x = dot(p1_p2, Vector(1, 0, 0));
-	Matrix rotation_x_matrix = scaleMatrix(0.1, 0.1, 0.1);*/
+	Vector p1_p2_y = Vector(p1_p2.x(), 0, p1_p2.z()).normalize(); 
+	float cos_angle_y = dot(p1_p2_y, Vector(1, 0, 0));
+	float angle_y = acos(cos_angle_y);
+	if(position1.z() > position2.z()) angle_y = -angle_y;
+	Matrix rotation_y_matrix = rotationYMatrix(angle_y);
+	//std::cout<<angle_y<<std::endl;
 
-	Transform model = translation_matrix * rotation_z_matrix * scale_matrix;
+	Transform model = translation_matrix /** rotation_y_matrix*/ * rotation_z_matrix * scale_matrix;
 	m_mesh.draw(model, view, projection);
 }
