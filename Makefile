@@ -2,7 +2,6 @@
 # Laurent   BARDOUX p1108365
 # Mehdi     GHESH   p1209574
 # Charles   SULTAN  p1207507
-# Alexandre BELAIZI p
 
 
 .PHONY: doc tar help decompress push
@@ -98,6 +97,8 @@ $(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hp
                                $(INCLUDES)/SkeletonStateWindow.hpp
 $(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
+$(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/Widget.hpp
+$(OBJ)/Sprite.o              : $(INCLUDES)/Sprite.hpp $(INCLUDES)/Cv_core.hpp
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@
