@@ -34,6 +34,7 @@ typedef cv::Mat Sprite; //!< Beaucoup plus simple à manipuler.
 class Sprites final
 {
     public:
+		static Sprite test;
 		/**
 		 * @brief Charge les sprites en un coup.
 		 * @throw std::runtime_error Si un chargement a échoué.
@@ -50,7 +51,7 @@ class Sprites final
  * @param[in]  fname Le nom du fichier, depuis la racine du projet.
  * @param[out] dst   Le réceptacle qui va stocker l'image.
  */
-void loadSprite(const std::string& fname, cv::Mat& dst);
+void loadSprite(const std::string& fname, Sprite& dst);
 
 /**
  * @brief Affiche @b dst sur @b sprite en mettant son origine à @b x et @b y.

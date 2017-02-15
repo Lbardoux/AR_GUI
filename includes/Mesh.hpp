@@ -19,6 +19,8 @@
 #include "GlCore.hpp"
 #include "Matrix.hpp"
 #include "ShaderProgram.hpp"
+#include "Cv_core.hpp"
+#include "Camera.hpp"
 
 #ifndef BUFFER_OFFSET
     #define BUFFER_OFFSET(offset) ((char*)NULL + (offset))
@@ -33,15 +35,30 @@ class Mesh
 public:
 	/**
      * @brief Construit le mesh
-     * @param[in] path le chemin vers le fichier .obj 
+     * @param[in] path_to_obj le chemin vers le fichier .obj 
+     * @param[in] path_to_texture le chemin vers le fichier de texture (doit être un fichier BMP)
      * @param[in] program le shader
      */
-	Mesh(const char * path, ShaderProgram & program);
+	Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program);
+
+    /**
+     * @brief Construit le mesh
+     * @param[in] path_to_obj le chemin vers le fichier .obj 
+     * @param[in] mat la matrice contenant l'image
+     * @param[in] program le shader
+     */
+    Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program);
 
 	/**
      * @brief Déstructeur par défaut.
      */
 	~Mesh() = default;
+
+    /**
+     * @brief      Initialise ou rafraichie la texture
+     * @param[in]  mat  La matrice contenant l'image
+     */
+    void readTextureFromCamera(Camera & camera);
 
 	/**
      * @brief Affiche le mesh.r
@@ -52,7 +69,21 @@ public:
 	void draw(const Transform & model, const Transform & view, const Transform & projection) const;
 
 private:
+    /**
+     * @brief      Initialise les 3 tableaux à partir d'un fichier .obj
+     */
+    void readWaveFront(const char * path_to_obj);
+
+    /**
+     * @brief      Initialise la VAO
+     */
 	void initVAO();
+
+    /**
+     * @brief      Initialise la texture
+     * @param[in]  path  Le chemin vers le fichier contenant la texture (doit être un fichier BMP)
+     */
+    void initTexture(const char * path);
 
 	GLuint              m_program;  //!< Le shader   
     GLuint              m_vao;      //!< Le VAO.
@@ -60,6 +91,7 @@ private:
     std::vector<vec3>   m_vertices; //!< Les coordonnées des points.
     std::vector<vec3>   m_normals;  //!< Les normales.
     std::vector<vec2>   m_uvs;      //!< Les coordonnées de textures.
+    GLuint              m_texture;  //!< La texture
 };
 
 #endif

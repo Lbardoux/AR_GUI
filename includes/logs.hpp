@@ -467,7 +467,7 @@ namespace mtl
 			//! @brief Stores the name of the configuration file.
 			inline const char* _filename(void)
 			{
-				return "log.cfg";
+				return "assets/log.cfg";
 			}
 			/**
 			 * @brief Load the configuration file (for gcc only) if it exists, else create it next to the

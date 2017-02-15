@@ -23,7 +23,7 @@ TouchButton::TouchButton(TouchButton&& other) : TouchButton(other)
     
 }
 
-TouchButton::TouchButton(const cv::Mat* image) : Widget(), sprite(image)
+TouchButton::TouchButton(cv::Mat* image) : Widget(), sprite(image)
 {
     
 }

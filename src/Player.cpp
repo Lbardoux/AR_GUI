@@ -3,14 +3,28 @@
  */
 #include "Player.hpp"
 
-Player::Player(nite::UserTracker & user_tracker) : m_user_tracker(user_tracker)
-{}
+Player::Player(Camera & camera)
+{
+	openni::Device & device = camera.getDevice();
+	nite::NiTE::initialize();
+    std::cout<<"NiTE initialisé"<<std::endl;
+
+    //Création du tracker
+    m_user_tracker = new nite::UserTracker;
+    if(m_user_tracker->create(&device) != nite::STATUS_OK)
+    {
+        printf("Failed to create tracker\n");
+        assert(false);
+    }
+
+    std::cout<<"Player initialisé "<<std::endl;
+}
 
 bool Player::update()
 {
 	//On choppe une frame
 	nite::UserTrackerFrameRef user_tracker_frame;
-	nite::Status status = m_user_tracker.readFrame(&user_tracker_frame);
+	nite::Status status = m_user_tracker->readFrame(&user_tracker_frame);
 	if(status != nite::STATUS_OK)
 	{
 		printf("GetNextData failed\n");
@@ -33,8 +47,8 @@ bool Player::update()
 	//Si il est nouveau, on commence à le traquer
 	if(m_user->isNew())
 	{
-		m_user_tracker.startSkeletonTracking(m_user->getId());
-		m_user_tracker.startPoseDetection(m_user->getId(), nite::POSE_CROSSED_HANDS);
+		m_user_tracker->startSkeletonTracking(m_user->getId());
+		m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_CROSSED_HANDS);
 	}
 
 	one_player_visible = true;

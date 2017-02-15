@@ -31,7 +31,7 @@
 // ############################################################################
 // Définition des typedefs
 
-typedef cv::Vec3i mat_data_t; //!< Type stockée dans nos matrices, et évite de taper cv::Vec3i à chaque fois
+typedef cv::Vec4b mat_data_t; //!< Type stockée dans nos matrices, et évite de taper cv::Vec4i à chaque fois
 
 // ############################################################################
 // Déclaration des fonctions usuelles

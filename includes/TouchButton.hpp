@@ -25,7 +25,7 @@ class TouchButton : public Widget
          * @brief Instancie un TouchButton avec @b image comme sprite
          * @param[in] image L'aresse d'une cv::Mat préalablement chargée.
          */
-        TouchButton(const cv::Mat* image);
+        TouchButton(cv::Mat* image);
         
         virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) const override;
         //virtual void setActivationTime(time_t time) override;

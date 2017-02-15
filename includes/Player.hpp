@@ -9,6 +9,7 @@
 
 #include <NiTE.h>
 #include "vec.hpp"
+#include "Camera.hpp"
 
 /**
  * @enum PlayerMember
@@ -33,7 +34,7 @@ public:
      * @param[in] 	user_tracker le tracker préallablement initialisé avec la bibliothèque NiTE.
 	 * @pre 		Veuillez faire attention  que user_tracker->create(&device) soit bien égal à nite::STATUS_OK.
      */
-	Player(nite::UserTracker & user_tracker);
+	Player(Camera & camera);
 	/**
      * @brief Destructeur par défaut.
      */
@@ -75,7 +76,7 @@ private:
      */
 	nite::Point3f getPositionOf(nite::JointType member) const;
 
-    nite::UserTracker & 	m_user_tracker;		//!< Le tracker.
+    nite::UserTracker * 	m_user_tracker;		//!< Le tracker.
     const nite::UserData * 	m_user;				//!< Le joueur detecté. 
     bool 					one_player_visible;	//!< Permet de savoir si lors du dernier update, la caméra a bien decté un et un seul joueur.
 };
