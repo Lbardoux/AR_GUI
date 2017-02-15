@@ -82,7 +82,7 @@ $(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
 $(OBJ)/main.o                : 
-$(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(INCLUDES)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
+$(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(MTLKIT)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
 $(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp
 $(OBJ)/Player.o              : $(INCLUDES)/Player.hpp $(MTLKIT)/ShaderProgram.hpp
 $(OBJ)/SetCursor.o           : $(INCLUDES)/SetCursor.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Cv_core.hpp
