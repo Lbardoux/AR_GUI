@@ -78,6 +78,7 @@ struct Camera final
         // void initDepthStream(void); //!< @brief Initialise le canal de profondeur.
         void initColorStream(void); //!< @brief Initialise le canal couleur.
 
+
         openni::Device        device;     //!< La caméra elle-même.
         // openni::VideoStream   depth;      //!< Le canal de profondeur.
         openni::VideoStream   color;      //!< Le canal couleur.

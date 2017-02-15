@@ -134,39 +134,51 @@
 #include "Mesh.hpp"
 #include "Player.hpp"
 #include "Clothe.hpp"
+#include "Camera.hpp"
 
 /*Transform model = Translation(-3, -2, 10);
 Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
 Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);*/
-bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
+bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe, Camera & camera)
 {
     Pipeline::clear(true, true);
 
     //Epaule 1
-    /*Point p1(0.3, 0.5, 0);
-    const Transform model1 = translationMatrix(p1) * scaleMatrix(0.1, 0.1, 0.1);
+    Point p1(0.3, 0.5, 0);
+    const Transform model1 = translationMatrix(p1) * scaleMatrix(0.7, 0.7, 0.7);
     const Transform view = translationMatrix(0, 0, 0);
     const Transform projection = translationMatrix(0, 0, 0);
+    
+    mesh.readTextureFromCamera(camera);
     mesh.draw(model1, view, projection);
 
     //Epaule 2
-    Point p2(-0.3, 0, 0);
+    Point p2(-0.3, -0.5, 0);
     const Transform model2 = translationMatrix(p2) * scaleMatrix(0.1, 0.1, 0.1);
-    mesh.draw(model2, view, projection);
+    //mesh.draw(model2, view, projection);
 
     //Vetement
-    clothe.draw(p1, p2, view, projection);*/
+    //clothe.draw(p1, p2, view, projection);
 
-    const Transform model1 = translationMatrix(0, -0.5, 0) * scaleMatrix(0.1, 0.1, 0.1);
+    /*
+     *
+     * METTRE DANS LE CONSTRUCTEUR DE MESH UN DECALLAGE FACULTATIF
+     * CA SERA BEAUCOUP PLUS SIMPLE A GERER ENSUITE
+     * 
+     */
+
+    /*player.update();
+    nite::Point3f  position = player.getPositionOf(HEAD);
+    std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;  */
+
+
+    /*const Transform model1 = translationMatrix(0, -1.0, 0) * scaleMatrix(0.15, 0.15, 0.15);
     const Transform view = translationMatrix(0, 0, 0);
     const Transform projection = translationMatrix(0, 0, 0);
-    mesh.draw(model1, view, projection);
+    mesh.draw(model1, view, projection);*/
 
     return false;
 }
-
-*/
-
 
 int main(int argc, char** argv)
 {
@@ -189,88 +201,32 @@ int main(int argc, char** argv)
     }
     else
     {
-        /*GlContext::initGL(640, 480);
-        GlContext::windowCaption("OpenGL window");
-        Pipeline::fromXML("assets/PipelineConfig.xml");
+        Camera camera;
+	    camera.init();
+	    camera.start(640, 480);
+    	Player player(camera);
+
+    	GlContext::initGL(640, 480);
+		GlContext::windowCaption("OpenGL window");
+		Pipeline::fromXML("assets/PipelineConfig.xml");
 
         VertexShader vertex("assets/shaders/vertex.cpp");
         FragmentShader fragment("assets/shaders/fragment.cpp");
         ShaderProgram program({vertex, fragment});
 
-        Mesh mesh("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program);
-
-        nite::UserTracker * user_tracker = new nite::UserTracker;	//Très mal initialisé, 
-    	Player player(*user_tracker);								//juste pour faire plaisir au compilo
+        //Mesh mesh("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
+        Mesh mesh("assets/objs/squarre.obj", camera, program);
 
         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
 
         program.use();
-        renderLoop(30, met_ton_code_la_charles, mesh, player, clothe);
+        renderLoop(30, met_ton_code_la_charles, mesh, player, clothe, camera);
         
-        GlContext::endGL();*/
+        GlContext::endGL();
     }
     
     return EXIT_SUCCESS;
 }
-
-
-
-//
-//Main de Charles
-//
-/*
-#include "Player.hpp"
-#include <iostream>
-
-int main(int argc, char** argv)
-{
-    //Initialisation de OpenNI
-    openni::Status status = openni::OpenNI::initialize();
-    if(status != openni::STATUS_OK)
-    {
-        printf("Failed to initialize OpenNI\n%s\n", openni::OpenNI::getExtendedError());
-        return status;
-    }
-    std::cout<<"(1/4) OpenNI initialisé"<<std::endl;
-
-    //Ouvre n'importe quelle caméra
-    const char* deviceUri = openni::ANY_DEVICE;
-    openni::Device device;
-    status = device.open(deviceUri);
-    if (status != openni::STATUS_OK)
-    {
-        printf("Failed to open device\n%s\n", openni::OpenNI::getExtendedError());
-        return status;
-    }
-    std::cout<<"(2/4) Caméra initialisée"<<std::endl;
-
-    //Initialisation de nite
-    nite::NiTE::initialize();
-    std::cout<<"(3/4) NiTE initialisé"<<std::endl;
-
-    //Création du tracker
-    nite::UserTracker * user_tracker = new nite::UserTracker;
-    if(user_tracker->create(&device) != nite::STATUS_OK)
-    {
-        printf("Failed to create tracker\n");
-        return openni::STATUS_ERROR;
-    }
-    std::cout<<"(4/4) Tracker initialisé"<<std::endl;
-
-    //Création du squelette
-    Player player(*user_tracker);
-
-    //Exemple
-    while(true)
-    {
-        player.update();
-        nite::Point3f  position = player.getPositionOf(HEAD);
-        std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;    
-    }
-}
-*/
-
-
 
 //
 // (Fait par la) Main de Mehdi

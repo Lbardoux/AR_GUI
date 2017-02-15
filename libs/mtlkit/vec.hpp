@@ -161,6 +161,21 @@ struct Vecf final
 		 * @param[in] other The same Vecf to copy.
 		 * @return A reference into \b this to chain calls.
 		 */
+		Vecf<T, N> normalize() noexcept
+		{
+			float k = 1/this->normL2();
+			Vecf temp = Vecf<T, N>();
+			for(unsigned int i=0;i<N;++i)
+			{
+				temp.values[i] = this->values[i]*k;
+			}
+			return *this;
+		}
+		/**
+		 * @brief Affects \b other to \b this as a copy.
+		 * @param[in] other The same Vecf to copy.
+		 * @return A reference into \b this to chain calls.
+		 */
 		Vecf<T, N>& operator=(const Vecf<T, N>& other) noexcept
 		{
 			this->copy(other);

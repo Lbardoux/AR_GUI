@@ -6,8 +6,24 @@
 Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program) : m_program(program)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
+    readWaveFront(path_to_obj);
+    initVAO();
+    initTexture(path_to_texture);
+    std::cout<<"Fait"<<std::endl;
+}
 
-    std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
+Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program) : m_program(program)
+{
+    std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
+    readWaveFront(path_to_obj);
+    initVAO();
+    readTextureFromCamera(camera);
+    std::cout<<"Fait"<<std::endl;
+}
+
+void Mesh::readWaveFront(const char * path_to_obj)
+{
+    std::vector<int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
     std::vector<vec2> temp_uvs;
     std::vector<vec3> temp_normals;
@@ -49,7 +65,7 @@ Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram
         else if ( strcmp( lineHeader, "f" ) == 0 )
         {
             std::string vertex1, vertex2, vertex3;
-            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+            int vertexIndex[3], uvIndex[3], normalIndex[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
             if (matches != 9)
             {
@@ -78,9 +94,9 @@ Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram
     for(unsigned int i=0; i<vertexIndices.size(); i++)
     {
         
-        unsigned int vertexIndex = vertexIndices[i];
-        unsigned int uvIndex = uvIndices[i];
-        unsigned int normalIndex = normalIndices[i];
+        unsigned int vertexIndex = std::abs(vertexIndices[i]);
+        unsigned int uvIndex = std::abs(uvIndices[i]);
+        unsigned int normalIndex = std::abs(normalIndices[i]);
 
         vec3 vertex = temp_vertices[ vertexIndex-1 ];
         vec2 uv = temp_uvs[ uvIndex-1 ];
@@ -90,11 +106,6 @@ Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram
         m_uvs     .push_back(uv);
         m_normals .push_back(normal);
     }
-
-    initVAO();
-    init_texture(path_to_texture);
-
-    std::cout<<"Fait"<<std::endl;
 }
 
 void Mesh::initVAO()
@@ -151,7 +162,74 @@ void Mesh::initVAO()
     glBindVertexArray(0);
 }
 
-void Mesh::init_texture(const char * path)
+void Mesh::readTextureFromCamera(Camera & camera)
+{
+    camera.readFrame();
+    cv::Mat mat = camera.colorFrame();
+
+    GLenum minFilter = GL_NEAREST;
+    GLenum magFilter = GL_NEAREST;
+    GLenum wrapFilter = GL_CLAMP;
+
+    // Generate a number for our textureID's unique handle
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+ 
+    // Bind to our texture handle
+    glBindTexture(GL_TEXTURE_2D, textureID);
+ 
+    // Catch silly-mistake texture interpolation method for magnification
+    if (magFilter == GL_LINEAR_MIPMAP_LINEAR  ||
+        magFilter == GL_LINEAR_MIPMAP_NEAREST ||
+        magFilter == GL_NEAREST_MIPMAP_LINEAR ||
+        magFilter == GL_NEAREST_MIPMAP_NEAREST)
+    {
+        std::cout << "You can't use MIPMAPs for magnification - setting filter to GL_LINEAR" << std::endl;
+        magFilter = GL_LINEAR;
+    }
+ 
+    // Set texture interpolation methods for minification and magnification
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
+ 
+    // Set texture clamping method
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapFilter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapFilter);
+ 
+    // Set incoming texture format to:
+    // GL_BGR       for CV_CAP_OPENNI_BGR_IMAGE,
+    // GL_LUMINANCE for CV_CAP_OPENNI_DISPARITY_MAP,
+    // Work out other mappings as required ( there's a list in comments in main() )
+    GLenum inputColourFormat = GL_BGR;
+    if (mat.channels() == 1)
+    {
+        inputColourFormat = GL_LUMINANCE;
+    }
+ 
+    // Create the texture
+    glTexImage2D(GL_TEXTURE_2D,     // Type of texture
+                 0,                 // Pyramid level (for mip-mapping) - 0 is the top level
+                 GL_RGB,            // Internal colour format to convert to
+                 mat.cols,          // Image width  i.e. 640 for Kinect in standard mode
+                 mat.rows,          // Image height i.e. 480 for Kinect in standard mode
+                 0,                 // Border width in pixels (can either be 1 or 0)
+                 inputColourFormat, // Input image format (i.e. GL_RGB, GL_RGBA, GL_BGR etc.)
+                 GL_UNSIGNED_BYTE,  // Image data type
+                 mat.ptr());        // The actual image data itself
+ 
+    // If we're using mipmaps then generate them. Note: This requires OpenGL 3.0 or higher
+    if (minFilter == GL_LINEAR_MIPMAP_LINEAR  ||
+        minFilter == GL_LINEAR_MIPMAP_NEAREST ||
+        minFilter == GL_NEAREST_MIPMAP_LINEAR ||
+        minFilter == GL_NEAREST_MIPMAP_NEAREST)
+    {
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+ 
+    m_texture = textureID;
+}
+
+void Mesh::initTexture(const char * path)
 {
     printf("Reading image %s\n", path);
 

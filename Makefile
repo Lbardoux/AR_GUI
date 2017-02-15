@@ -6,6 +6,7 @@
 
 .PHONY: doc tar help decompress push
 
+# Option pour la verbosité du makefile lors de la compilation des sources
 VERBOSE  := 0
 CXX_V    := g++
 CC_0      = @echo "Compiling $<..."; $(CXX_V)
@@ -28,7 +29,7 @@ NITE2     := $(LIBS)/NiTE2
 MTLKIT    := $(LIBS)/mtlkit
 LOGS      := $(LIBS)/logs
 
-LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image -lm
+LDLIBS   := -L$(OBJ)/ -lOpenNI2 -L$(NITE2)/Redist -lpthread -lNiTE2 -lGL -lGLEW -lSDL2 -lSDL2_image
 LDFLAGS  := -I$(INCLUDES)/ -I$(XMLLOADER)/ -I$(NITE2)/Include -I$(MTLKIT)/ -I$(LOGS)
 location := $(shell whoami)
 README   := ReadMe.html
@@ -88,7 +89,8 @@ $(OBJ)/Player.o              : $(INCLUDES)/Player.hpp $(MTLKIT)/ShaderProgram.hp
 $(OBJ)/SetCursor.o           : $(INCLUDES)/SetCursor.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Cv_core.hpp
 $(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/Cv_core.hpp $(INCLUDES)/logs.hpp
 $(OBJ)/WindowsManager.o      : $(INCLUDES)/WindowsManager.hpp
-$(OBJ)/Widget.o              : $(INCLUDES)/Widget.hpp $(INCLUDES)/Cv_core.hpp $(INCLUDES)/Cursor.hpp
+$(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp $(OBJ)/WindowsManager.o
+$(OBJ)/SkeletonStateWindow.o : $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/OpenCVWindow.hpp $(OBJ)/OpenCVWindow.o
 $(OBJ)/Cv_core.o             : $(INCLUDES)/Cv_core.hpp
 $(OBJ)/Clothe.o              : $(INCLUDES)/Clothe.hpp $(INCLUDES)/Player.hpp $(INCLUDES)/Mesh.hpp $(INCLUDES)/Matrix.hpp
 $(OBJ)/Cursor.o              : $(INCLUDES)/Cursor.hpp $(INCLUDES)/clamp.hpp $(INCLUDES)/Cv_core.hpp
@@ -112,7 +114,6 @@ _directories:
 
 libs : $(XMLOBJECTS) $(MTLKITOBJECTS)
 
-#dépendances pour XmlLoader/Writer
 $(OBJ)/XmlBase.o   : $(XMLLOADER)/XmlBase.hpp   $(XMLLOADER)/tinyxml2.h  $(OBJ)/tinyxml2.o
 $(OBJ)/XmlLoader.o : $(XMLLOADER)/XmlLoader.hpp $(XMLLOADER)/XmlBase.hpp
 $(OBJ)/XmlWriter.o : $(XMLLOADER)/XmlWriter.hpp $(XMLLOADER)/XmlBase.hpp
@@ -120,12 +121,6 @@ $(OBJ)/tinyxml2.o  : $(XMLLOADER)/tinyxml2.h
 $(OBJ)/%.o : $(XMLLOADER)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -I$(XMLLOADER) -o $@
 
-# Dépendances pour MTLKIT
-$(OBJ)/Events.o          : $(MTLKIT)/keymap.hpp        $(MTLKIT)/Events.hpp
-$(OBJ)/GlContext.o       : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/GlContext.hpp       $(MTLKIT)/Events.hpp
-$(OBJ)/Pipeline.o        : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/Pipeline_traits.hpp $(MTLKIT)/vec.hpp    $(XMLLOADER)/XmlLoader.hpp $(MTLKIT)/Pipeline.hpp
-$(OBJ)/Pipeline_traits.o : $(MTLKIT)/GlCore.hpp        $(MTLKIT)/Pipeline_traits.hpp
-$(OBJ)/ShaderProgram.o   : $(MTLKIT)/ShaderProgram.hpp $(MTLKIT)/GlCore.hpp
 $(OBJ)/%.o : $(MTLKIT)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -I$(MTLKIT) -I$(XMLLOADER) -lGL -lGLEW -lSDL2 -lSDL2_image -o $@
 
