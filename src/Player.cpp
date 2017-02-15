@@ -63,7 +63,7 @@ bool Player::isVisible() const
 Point Player::getPointOf(PlayerMember member) const
 {
 	nite::Point3f point = getPositionOf(member);
-	return Point(point.x, point.y, point.z);
+	return Point(-point.x, point.y, point.z);
 }
 
 nite::Point3f Player::getPositionOf(PlayerMember member) const

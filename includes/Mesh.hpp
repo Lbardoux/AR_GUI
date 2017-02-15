@@ -34,20 +34,25 @@ class Mesh
 {
 public:
 	/**
-     * @brief Construit le mesh
-     * @param[in] path_to_obj le chemin vers le fichier .obj 
-     * @param[in] path_to_texture le chemin vers le fichier de texture (doit être un fichier BMP)
-     * @param[in] program le shader
-     */
-	Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program);
+      * @brief      Construit le mesh
+      * @param[in]  path_to_obj      le chemin vers le fichier .obj
+      * @param[in]  path_to_texture  le chemin vers le fichier de texture (doit
+      *                              être un fichier BMP)
+      * @param[in]  program          le shader
+      * @param[in]  offset           le décallage
+      */
+	Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
+            const Vector & offset = Vector());
 
     /**
-     * @brief Construit le mesh
-     * @param[in] path_to_obj le chemin vers le fichier .obj 
-     * @param[in] mat la matrice contenant l'image
-     * @param[in] program le shader
+     * @brief      Construit le mesh
+     * @param[in]  path_to_obj  le chemin vers le fichier .obj
+     * @param      camera       la camera
+     * @param[in]  program      le shader
+     * @param[in]  offset       le décallage
      */
-    Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program);
+    Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
+            const Vector & offset = Vector());
 
 	/**
      * @brief Déstructeur par défaut.
@@ -56,7 +61,7 @@ public:
 
     /**
      * @brief      Initialise ou rafraichie la texture
-     * @param[in]  mat  La matrice contenant l'image
+     * @param      camera  la camera
      */
     void readTextureFromCamera(Camera & camera);
 
@@ -71,8 +76,10 @@ public:
 private:
     /**
      * @brief      Initialise les 3 tableaux à partir d'un fichier .obj
+     * @param[in]  path_to_obj  Le chemin vers le fichier .obj
+     * @param[in]  offset       Le décallage
      */
-    void readWaveFront(const char * path_to_obj);
+    void readWaveFront(const char * path_to_obj, const Vector & offset);
 
     /**
      * @brief      Initialise la VAO

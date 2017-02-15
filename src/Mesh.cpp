@@ -3,26 +3,35 @@
  */
 #include "Mesh.hpp"
 
-Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program) : m_program(program)
+Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
+        const Vector & offset) : m_program(program)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
-    readWaveFront(path_to_obj);
+    readWaveFront(path_to_obj, offset);
     initVAO();
     initTexture(path_to_texture);
     std::cout<<"Fait"<<std::endl;
 }
 
-Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program) : m_program(program)
+Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
+        const Vector & offset) : m_program(program)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
-    readWaveFront(path_to_obj);
+    readWaveFront(path_to_obj, offset);
     initVAO();
     readTextureFromCamera(camera);
     std::cout<<"Fait"<<std::endl;
 }
 
-void Mesh::readWaveFront(const char * path_to_obj)
+void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
 {
+    /*float xmin = std::numeric_limits<float>::max();
+    float ymin = std::numeric_limits<float>::max();
+    float zmin = std::numeric_limits<float>::max();
+    float xmax = std::numeric_limits<float>::min();
+    float ymax = std::numeric_limits<float>::min();
+    float zmax = std::numeric_limits<float>::min();*/
+
     std::vector<int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
     std::vector<vec2> temp_uvs;
@@ -45,7 +54,15 @@ void Mesh::readWaveFront(const char * path_to_obj)
         {
             float x, y, z;
             assert(fscanf(file, "%f %f %f\n", &x, &y, &z));
-            vec3 vertex(x, y, z);
+            vec3 vertex(x + offset.x(), y + offset.y(), z + offset.z());
+
+            /*if(xmin > x) xmin = x;
+            if(ymin > x) ymin = y;
+            if(zmin > x) zmin = z;
+            if(xmax < x) xmax = x;
+            if(ymax < y) ymax = y;
+            if(zmax < z) zmax = z;*/
+
             temp_vertices.push_back(vertex);
         }
         else if ( strcmp( lineHeader, "vt" ) == 0 )
@@ -66,7 +83,10 @@ void Mesh::readWaveFront(const char * path_to_obj)
         {
             std::string vertex1, vertex2, vertex3;
             int vertexIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+                &vertexIndex[0], &uvIndex[0], &normalIndex[0], 
+                &vertexIndex[1], &uvIndex[1], &normalIndex[1], 
+                &vertexIndex[2], &uvIndex[2], &normalIndex[2] );
             if (matches != 9)
             {
                 std::cout<<"Le fichier ne peut être lu par ce parseur"<<std::endl;
@@ -106,6 +126,8 @@ void Mesh::readWaveFront(const char * path_to_obj)
         m_uvs     .push_back(uv);
         m_normals .push_back(normal);
     }
+
+    //std::cout<<std::endl<<std::endl<<xmin<<" "<<ymin<<" "<<zmin<<" "<<xmax<<" "<<ymax<<" "<<zmax<<std::endl;
 }
 
 void Mesh::initVAO()
@@ -318,11 +340,6 @@ void Mesh::draw(const Transform & model, const Transform & view, const Transform
     glUniformMatrix4fv(mvp_location, 1, GL_TRUE, mvp.getBuffer());
     glUniformMatrix4fv(mv_location, 1, GL_TRUE, mv.getBuffer());
     glUniformMatrix4fv(n_location, 1, GL_TRUE, mv.getBuffer());
-    /*for(int i = 0; i < 16; i++)
-    {
-        std::cout<<model.getBuffer()[i]<<std::endl;
-    }
-    std::cout<<std::endl<<std::endl;*/
 
     //Texture
     GLint texture_location = glGetUniformLocation(m_program, "u_texture");

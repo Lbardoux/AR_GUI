@@ -24,7 +24,8 @@ float dot(Vector v1, Vector v2)
  *
  */
 
-void Clothe::draw(const Point & position1, const Point & position2, const Transform & view, const Transform & projection) const
+void Clothe::draw(const Point & position1, const Point & position2, const Transform & view, 
+	const Transform & projection) const
 {
 	//La translation
 	Vector v_translate = center(position1, position2);
@@ -32,8 +33,8 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
 	Matrix translation_matrix = translationMatrix(v_translate);
 
 	//Le scale
-	//float scale = p1_p2.normL2() * 1.0;
-	Matrix scale_matrix = scaleMatrix(0.1, 0.1, 0.1);
+	float scale_with_proportion = p1_p2.normL2() * 0.2;
+	Matrix scale_matrix = scaleMatrix(scale_with_proportion, scale_with_proportion, scale_with_proportion);
 
 	//La rotation selon z
 	Vector p1_p2_z = Vector(p1_p2.x(), p1_p2.y(), 0).normalize(); 
