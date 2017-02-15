@@ -1,4 +1,5 @@
 #include "CameraWindow.hpp"
+#include "Sprite.hpp"
 
 CameraWindow::CameraWindow()
 {}
@@ -22,6 +23,8 @@ void CameraWindow::close(void)
 void CameraWindow::update(void)
 {
 	this->camera.readFrame();
+	//mtl::log::info("nombre de canaux :", this->camera.colorFrame().channels());
+	blit(this->camera.colorFrame(), Sprites::test, -24, -24);
 	cv::imshow(this->name, this->camera.colorFrame());
 }
 

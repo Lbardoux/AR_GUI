@@ -8,6 +8,7 @@
 #include "GlContext.hpp"
 #include "Pipeline.hpp"
 
+
 App::App(void) noexcept : process(true)
 {
 	this->initLibs();

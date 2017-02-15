@@ -134,12 +134,16 @@
 #include "Mesh.hpp"
 #include "Player.hpp"
 #include "Clothe.hpp"
-#include "Camera.hpp"
+
+#include "Sprite.hpp"
+
+//#include <QApplication>
 
 /*Transform model = Translation(-3, -2, 10);
 Transform view = Lookat(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);*/
-bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe, Camera & camera)
+Transform projection = Perspective(45, 640.0f / 480.0f, 0.1f, 1000.0f);
+bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
+
 {
     Pipeline::clear(true, true);
 
@@ -171,6 +175,11 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe, Came
     nite::Point3f  position = player.getPositionOf(HEAD);
     std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;  */
 
+void cv_version(void)
+{
+	
+}
+
 
     /*const Transform model1 = translationMatrix(0, -1.0, 0) * scaleMatrix(0.15, 0.15, 0.15);
     const Transform view = translationMatrix(0, 0, 0);
@@ -184,6 +193,10 @@ int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
     mtl::log::info("Ligne de commande valide");
+	mtl::log::info("Chargement des sprites...");
+	Sprites::init();
+	mtl::log::info("Chargement des sprites terminé");
+	
     if (std::string(argv[1]) == "cv")
     {
         mtl::log::info("Lancement avec OpenCV");
@@ -195,9 +208,15 @@ int main(int argc, char** argv)
     }
     else if (std::string(argv[1]) == "test")
     {
-        Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-        Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-        std::cout << mat1*mat2 << std::endl;
+		//QApplication app(argc, argv);
+        cv::namedWindow("test");
+		cv::resizeWindow("test", 640u, 640u);
+		cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
+//		cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
+		blit(img, Sprites::test, 0, 0);
+		cv::imshow("test", img);
+		cv::waitKey(0);
+		cv::destroyWindow("test");
     }
     else
     {
@@ -224,7 +243,8 @@ int main(int argc, char** argv)
         
         GlContext::endGL();
     }
-    
+    Sprites::empty();
+	mtl::log::info("Vidage des sprites");
     return EXIT_SUCCESS;
 }
 

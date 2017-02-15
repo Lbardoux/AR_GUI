@@ -190,7 +190,8 @@ void Camera::readFrame(void)
     colorMat.create(this->colorframe.getHeight(), this->colorframe.getWidth(), CV_8UC3);
     memcpy(colorMat.data, rgbImageBuffer, this->colorframe.getHeight()*this->colorframe.getWidth()*sizeof(uint8_t)*3);
     // cv::flip(temp, this->colorMat, 1);
-    cv::cvtColor(this->colorMat, this->colorMat, CV_BGR2RGB);
+	
+    cv::cvtColor(this->colorMat, this->colorMat, CV_BGR2RGBA);
 }
 
 
