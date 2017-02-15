@@ -15,7 +15,7 @@
         -->
         <depthFunction>less</depthFunction>
         <!-- This value will be interpreted as a float. -->
-        <clearDepthValue_f>1.0</clearDepthValue_f>
+        <clearDepthValue_f>10.0</clearDepthValue_f>
     </depth>
 
     <clearColor>
@@ -27,9 +27,9 @@
     </clearColor>
     
 	<cullFace>
-		<enableCulling>true</enableCulling>
+		<enableCulling>false</enableCulling>
 		<!-- clockwise or counter -->
-		<rotationDirection>counter</rotationDirection>
+		<rotationDirection>clockwise</rotationDirection>
 		<!-- front, back, front_back -->
 		<keeping>front</keeping>
 	</cullFace>

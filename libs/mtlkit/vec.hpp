@@ -164,10 +164,9 @@ struct Vecf final
 		Vecf<T, N> normalize() noexcept
 		{
 			float k = 1/this->normL2();
-			Vecf temp = Vecf<T, N>();
 			for(unsigned int i=0;i<N;++i)
 			{
-				temp.values[i] = this->values[i]*k;
+				this->values[i] = this->values[i]*k;
 			}
 			return *this;
 		}

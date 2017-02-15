@@ -200,7 +200,7 @@ void Mesh::readTextureFromCamera(Camera & camera)
     // GL_BGR       for CV_CAP_OPENNI_BGR_IMAGE,
     // GL_LUMINANCE for CV_CAP_OPENNI_DISPARITY_MAP,
     // Work out other mappings as required ( there's a list in comments in main() )
-    GLenum inputColourFormat = GL_BGR;
+    GLenum inputColourFormat = GL_BGRA;
     if (mat.channels() == 1)
     {
         inputColourFormat = GL_LUMINANCE;
@@ -310,8 +310,8 @@ void Mesh::draw(const Transform & model, const Transform & view, const Transform
     glEnable(GL_TEXTURE_2D);
 
     //Matrices
-    Transform mv = model * view;
-    Transform mvp = model * view * projection;
+    Transform mv = view * model;
+    Transform mvp = projection * mv;
     GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
     GLint mv_location  =  glGetUniformLocation(m_program, "MV");
     GLint n_location   =  glGetUniformLocation(m_program, "N");

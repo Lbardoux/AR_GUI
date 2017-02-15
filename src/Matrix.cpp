@@ -156,6 +156,113 @@ Matrix scaleMatrix(float x, float y, float z)
 				  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
+Matrix& Matrix::inverse()
+{ 
+    int indxc[4], indxr[4];
+    int ipiv[4] = { 0, 0, 0, 0 };
+
+    for (int i = 0; i < 4; i++) {
+        int irow = -1, icol = -1;
+        float big = 0.f;
+
+        // Choose pivot
+        for (int j = 0; j < 4; j++) {
+            if (ipiv[j] != 1) {
+                for (int k = 0; k < 4; k++) {
+                    if (ipiv[k] == 0) {
+                        if (fabsf(this->at(j, k)) >= big) {
+                            big = std::abs(this->at(j, k));
+                            irow = j;
+                            icol = k;
+                        }
+                    }
+                    else if (ipiv[k] > 1)
+                        printf("singular matrix in make_inverse()\n");
+                }
+            }
+        }
+
+        if(!(irow >= 0 && irow < 4) || !(icol >= 0 && icol < 4))
+        	throw std::invalid_argument("La matrice est non inversible");
+
+        ++ipiv[icol];
+        // Swap rows _irow_ and _icol_ for pivot
+        if (irow != icol) {
+            for (int k = 0; k < 4; ++k)
+                std::swap(this->at(irow, k), this->at(icol, k));
+        }
+
+        indxr[i] = irow;
+        indxc[i] = icol;
+        if (this->at(icol, icol) == 0.)
+            printf("singular matrix in make_inverse()\n");
+
+        // Set $m[icol][icol]$ to one by scaling row _icol_ appropriately
+        float pivinv = 1.f / this->at(icol, icol);
+        this->at(icol, icol) = 1.f;
+        for (int j = 0; j < 4; j++)
+            this->at(icol, j) *= pivinv;
+
+        // Subtract this row from others to zero out their columns
+        for (int j = 0; j < 4; j++) {
+            if (j != icol) {
+                float save = this->at(j, icol);
+                this->at(j, icol) = 0;
+                for (int k = 0; k < 4; k++)
+                    this->at(j, k) -= this->at(icol, k)*save;
+            }
+        }
+    }
+
+    // Swap columns to reflect permutation
+    for (int j = 3; j >= 0; j--) {
+        if (indxr[j] != indxc[j]) {
+            for (int k = 0; k < 4; k++)
+                std::swap(this->at(k, indxr[j]), this->at(k, indxc[j]));
+        }
+    }
+
+    return *this;
+}
+
+Vector cross(Vector & u, Vector & v)
+{
+	return Vector(
+        (u.y() * v.z()) - (u.z() * v.y()),
+        (u.z() * v.x()) - (u.x() * v.z()),
+        (u.x() * v.y()) - (u.y() * v.x()));
+}
+
+Matrix lookAt(const Point& from, const Point& to, const Vector& up)
+{
+    Vector dir = Vector(from, to).normalize();
+    Vector up_normalized = up;
+    up_normalized.normalize();
+    Vector right = cross(dir, up_normalized).normalize();
+    Vector newUp = cross(right, dir).normalize();
+
+    Transform m(
+        right.x(), newUp.x(), -dir.x(), from.x(),
+        right.y(), newUp.y(), -dir.y(), from.y(),
+        right.z(), newUp.z(), -dir.z(), from.z(),
+        0,         0,          0,       1);
+
+    return m.inverse();
+}
+
+Matrix perspective(const float fov, const float aspect, const float znear, const float zfar)
+{
+    // perspective, openGL version
+    float itan= 1 / tanf((fov * M_PI / 180) * 0.5f);
+    float id= 1 / (znear - zfar);
+
+    return Matrix(
+        itan/aspect,    0,               0,                 0,
+                  0, itan,               0,                 0,
+                  0,    0, (zfar+znear)*id, 2.f*zfar*znear*id,
+                  0,    0,              -1,                 0);
+}
+
 Matrix operator*(const Matrix& m, float v) noexcept
 {
     Matrix result;
