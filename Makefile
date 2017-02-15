@@ -82,8 +82,6 @@ $(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
 	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
-
-
 $(OBJ)/main.o                : 
 $(OBJ)/Mesh.o                : $(INCLUDES)/Mesh.hpp $(MTLKIT)/vec.hpp $(INCLUDES)/GlCore.hpp $(INCLUDES)/Matrix.hpp $(MTLKIT)/ShaderProgram.hpp
 $(OBJ)/OpenCVWindow.o        : $(INCLUDES)/OpenCVWindow.hpp $(INCLUDES)/WindowsManager.hpp

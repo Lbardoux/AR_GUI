@@ -160,6 +160,7 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
     return false;
 }
 
+*/
 
 
 int main(int argc, char** argv)
@@ -175,9 +176,15 @@ int main(int argc, char** argv)
         mtl::log::info("Terminaison en cours");
         appli.quit();
     }
+    else if (std::string(argv[1]) == "test")
+    {
+        Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+        std::cout << mat1*mat2 << std::endl;
+    }
     else
     {
-        GlContext::initGL(600, 600);
+        /*GlContext::initGL(640, 480);
         GlContext::windowCaption("OpenGL window");
         Pipeline::fromXML("assets/PipelineConfig.xml");
 
@@ -195,7 +202,7 @@ int main(int argc, char** argv)
         program.use();
         renderLoop(30, met_ton_code_la_charles, mesh, player, clothe);
         
-        GlContext::endGL();
+        GlContext::endGL();*/
     }
     
     return EXIT_SUCCESS;
