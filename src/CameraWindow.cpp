@@ -24,3 +24,8 @@ void CameraWindow::update(void)
 	this->camera.readFrame();
 	cv::imshow(this->name, this->camera.colorFrame());
 }
+
+Camera& CameraWindow::getCamera()
+{
+	return this->camera;
+}
