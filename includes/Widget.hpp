@@ -6,6 +6,7 @@
 
 #include "Cv_core.hpp"
 #include "Cursor.hpp"
+#include "logs.hpp"
 #include <ctime>
 
 /**
@@ -31,18 +32,27 @@ public:
 	/**
 	 * @date       10-Feb-2017
 	 * @brief      Indique si le Widget est sous le curseur
+	 * Pour faciliter le code, il faut lui faire retourner l'appel à changeFirstActivation
 	 * @param[in]  cursor  Le Cursor
 	 * @return     Vrai si le Widget est sous le Cursor, Faux sinon
 	 */
-	virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) const;
+	virtual bool isUnderCursor(UNUSED(const Cursor& cursor));
 
 
 	/**
 	 * @date       10-Feb-2017
 	 * @brief      Set pour le temps d'activation
-	 * @param[in]  time  Temps d'activation du Widget
+	 * @param[in]  seconde  Temps d'activation du Widget en seconde
 	 */
-	virtual void setActivationTime(time_t time);
+	virtual void setActivationTime(double seconde);
+
+	/**
+	 * @date       15-Feb-2017
+	 * @brief      Change le temps auquel le Widget a été activé
+	 * @param[in]  underCursor  Retour de underCursor
+	 * @return     Retour de underCursor
+	 */
+	bool changeFirstActivation(bool underCursor);
 
 	/**
 	 * @date       10-Feb-2017
@@ -50,7 +60,7 @@ public:
 	 *             un curseur depuis un temps de activationTime
 	 * @return     Vrai si le Widget est activé, Faux sinon.
 	 */
-	virtual bool isActivated() const;
+	bool isActivated() const;
 
 	/**
 	 * @date       10-Feb-2017
@@ -71,9 +81,12 @@ public:
 	uint32_t& y();
 
 private:
-	time_t activationTime; //!< Temps minimum pour activer le Widget
+	double activationTime;	//!< Temps minimum pour activer le Widget en seconde
+	time_t firstActiveTime; //!< Temps auquel le Widget a été activé
 	uint32_t _x; //!< Coordonnées en x du Widget
 	uint32_t _y; //!< Coordonnées en y du Widget
 };
 
+
+// Code wifi Oasis-TD8 : @Deay2dh&
 #endif

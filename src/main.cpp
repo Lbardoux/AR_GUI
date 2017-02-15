@@ -174,64 +174,28 @@ bool met_ton_code_la_charles(Mesh & mesh, Player & player, Clothe & clothe)
     nite::Point3f  position = player.getPositionOf(HEAD);
     std::cout<<position.x<<" "<<position.y<<" "<<position.z<<std::endl;  */
 
-void cv_version(void)
-{
+// void cv_version(void)
+// {
 	
-}
+// }
 
 
-    /*const Transform model1 = translationMatrix(0, -1.0, 0) * scaleMatrix(0.15, 0.15, 0.15);
-    const Transform view = translationMatrix(0, 0, 0);
-    const Transform projection = translationMatrix(0, 0, 0);
-    mesh.draw(model1, view, projection);*/
+//     /*const Transform model1 = translationMatrix(0, -1.0, 0) * scaleMatrix(0.15, 0.15, 0.15);
+//     const Transform view = translationMatrix(0, 0, 0);
+//     const Transform projection = translationMatrix(0, 0, 0);
+//     mesh.draw(model1, view, projection);*/
 
-    return false;
-}
-
-int main(int argc, char** argv)
-{
-    checkCommandLine(argc, argv);
-    mtl::log::info("Ligne de commande valide");
-	mtl::log::info("Chargement des sprites...");
-	Sprites::init();
-	mtl::log::info("Chargement des sprites terminé");
-	
-    if (std::string(argv[1]) == "cv")
-    {
-        mtl::log::info("Lancement avec OpenCV");
-        App appli;
-        mtl::log::info("Creation de l'application reussie");
-        appli.mainLoop();
-        mtl::log::info("Terminaison en cours");
-        appli.quit();
-    }
-    else if (std::string(argv[1]) == "test")
-    {
-		//QApplication app(argc, argv);
-        cv::namedWindow("test");
-		cv::resizeWindow("test", 640u, 640u);
-		cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
-//		cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
-		blit(img, Sprites::test, 0, 0);
-		cv::imshow("test", img);
-		cv::waitKey(0);
-		cv::destroyWindow("test");
-    }
-    else
-    {
-        Camera camera;
-	    camera.init();
-	    camera.start(640, 480);
-    	Player player(camera);
-
-    	GlContext::initGL(640, 480);
-		GlContext::windowCaption("OpenGL window");
-		Pipeline::fromXML("assets/PipelineConfig.xml");
+//     return false;
+// }
 
 // int main(int argc, char** argv)
 // {
 //     checkCommandLine(argc, argv);
 //     mtl::log::info("Ligne de commande valide");
+// 	mtl::log::info("Chargement des sprites...");
+// 	Sprites::init();
+// 	mtl::log::info("Chargement des sprites terminé");
+	
 //     if (std::string(argv[1]) == "cv")
 //     {
 //         mtl::log::info("Lancement avec OpenCV");
@@ -243,53 +207,89 @@ int main(int argc, char** argv)
 //     }
 //     else if (std::string(argv[1]) == "test")
 //     {
-//         Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-//         Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-//         std::cout << mat1*mat2 << std::endl;
+// 		//QApplication app(argc, argv);
+//         cv::namedWindow("test");
+// 		cv::resizeWindow("test", 640u, 640u);
+// 		cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
+// //		cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
+// 		blit(img, Sprites::test, 0, 0);
+// 		cv::imshow("test", img);
+// 		cv::waitKey(0);
+// 		cv::destroyWindow("test");
 //     }
 //     else
 //     {
-//         /*GlContext::initGL(640, 480);
-//         GlContext::windowCaption("OpenGL window");
-//         Pipeline::fromXML("assets/PipelineConfig.xml");
+//         Camera camera;
+// 	    camera.init();
+// 	    camera.start(640, 480);
+//     	Player player(camera);
 
-//         VertexShader vertex("assets/shaders/vertex.cpp");
-//         FragmentShader fragment("assets/shaders/fragment.cpp");
-//         ShaderProgram program({vertex, fragment});
+//     	GlContext::initGL(640, 480);
+// 		GlContext::windowCaption("OpenGL window");
+// 		Pipeline::fromXML("assets/PipelineConfig.xml");
 
-        //Mesh mesh("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
-        Mesh mesh("assets/objs/squarre.obj", camera, program);
+// // int main(int argc, char** argv)
+// // {
+// //     checkCommandLine(argc, argv);
+// //     mtl::log::info("Ligne de commande valide");
+// //     if (std::string(argv[1]) == "cv")
+// //     {
+// //         mtl::log::info("Lancement avec OpenCV");
+// //         App appli;
+// //         mtl::log::info("Creation de l'application reussie");
+// //         appli.mainLoop();
+// //         mtl::log::info("Terminaison en cours");
+// //         appli.quit();
+// //     }
+// //     else if (std::string(argv[1]) == "test")
+// //     {
+// //         Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+// //         Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+// //         std::cout << mat1*mat2 << std::endl;
+// //     }
+// //     else
+// //     {
+// //         /*GlContext::initGL(640, 480);
+// //         GlContext::windowCaption("OpenGL window");
+// //         Pipeline::fromXML("assets/PipelineConfig.xml");
 
-//         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
+// //         VertexShader vertex("assets/shaders/vertex.cpp");
+// //         FragmentShader fragment("assets/shaders/fragment.cpp");
+// //         ShaderProgram program({vertex, fragment});
 
-        program.use();
-        renderLoop(30, met_ton_code_la_charles, mesh, player, clothe, camera);
+//         //Mesh mesh("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
+//         Mesh mesh("assets/objs/squarre.obj", camera, program);
+
+// //         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
+
+//         program.use();
+//         renderLoop(30, met_ton_code_la_charles, mesh, player, clothe, camera);
         
-        GlContext::endGL();
-    }
-    Sprites::empty();
-	mtl::log::info("Vidage des sprites");
-    return EXIT_SUCCESS;
-}
+//         GlContext::endGL();
+//     }
+//     Sprites::empty();
+// 	mtl::log::info("Vidage des sprites");
+//     return EXIT_SUCCESS;
+// }
 
 //
 // (Fait par la) Main de Mehdi
 //
 
-// #include "Camera.hpp"
-// int main(int argc, char const *argv[])
-// {
-//     // Camera cam;
+#include "Camera.hpp"
+int main(int argc, char const *argv[])
+{
+    // Camera cam;
 
-//     // cam.init();
+    // cam.init();
 
 
     
-//     App app;
+    App app;
 
-//     app.mainLoop();
+    app.mainLoop();
 
-//     app.quit();
-//     return 0;
-// }
+    app.quit();
+    return 0;
+}
 

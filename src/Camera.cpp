@@ -154,7 +154,7 @@ void Camera::start(int width, int height)
 	// 	else
 	// 		mtl::log::info("Resolution sets to [", width, ',', height, "] for depth stream");
  // 	}
-	if(findVideoModes(width, height, openni::SENSOR_COLOR, videoMode))
+	if(findVideoModes(width, height, openni::SENSOR_COLOR, videoMode, true))
 	{
 		status = this->color.setVideoMode(videoMode);
 		if(status != openni::STATUS_OK)

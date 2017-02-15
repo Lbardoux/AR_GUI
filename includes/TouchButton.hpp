@@ -9,6 +9,7 @@
 #include "Cv_core.hpp"
 #include "Widget.hpp"
 #include "Sprite.hpp"
+#include "logs.hpp"
 
 /**
  * @class TouchButton
@@ -26,10 +27,19 @@ class TouchButton : public Widget
          * @param[in] image L'aresse d'une cv::Mat préalablement chargée.
          */
         TouchButton(Sprite* image);
+
+        /**
+         * @date       15-Feb-2017
+         * @brief      Initialise le Sprite du Widget
+         * @param      image    Le Sprite
+         * @param[in]  x        Position en x du Widget
+         * @param[in]  y        Position en y du Widget
+         * @param[in]  seconde  Temps d'activation du Widget
+         */
+        void init(Sprite* image, int x, int y, double seconde);
         
-        virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) const override;
+        virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) override;
         //virtual void setActivationTime(time_t time) override;
-        virtual bool isActivated() const override;
         virtual void action() override;
         virtual void draw(UNUSED(Sprite& frame)) override;
     

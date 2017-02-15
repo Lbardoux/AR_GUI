@@ -23,6 +23,7 @@ App::~App(void) noexcept
 
 void App::quit(void)
 {
+	Sprites::empty();
 }
 
 void App::mainLoop(void)
@@ -56,6 +57,7 @@ void App::initInputs(void)
 
 void App::initLibs(void)
 {
+	Sprites::init();
 		
 }
 
@@ -66,6 +68,6 @@ void App::initComponents(void)
 	this->windows.addWindow(&this->programState);
 
 	// Fenetre de la camera
-	this->cameraW.init("Camera", 1280, 1024);
+	this->cameraW.init("Camera", 640, 480);
 	this->windows.addWindow(&this->cameraW);
 }

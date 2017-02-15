@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "TouchButton.hpp"
+#include "Sprite.hpp"
 
 
 TouchButton::TouchButton(void) : Widget(), sprite(nullptr)
@@ -28,25 +29,28 @@ TouchButton::TouchButton(Sprite* image) : Widget(), sprite(image)
     
 }
 
-bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor)) const
+void TouchButton::init(Sprite* image, int x, int y, double seconde)
 {
-    return cursor.x() >= x() && cursor.x() <= (x() + sprite->cols) && cursor.y() >= y() && cursor.y() <= (y() + sprite->rows);
+	this->sprite = image;
+	this->x() = x;
+	this->y() = y;
+	this->setActivationTime(seconde);
 }
 
-bool TouchButton::isActivated() const
+bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor))
 {
-    // A refaire éventuellement
-    return true;
+    return this->changeFirstActivation(cursor.x() >= x() && cursor.x() <= (x() + sprite->cols) && cursor.y() >= y() && cursor.y() <= (y() + sprite->rows));
 }
 
 void TouchButton::action()
 {
     // à implémenter pour les classes supérieures
+    mtl::log::info("Action réalisée pour le TouchButton");
 }
 
 void TouchButton::draw(UNUSED(Sprite& frame))
 {
-    
+    blit(frame, *(this->sprite), this->x(), this->y());
 }
 
 
