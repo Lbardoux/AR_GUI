@@ -92,7 +92,7 @@ void Camera::init(const char* uri)
 }
 
 // #define __DEPTH_FORMAT__ openni::PIXEL_FORMAT_DEPTH_1_MM
-bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode)
+bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode, bool printMods)
 {
 	const openni::SensorInfo* sinfo = this->device.getSensorInfo(sensorType);
 
@@ -104,13 +104,24 @@ bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType
 
     const openni::Array<openni::VideoMode>& modesDepth = sinfo->getSupportedVideoModes();
 
+    bool old_value = mtl::log::Options::ENABLE_SPACING;
+    mtl::log::Options::ENABLE_SPACING = false;
+
     std::vector<int> item;
     for (int i = 0; i < modesDepth.getSize(); i++) {
-        // printf("%i: %ix%i, %i fps, %i format\n", i, modesDepth[i].getResolutionX(), modesDepth[i].getResolutionY(),
-        //     modesDepth[i].getFps(), modesDepth[i].getPixelFormat()); //PIXEL_FORMAT_DEPTH_1_MM = 100, PIXEL_FORMAT_DEPTH_100_UM
-        if (modesDepth[i].getResolutionX() == width && modesDepth[i].getResolutionY() == height)/* &&
-            modesDepth[i].getPixelFormat() == __DEPTH_FORMAT__)*/
+        if(printMods)
+        	mtl::log::info(i, ": ", modesDepth[i].getResolutionX(), 'x', modesDepth[i].getResolutionY(), ", ", modesDepth[i].getFps(), " fps, ", modesDepth[i].getPixelFormat(), " format", mtl::log::hold_on());
+        	// printf("%i: %ix%i, %i fps, %i format\n", i, modesDepth[i].getResolutionX(), modesDepth[i].getResolutionY(),
+         //    	modesDepth[i].getFps(), modesDepth[i].getPixelFormat()); //PIXEL_FORMAT_DEPTH_1_MM = 100, PIXEL_FORMAT_DEPTH_100_UM
+        if (modesDepth[i].getResolutionX() == width && modesDepth[i].getResolutionY() == height)
+        {
             item.push_back(i);
+            if(printMods)
+            	mtl::log::info(" : Ajouté");
+        }
+        else if(printMods)
+        		mtl::log::info();
+
     }
 
     if(item.empty())
@@ -120,6 +131,8 @@ bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType
     }
 
     videoMode = modesDepth[item[0]];
+
+    mtl::log::Options::ENABLE_SPACING = old_value;
 
     return true;
 }

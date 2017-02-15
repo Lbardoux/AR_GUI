@@ -65,8 +65,15 @@ public:
 	 */
 	virtual void draw(UNUSED(cv::Mat& frame));
 
+	uint32_t  x() const ;
+	uint32_t& x();
+	uint32_t  y() const ;
+	uint32_t& y();
+
 private:
-	time_t activationTime;
+	time_t activationTime; //!< Temps minimum pour activer le Widget
+	uint32_t _x; //!< Coordonnées en x du Widget
+	uint32_t _y; //!< Coordonnées en y du Widget
 };
 
 #endif

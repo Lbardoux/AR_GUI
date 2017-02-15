@@ -66,6 +66,6 @@ void App::initComponents(void)
 	this->windows.addWindow(&this->programState);
 
 	// Fenetre de la camera
-	this->cameraW.init();
+	this->cameraW.init("Camera", 1280, 1024);
 	this->windows.addWindow(&this->cameraW);
 }

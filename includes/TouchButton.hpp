@@ -8,7 +8,7 @@
 
 #include "Cv_core.hpp"
 #include "Widget.hpp"
-
+#include "Sprite.hpp"
 
 /**
  * @class TouchButton
@@ -25,16 +25,16 @@ class TouchButton : public Widget
          * @brief Instancie un TouchButton avec @b image comme sprite
          * @param[in] image L'aresse d'une cv::Mat préalablement chargée.
          */
-        TouchButton(cv::Mat* image);
+        TouchButton(Sprite* image);
         
         virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) const override;
         //virtual void setActivationTime(time_t time) override;
         virtual bool isActivated() const override;
         virtual void action() override;
-        virtual void draw(UNUSED(cv::Mat& frame)) override;
+        virtual void draw(UNUSED(Sprite& frame)) override;
     
     protected:
-        cv::Mat* sprite; //!< La représentation de ce widget.
+        Sprite* sprite; //!< La représentation de ce widget.
         
         TouchButton& operator=(const TouchButton& other) = delete;
         TouchButton& operator=(TouchButton&& other) = delete;

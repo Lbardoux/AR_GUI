@@ -23,14 +23,14 @@ TouchButton::TouchButton(TouchButton&& other) : TouchButton(other)
     
 }
 
-TouchButton::TouchButton(cv::Mat* image) : Widget(), sprite(image)
+TouchButton::TouchButton(Sprite* image) : Widget(), sprite(image)
 {
     
 }
 
 bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor)) const
 {
-    
+    return cursor.x() >= x() && cursor.x() <= (x() + sprite->cols) && cursor.y() >= y() && cursor.y() <= (y() + sprite->rows);
 }
 
 bool TouchButton::isActivated() const
@@ -44,7 +44,7 @@ void TouchButton::action()
     // à implémenter pour les classes supérieures
 }
 
-void TouchButton::draw(UNUSED(cv::Mat& frame))
+void TouchButton::draw(UNUSED(Sprite& frame))
 {
     
 }

@@ -10,9 +10,12 @@
 VERBOSE  := 0
 CXX_V    := g++
 CC_0      = @echo "Compiling $<..."; $(CXX_V)
+LINK_0    = @echo "Polymerisation..."; $(CXX_V)
 CC_1     := $(CXX_V)
+LINK_1   := $(CXX_V)
 
 CXX       = $(CC_$(VERBOSE))
+LXX       = $(LINK_$(VERBOSE))
 WARNINGS := -Wall -Wextra
 STD      := -std=c++11
 TARGET   := -g
@@ -79,7 +82,7 @@ MTLKITOBJECTS := $(patsubst $(MTLKIT)/%.cpp, $(OBJ)/%.o, $(wildcard $(MTLKIT)/*.
 all : $(EXE_NAME)
 
 $(EXE_NAME) : $(OBJECTS) $(XMLOBJECTS) $(MTLKITOBJECTS)
-	$(CXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
+	$(LXX) $(CXXFLAGS) $^ $(LDLIBS) -o $@
 
 # Ajouter ici quand on veut un fichier supplémentaire à compiler.
 $(OBJ)/main.o                : 

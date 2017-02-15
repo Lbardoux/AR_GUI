@@ -134,7 +134,6 @@
 #include "Mesh.hpp"
 #include "Player.hpp"
 #include "Clothe.hpp"
-
 #include "Sprite.hpp"
 
 //#include <QApplication>
@@ -229,14 +228,39 @@ int main(int argc, char** argv)
 		GlContext::windowCaption("OpenGL window");
 		Pipeline::fromXML("assets/PipelineConfig.xml");
 
-        VertexShader vertex("assets/shaders/vertex.cpp");
-        FragmentShader fragment("assets/shaders/fragment.cpp");
-        ShaderProgram program({vertex, fragment});
+// int main(int argc, char** argv)
+// {
+//     checkCommandLine(argc, argv);
+//     mtl::log::info("Ligne de commande valide");
+//     if (std::string(argv[1]) == "cv")
+//     {
+//         mtl::log::info("Lancement avec OpenCV");
+//         App appli;
+//         mtl::log::info("Creation de l'application reussie");
+//         appli.mainLoop();
+//         mtl::log::info("Terminaison en cours");
+//         appli.quit();
+//     }
+//     else if (std::string(argv[1]) == "test")
+//     {
+//         Matrix mat1(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+//         Matrix mat2(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+//         std::cout << mat1*mat2 << std::endl;
+//     }
+//     else
+//     {
+//         /*GlContext::initGL(640, 480);
+//         GlContext::windowCaption("OpenGL window");
+//         Pipeline::fromXML("assets/PipelineConfig.xml");
+
+//         VertexShader vertex("assets/shaders/vertex.cpp");
+//         FragmentShader fragment("assets/shaders/fragment.cpp");
+//         ShaderProgram program({vertex, fragment});
 
         //Mesh mesh("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
         Mesh mesh("assets/objs/squarre.obj", camera, program);
 
-        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
+//         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, mesh);
 
         program.use();
         renderLoop(30, met_ton_code_la_charles, mesh, player, clothe, camera);
@@ -251,21 +275,21 @@ int main(int argc, char** argv)
 //
 // (Fait par la) Main de Mehdi
 //
-/*
-#include "Camera.hpp"
-int main(int argc, char const *argv[])
-{
-    // Camera cam;
 
-    // cam.init();
+// #include "Camera.hpp"
+// int main(int argc, char const *argv[])
+// {
+//     // Camera cam;
+
+//     // cam.init();
 
 
     
-    App app;
+//     App app;
 
-    app.mainLoop();
+//     app.mainLoop();
 
-    app.quit();
-    return 0;
-}
-*/
+//     app.quit();
+//     return 0;
+// }
+

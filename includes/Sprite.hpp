@@ -44,6 +44,8 @@ class Sprites final
 		 * @brief Vide les images.
 		 */
 		static void empty(void);
+
+		static Sprite spr_touchButton; //!< Sprite pour le TouchButton
 };
 
 /**
@@ -60,6 +62,6 @@ void loadSprite(const std::string& fname, Sprite& dst);
  * @param[in]     x      La position x à laquelle dessiner.
  * @param[in]     y      La position y à laquelle dessiner.
  */
-void blit(cv::Mat& dst, const cv::Mat& sprite, int x, int y);
+void blit(Sprite& dst, const Sprite& sprite, int x, int y);
 
 #endif

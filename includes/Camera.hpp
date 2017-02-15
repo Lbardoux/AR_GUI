@@ -95,10 +95,12 @@ struct Camera final
          * @param[in]  width       Largeur du flux voulu
          * @param[in]  height      Hauteur du flux voulu
          * @param[in]  sensorType  Type du sensor sur lequel on veut les infos
-         * @param      videoMode   VideoMode dans lequel on stocke ce qu'on a trouvé
+         * @param      videoMode   VideoMode dans lequel on stocke ce qu'on a
+         *                         trouvé
+         * @param[in]  printMods   Si vrai, les modes possibles sont affichés, faux par défaut
          * @return     True si on a trouvé le mode voulu, False sinon
          */
-        bool findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode);
+        bool findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode, bool printMods = false);
 
 		/**
 		 * @date       15-Feb-2017

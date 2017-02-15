@@ -10,15 +10,17 @@
 
 Sprite Sprites::test;
 
+Sprite Sprites::spr_touchButton;
+
 void Sprites::init(void)
 {
     loadSprite("assets/images/spr_shield.png", Sprites::test);
-	
+    loadSprite("assets/images/valid.png", spr_touchButton);
 }
 
 void Sprites::empty(void)
 {
-    
+    spr_touchButton.release();
 	
 }
 
