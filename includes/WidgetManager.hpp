@@ -5,7 +5,7 @@
 #define _WIDGET_HPP__ 
 
 #include "Cv_core.hpp"
-#include "SetCursor.hpp"
+#include "CursorSet.hpp"
 #include "logs.hpp"
 #include <ctime>
 

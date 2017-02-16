@@ -1,4 +1,4 @@
-#include "SetCursor.hpp"
+#include "CursorSet.hpp"
 #include "Player.hpp"
 #include <algorithm>
 #include <functional>

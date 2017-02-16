@@ -13,7 +13,7 @@
 #include "SkeletonStateWindow.hpp"
 #include "CameraWindow.hpp"
 #include "Player.hpp"
-#include "SetCursor.hpp"
+#include "CursorSet.hpp"
 
 /**
  * @class App
