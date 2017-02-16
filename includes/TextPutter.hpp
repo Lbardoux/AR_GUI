@@ -13,6 +13,14 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#if CV_MAJOR_VERSION < 3
+    #define _HERSHEY_FONT_NS_ cv
+    #define _HERSHEY_TYPE_NS_ int
+#else
+    #define _HERSHEY_FONT_NS_ cv::HersheyFonts
+    #define _HERSHEY_TYPE_NS_ cv::HersheyFonts
+#endif
+
 
 /**
  * @class TextPutter
@@ -62,7 +70,7 @@ class TextPutter final
          * 
          * @return *this
          */
-        TextPutter& font(cv::HersheyFonts enumValue) noexcept;
+        TextPutter& font(_HERSHEY_TYPE_NS_ enumValue) noexcept;
         /**
          * @brief Ecrit @b text sur @b dst avec les paramètres actuels.
          * @param[in,out] dst  La frame sur laquelle dessiner.

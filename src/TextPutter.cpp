@@ -4,11 +4,11 @@
 
 
 #include "TextPutter.hpp"
-
+// cv::HersheyFonts
 
 TextPutter::TextPutter(void) noexcept : red(0), green(0), blue(0),
                                         x(0), y(0),
-                                        face(cv::HersheyFonts::FONT_HERSHEY_SIMPLEX),
+                                        face(_HERSHEY_FONT_NS_::FONT_HERSHEY_SIMPLEX),
                                         size(1.0f)
 {
     
@@ -35,7 +35,7 @@ TextPutter& TextPutter::pos(int x, int y) noexcept
     return *this;
 }
 
-TextPutter& TextPutter::font(cv::HersheyFonts enumValue) noexcept
+TextPutter& TextPutter::font(_HERSHEY_TYPE_NS_ enumValue) noexcept
 {
     this->face = enumValue;
     return *this;
