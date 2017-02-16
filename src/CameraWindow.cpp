@@ -23,18 +23,15 @@ void CameraWindow::close(void)
     this->OpenCVWindow::close();
 }
 
+
 void CameraWindow::update(void)
 {
-	// if (this->touchButton.isUnderCursor(Cursor(nite::Point3f(10, 10, 10))) && this->touchButton.isActivated())
-	// 	this->touchButton.action();
-
-	// this->touchButton.draw(this->camera.colorFrame());
 	cv::imshow(this->name, this->camera.colorFrame());
 }
 
 void CameraWindow::readFrame(void)
 {
-	this->camera.readFrame();
+    this->camera.readFrame();
 }
 
 Camera& CameraWindow::getCamera()

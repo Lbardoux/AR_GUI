@@ -46,8 +46,13 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
     {
         for(int row=beginY;row<endY;++row)
         {
-            if (sprite.at<mat_data_t>(row, col)[3] != 0)
-                matAt(dst, col + x, row + y) = matAt(sprite, col, row);
-        }
+			double alpha = static_cast<double>(sprite.at<mat_data_t>(row, col)[3])/255.0;
+			if (alpha > 0.0)
+			{
+				mat_data_t fromSprite = (1.0 - alpha)*matAt(sprite, col, row);
+				mat_data_t fromDst    = alpha*matAt(dst, col + x, row + y);
+				matAt(dst, col + x, row + y) = fromSprite + fromDst;
+			}
+		}
     }
 }

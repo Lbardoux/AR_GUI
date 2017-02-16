@@ -183,11 +183,6 @@ int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
     mtl::log::info("Ligne de commande valide");
-    mtl::log::info("Chargement des sprites...");
-    Sprites::init();
-    mtl::log::info("Chargement des sprites terminé");
-
-
     if (std::string(argv[1]) == "cv")
     {
         mtl::log::info("Lancement avec OpenCV");
@@ -196,18 +191,6 @@ int main(int argc, char** argv)
         appli.mainLoop();
         mtl::log::info("Terminaison en cours");
         appli.quit();
-    }
-    else if (std::string(argv[1]) == "test")
-    {
-        //QApplication app(argc, argv);
-        cv::namedWindow("test");
-        cv::resizeWindow("test", 640u, 640u);
-        cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
-//       cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
-        blit(img, Sprites::test, 0, 0);
-        cv::imshow("test", img);
-        cv::waitKey(0);
-        cv::destroyWindow("test");
     }
     else
     {
@@ -235,8 +218,5 @@ int main(int argc, char** argv)
 
         GlContext::endGL();
     }
-
-    Sprites::empty();
-    mtl::log::info("Vidage des sprites");
     return EXIT_SUCCESS;
 }

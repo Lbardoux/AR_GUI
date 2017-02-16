@@ -44,8 +44,7 @@ bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor))
 
 void TouchButton::action()
 {
-    // à implémenter pour les classes supérieures
-    // mtl::log::info("Action réalisée pour le TouchButton");
+	
 }
 
 void TouchButton::draw(UNUSED(Sprite& frame))

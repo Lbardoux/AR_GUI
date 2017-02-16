@@ -224,7 +224,11 @@ struct Vecf final
 			{
 				value += this->values[i]*this->values[i];
 			}
-			return std::sqrt(value);
+			if (withSquareRoot)
+			{
+				return std::sqrt(value);
+			}
+			return value;
 		}
 		
 	private:

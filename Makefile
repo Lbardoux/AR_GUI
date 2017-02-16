@@ -104,6 +104,8 @@ $(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/WidgetManager.hpp
 $(OBJ)/Sprite.o              : $(INCLUDES)/Sprite.hpp $(INCLUDES)/Cv_core.hpp
+$(OBJ)ActionButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/Cv_core.hpp
+$(OBJ)/TextPutter.o          : $(INCLUDES)/TextPutter.hpp
 
 $(OBJ)/%.o : $(SRC)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< $(LDFLAGS) -o $@

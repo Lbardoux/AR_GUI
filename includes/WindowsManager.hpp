@@ -8,7 +8,6 @@
 #ifndef WINDOWSMANAGER_HPP_INCLUDED
 #define WINDOWSMANAGER_HPP_INCLUDED
 
-#include "Manager.hpp"
 #include <vector>
 #include <string>
 #include <cstdint>
