@@ -25,15 +25,16 @@ void CameraWindow::close(void)
 
 void CameraWindow::update(void)
 {
-    this->camera.readFrame();
-    //mtl::log::info("nombre de canaux :", this->camera.colorFrame().channels());
-    blit(this->camera.colorFrame(), Sprites::test, -24, -24);
+	// if (this->touchButton.isUnderCursor(Cursor(nite::Point3f(10, 10, 10))) && this->touchButton.isActivated())
+	// 	this->touchButton.action();
 
-    if (this->touchButton.isUnderCursor(Cursor(nite::Point3f(10, 10, 10))) && this->touchButton.isActivated())
-        this->touchButton.action();
+	// this->touchButton.draw(this->camera.colorFrame());
+	cv::imshow(this->name, this->camera.colorFrame());
+}
 
-    this->touchButton.draw(this->camera.colorFrame());
-    cv::imshow(this->name, this->camera.colorFrame());
+void CameraWindow::readFrame(void)
+{
+	this->camera.readFrame();
 }
 
 Camera& CameraWindow::getCamera()

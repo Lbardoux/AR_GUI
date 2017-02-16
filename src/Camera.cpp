@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "Camera.hpp"
+#include "Cursor.hpp"
 
 static bool OPENNI_INITIALISED = false;
 
@@ -178,6 +179,11 @@ void Camera::start(int width, int height)
         // printf("Couldn't start color stream:\n%s\n", openni::OpenNI::getExtendedError());
         this->color.destroy();
     }
+    
+    Interval iH = {0u, static_cast<uint32_t>(width)};
+    Interval iV = {0u, static_cast<uint32_t>(height)};
+    Cursor::horizontal = iH;
+    Cursor::vertical   = iV;
 }
 
 Camera::~Camera(void)

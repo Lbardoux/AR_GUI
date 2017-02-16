@@ -14,14 +14,16 @@ Sprite Sprites::spr_touchButton;
 
 void Sprites::init(void)
 {
-    loadSprite("assets/images/spr_shield.png", Sprites::test);
-    loadSprite("assets/images/valid.png", spr_touchButton);
+    loadSprite("assets/images/valid.png", Sprites::test);
+    loadSprite("assets/images/valid.png", Sprites::spr_touchButton);
 }
 
 void Sprites::empty(void)
 {
+	mtl::log::info("Aboutissement des Sprites...", mtl::log::hold_on());
     spr_touchButton.release();
-    
+
+	mtl::log::info("Fait!");
 }
 
 void loadSprite(const std::string& fname, Sprite& dst)

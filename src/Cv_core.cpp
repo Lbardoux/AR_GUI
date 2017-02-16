@@ -13,15 +13,15 @@ mat_data_t& matAt(cv::Mat& mat, int x, int y)
 
 mat_data_t matRedColor(void)
 {
-    return mat_data_t(0,0,255);
+    return mat_data_t(0, 0, 255, 1);
 }
 
 mat_data_t matBlueColor(void)
 {
-    return mat_data_t(255,0,0);
+    return mat_data_t(255, 0, 0, 1);
 }
 
 mat_data_t matGreenColor(void)
 {
-    return mat_data_t(0,255,0);
+    return mat_data_t(0, 255, 0, 1);
 }

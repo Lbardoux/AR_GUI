@@ -23,18 +23,26 @@ App::~App(void) noexcept
 
 void App::quit(void)
 {
-    Sprites::empty();
+	mtl::log::info("Aboutissement de l'application");
+	Sprites::empty();
 }
 
 void App::mainLoop(void)
 {
-    this->process = true;
-    while(this->process)
-    {
-        this->windows.updateWindows();
-        this->keyboard.checkInputs(25);
-    }
-    this->windows.closeWindows();
+	this->process = true;
+	while(this->process)
+	{
+		this->cameraW.readFrame();
+		
+		this->player.update();
+		this->programState.setState(this->player.isVisible());
+		this->setCursor.update(this->player);
+		// this->setCursor.draw(this->cameraW.getCamera().colorFrame());
+
+		this->windows.updateWindows();
+		this->keyboard.checkInputs(25);
+	}
+	this->windows.closeWindows();
 }
 
 
@@ -57,8 +65,8 @@ void App::initInputs(void)
 
 void App::initLibs(void)
 {
-    Sprites::init();
-        
+	mtl::log::info("Initialisation des libraires");
+	Sprites::init();
 }
 
 void App::initComponents(void)
@@ -67,7 +75,10 @@ void App::initComponents(void)
     this->programState.open(0u, 0u);
     this->windows.addWindow(&this->programState);
 
-    // Fenetre de la camera
-    this->cameraW.init("Camera", 640, 480);
-    this->windows.addWindow(&this->cameraW);
+	// Fenetre de la camera
+	this->cameraW.init("Camera", 640, 480);
+	this->windows.addWindow(&this->cameraW);
+
+	this->player.init(this->cameraW.getCamera());
+	// this->setCursor.init(this->player);
 }

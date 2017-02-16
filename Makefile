@@ -102,7 +102,7 @@ $(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hp
                                $(INCLUDES)/SkeletonStateWindow.hpp
 $(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
-$(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/Widget.hpp
+$(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/WidgetManager.hpp
 $(OBJ)/Sprite.o              : $(INCLUDES)/Sprite.hpp $(INCLUDES)/Cv_core.hpp
 
 $(OBJ)/%.o : $(SRC)/%.cpp

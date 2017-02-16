@@ -1,4 +1,4 @@
-#include "Widget.hpp"
+#include "WidgetManager.hpp"
 
 Widget::Widget() : firstActiveTime(0)
 {}
@@ -33,8 +33,8 @@ bool Widget::isActivated() const
     time_t timer;
     time(&timer);  /* get current time; same as: timer = time(NULL)  */
 
-    mtl::log::info(difftime(timer, this->firstActiveTime));
-    return (difftime(timer, this->firstActiveTime) >= (this->activationTime - 1.0f));
+	// mtl::log::info(difftime(timer, this->firstActiveTime));
+	return (difftime(timer, this->firstActiveTime) >= (this->activationTime - 1.0f));
 }
 
 void Widget::action()

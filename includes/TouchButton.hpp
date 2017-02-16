@@ -7,7 +7,7 @@
 #define TOUCHBUTTON_HPP_INCLUDED
 
 #include "Cv_core.hpp"
-#include "Widget.hpp"
+#include "WidgetManager.hpp"
 #include "Sprite.hpp"
 #include "logs.hpp"
 

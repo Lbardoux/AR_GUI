@@ -12,9 +12,7 @@
 #include "Cursor.hpp"
 #include "Player.hpp"
 
-// Todo : Ajouter le nombre de valeurs dans l'enum de Charles
-
-typedef std::pair<Cursor, mat_data_t> coloredCursor_t; //!< Encapsulation d'un curseur et de sa couleur
+typedef ColoredCursor coloredCursor_t; //!< Encapsulation d'un curseur et de sa couleur
 typedef std::map<PlayerMember, coloredCursor_t> mapCursor_t; //!< Map contenant un ensemble de curseurs colorés
 
 class SetCursor final
@@ -23,6 +21,13 @@ public:
     SetCursor();
     ~SetCursor();
 
+	/**
+	 * @date       16-Feb-2017
+	 * @brief      Initialise l'ensemble des Cursor à partir du Player
+	 * @param[in]  player  Le player
+	 * @param[in]  color   Couleur des Cursor
+	 */
+	void init(const Player& player, const mat_data_t& color=matRedColor());
 
     /**
      * @date       08-Feb-2017
@@ -33,7 +38,7 @@ public:
      * @param[in]  color   Couleur du curseur
      * @post       Le curseur du type demandé aura les nouvelles valeurs
      */
-    void addCursor(PlayerMember type, const Cursor& cursor, const mat_data_t& color=matRedColor());
+    void addCursor(PlayerMember type, const ColoredCursor& cursor);
 
     /**
      * @date       08-Feb-2017
@@ -42,7 +47,7 @@ public:
      * @param[in]  cursor  Nouvelle valeur du curseur
      * @pre        Le type demandé a déjà été ajouté
      */
-    void updateCursor(PlayerMember type, const Cursor& cursor);
+    void updateCursor(PlayerMember type, const ColoredCursor& cursor);
 
     /**
      * @date       08-Feb-2017

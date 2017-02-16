@@ -5,7 +5,7 @@
 #define _WIDGET_HPP__ 
 
 #include "Cv_core.hpp"
-#include "Cursor.hpp"
+#include "SetCursor.hpp"
 #include "logs.hpp"
 #include <ctime>
 
@@ -29,14 +29,16 @@ public:
     Faire quelque chose, une action -> virtuelle
 */
 
-    /**
-     * @date       10-Feb-2017
-     * @brief      Indique si le Widget est sous le curseur
-     * Pour faciliter le code, il faut lui faire retourner l'appel à changeFirstActivation
-     * @param[in]  cursor  Le Cursor
-     * @return     Vrai si le Widget est sous le Cursor, Faux sinon
-     */
-    virtual bool isUnderCursor(UNUSED(const Cursor& cursor));
+	// virtual void update(Player);
+
+	/**
+	 * @date       10-Feb-2017
+	 * @brief      Indique si le Widget est sous le curseur
+	 * Pour faciliter le code, il faut lui faire retourner l'appel à changeFirstActivation
+	 * @param[in]  cursor  Le Cursor
+	 * @return     Vrai si le Widget est sous le Cursor, Faux sinon
+	 */
+	virtual bool isUnderCursor(UNUSED(const Cursor& cursor));
 
 
     /**
@@ -85,6 +87,36 @@ private:
     time_t firstActiveTime; //!< Temps auquel le Widget a été activé
     uint32_t _x; //!< Coordonnées en x du Widget
     uint32_t _y; //!< Coordonnées en y du Widget
+};
+
+
+class WidgetManager final
+{
+    public:
+        //! @brief Crée juste le gestionnaire.
+        WidgetManager(void) noexcept;
+        //! @brief Appelle la méthode close() de chaque widget.
+        ~WidgetManager(void);
+        //! @brief Appelle la méthode update pour toutes les widgets.
+        void updateWidgets(void);
+        /**
+         * @brief Ajoute @b Widget au gestionnaire.
+         * @param[in,out] Widget L'adresse du widget à ajouter.
+         * Le gestionnaire ne désallouera rien !
+         * @return *this
+         */
+        WidgetManager& addWidget(Widget* Widget);
+        //! @brief Ferme tous les widgets.
+        void closeWidgets(void);
+        
+    private:
+        std::vector<Widget*> Widgets; //!< L'ensemble des widgets utilisées.
+        
+        WidgetManager(const WidgetManager& other)            = delete;
+        WidgetManager(WidgetManager&& other)                 = delete;
+        WidgetManager& operator=(const WidgetManager& other) = delete;
+        WidgetManager& operator=(WidgetManager&& other)      = delete;
+        
 };
 
 

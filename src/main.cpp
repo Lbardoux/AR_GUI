@@ -14,15 +14,15 @@
  *    - @b tinyxml2 et son wrapper XmlLoader.
  *    - @b mtlkit.
  *    - @b logs
- * 
- * 
+ *
+ *
  * @subsection ss_id_base Le plus facile d'abord !
  * Ici cela va consister à installer la première librairie (la mienne - by MTLCRBN), il suffit juste de faire:
  * @code
  * make install
  * @endcode
  * Cela va créer les répertoires qu'il faut, décompresser XmlLoader, et compiler la lib.
- * 
+ *
  * @subsection ss_id_openni_sucks Installer OpenNI2, les VRAIS ennuis.
  * Actuellement le plus gros morceau de l'installation, cela va vous prendre des heures de sueur, sang et larmes.
  * Toujours près ?@n
@@ -60,16 +60,16 @@
  *       @code
  *       source "$HOME"/.bashrc
  *       @endcode
- * 
+ *
  * Si cela fonctionne, un <b>immense milliers de mercis</b> à @b Ashwin de CodeYarns.
- * 
+ *
  * @subsection ss_id_OpenCV Installer OpenCV 3.1.0
  * On impose bien entendu la version 3.1.0 comme version commune.@n
  * Ainsi, il suffit de se rendre à cette <a href="http://opencv.org/downloads.html">adresse</a> et de suivre la procédure indiquée, c'est simple en fait.
  *     - Télécharger l'archive 3.1.0 pour linux.
  *     - Chercher sur ce merveilleux site <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html">la doc</a> pour installer OpenCV.
- * 
- * 
+ *
+ *
  * @subsection ss_id_nite2 Installer NiTE2
  * Et on repart sur des magouilles !@n
  * Bon pour commencé, il vous faut l'archive NiTE2.tar.gz (fournie hier, réuploadable au besoin), et la décompresser dans @b libs/.
@@ -81,25 +81,25 @@
  * @code
  * source .bashrc
  * @endcode
- * 
+ *
  * @subsection ss_id_compiler Compiler sur nos machines.
  * <b>Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
- * 
+ *
  * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
  * @code
  * make
  * @endcode
- * 
+ *
  * @subsection ss_id_usage Lancer le programme
  * En premier lieu, il nous faut une caméra de profondeur branchée sur un port USB.
  * Puis, il suffit ensuite de taper la commande suivante <b>dans le répertoire où se trouve le binaire</b> :
  * @code
  * ./AdvancedGUI gl|cv
  * @endcode
- * 
+ *
  * @subsection ss_id_guignol Utiliser l'application
  * Placer vous face à la caméra à une bonne distance, et bouger !
- * 
+ *
  * @subsection ss_id_git_commands Quelques commandes GIT
  * Pour oublier les changements fait sur un ensemble de fichier et faire en sorte de pouvoir <b><code>git pull</code></b>
  * qui pourrait poser problème, faire :
@@ -114,7 +114,7 @@
  * @endcode
  * Normalement cela devrait remettre vos fichiers modifiés en l'état, avec peut être des résolutions de conflits
  * à faire par vos soins.
- * 
+ *
  * @author Laurent   BARDOUX   p1108365
  * @author Mehdi     GHESH     p1209574
  * @author Charles   SULTAN    p1207507
@@ -148,17 +148,18 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
     fond.readTextureFromCamera(camera);
     fond.draw(model, view, projection);
 
-       //Joueur
+    //Joueur
     //
-       player.update();
+    player.update();
     //Epaule 1
     //Point position_1(-100, 300, 1000);// = player.getPointOf(LEFT_SHOULDER);
     Point position_1 = player.getPointOf(RIGHT_SHOULDER);
-    if(position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0)
+    if (position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0)
     {
         model = translationMatrix(position_1) * scaleMatrix(50, 50, 50);
         mesh_test.draw(model, view, projection);
     }
+
     //Epaule 2
     //Point position_2(100, 200, 1000);// = player.getPointOf(RIGHT_SHOULDER);
     Point position_2 = player.getPointOf(LEFT_SHOULDER);
@@ -169,8 +170,8 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
     }
 
     //Vetement
-    if(    position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 || 
-        position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
+    if (  position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 ||
+            position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
         clothe.draw(position_1, position_2, view, projection);
     }
@@ -185,7 +186,8 @@ int main(int argc, char** argv)
     mtl::log::info("Chargement des sprites...");
     Sprites::init();
     mtl::log::info("Chargement des sprites terminé");
-    
+
+
     if (std::string(argv[1]) == "cv")
     {
         mtl::log::info("Lancement avec OpenCV");
@@ -201,7 +203,7 @@ int main(int argc, char** argv)
         cv::namedWindow("test");
         cv::resizeWindow("test", 640u, 640u);
         cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
-//        cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
+//       cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
         blit(img, Sprites::test, 0, 0);
         cv::imshow("test", img);
         cv::waitKey(0);
@@ -230,7 +232,7 @@ int main(int argc, char** argv)
 
         program.use();
         renderLoop(30, met_ton_code_la_charles, fond, cube, player, clothe, camera);
-        
+
         GlContext::endGL();
     }
 
@@ -238,25 +240,3 @@ int main(int argc, char** argv)
     mtl::log::info("Vidage des sprites");
     return EXIT_SUCCESS;
 }
-
-//
-// (Fait par la) Main de Mehdi
-//
-
-// #include "Camera.hpp"
-// int main(int argc, char const *argv[])
-// {
-//     // Camera cam;
-
-//     // cam.init();
-
-
-    
-//     App app;
-
-//     app.mainLoop();
-
-//     app.quit();
-//     return 0;
-// }
-

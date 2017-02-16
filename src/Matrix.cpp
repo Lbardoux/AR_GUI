@@ -85,6 +85,13 @@ Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
     return result;
 }
 
+Vector operator*(const Matrix& m, const Vector& v) noexcept
+{
+    return Vector((m.at(0, 0) * v.x() + m.at(0, 1) * v.y() + m.at(0, 2) * v.z() + m.at(0, 3)),
+                  (m.at(1, 0) * v.x() + m.at(1, 1) * v.y() + m.at(1, 2) * v.z() + m.at(1, 3)),
+                  (m.at(2, 0) * v.x() + m.at(2, 1) * v.y() + m.at(2, 2) * v.z() + m.at(2, 3)));
+}
+
 Matrix& Matrix::operator*=(float v) noexcept
 {
     *this = (*this)*v;

@@ -3,33 +3,50 @@
 #include <algorithm>
 #include <functional>
 
-void SetCursor::addCursor(PlayerMember type, const Cursor& cursor, const mat_data_t& color)
+SetCursor::SetCursor()
+{}
+
+SetCursor::~SetCursor()
+{}
+
+void SetCursor::init(const Player& player, const mat_data_t& color)
+{
+	if(!player.isVisible())
+		return;
+
+	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
+		addCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getCameraPositionOf(static_cast<PlayerMember>(p)), color));
+}
+
+void SetCursor::addCursor(PlayerMember type, const ColoredCursor& cursor)
 {
     mapCursor_t::iterator it = this->_cursors.find(type);
 
     if(it != this->_cursors.end())
         this->_cursors.erase(type);
 
-    this->_cursors[type] = coloredCursor_t(cursor, color);
+    this->_cursors[type] = coloredCursor_t(cursor);
 }
 
-void SetCursor::updateCursor(PlayerMember type, const Cursor& cursor)
+void SetCursor::updateCursor(PlayerMember type, const ColoredCursor& cursor)
 {
-    this->_cursors[type].first = cursor;
+    this->_cursors[type].x(cursor.x());
+    this->_cursors[type].y(cursor.y());
 }
+
 void SetCursor::updateColor(PlayerMember type, const mat_data_t& color)
 {
-    this->_cursors[type].second = color;
+    this->_cursors[type] = color;
 }
 
 const Cursor& SetCursor::getCursor(PlayerMember type) const
 {
-    return this->_cursors.at(type).first;
+    return this->_cursors.at(type);
 }
 
 Cursor& SetCursor::getCursor(PlayerMember type)
 {
-    return this->_cursors[type].first;
+    return this->_cursors[type];
 }
 
 mapCursor_t::const_iterator SetCursor::begin() const
@@ -55,13 +72,17 @@ mapCursor_t::iterator SetCursor::end()
 void SetCursor::draw(cv::Mat& frame)
 {
     std::for_each(this->_cursors.begin(), this->_cursors.end(),    [&frame] (mapCursor_t::value_type& val) {
-        val.second.first.draw(frame, val.second.second);
+        val.second.draw(frame);
     });
 }
 
 void SetCursor::update(const Player& player)
 {
-    for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
-        updateCursor(static_cast<PlayerMember>(p), player.getPositionOf(static_cast<PlayerMember>(p)));
-
+	if(!player.isVisible())
+		return;
+	
+	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
+	{
+		updateCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getCameraPositionOf(static_cast<PlayerMember>(p))));
+	}
 }

@@ -11,6 +11,24 @@
 #include "vec.hpp"
 #include "Camera.hpp"
 
+/*
+ * Petit message de la part de Mehdi :
+ * Peux-tu vérifier ton update s'il te plait ?
+ * Ou alors m'expliquer son retour (qui me plait pas mal !)
+ * 
+ * En gros mon problème est le suivant : 
+ * 	J'ai cru comprendre qu'update de Player renvoyait vrai si quelqu'un est détecté
+ * 	Faux si personne ou trop de monde. Du coup, je voulais afficher l'icone rouge/vert
+ * 	en fonction de ce résultat. Sauf que quand je me mets devant la caméra, ça devient vert (niquel)
+ * 	mais si j'en sors, ça reste vert au lieu de devenir rouge (tu renvoies toujours vrai après quoi)
+ * 	
+ * Du coup, est-ce que y'aurait quelque chose à changer, ou je dois changer mon utilisation ?
+ * Merci :)
+ * 
+ * PS : j'ai fait quelques modifs dans ta classe (constructeur par défaut + fonction init). C'est juste 
+ * du déplacement de code pour l'utiliser comme on veut derrière
+ */
+
 /**
  * @enum PlayerMember
  * @brief Enumère toutes les articulations d'un joueur
@@ -29,10 +47,12 @@ enum PlayerMember { HEAD = 0, NECK, TORSO,
 class Player
 {
 public:
-    /**
-     * @brief         Construit un nouveau player 
-     * @param[in]     user_tracker le tracker préallablement initialisé avec la bibliothèque NiTE.
-     * @pre         Veuillez faire attention  que user_tracker->create(&device) soit bien égal à nite::STATUS_OK.
+
+	Player();
+	/**
+     * @brief 		Construit un nouveau player 
+     * @param[in] 	user_tracker le tracker préallablement initialisé avec la bibliothèque NiTE.
+	 * @pre 		Veuillez faire attention  que user_tracker->create(&device) soit bien égal à nite::STATUS_OK.
      */
     Player(Camera & camera);
     /**
@@ -40,10 +60,17 @@ public:
      */
     ~Player() = default;
 
-    /**
-     * @brief     Met à jour les articulations du joueur en lisant une nouvelle frame.
-     * @return    Vrai si un seul joueur a été detecté.
-     *            Faux si aucun joueur a été detecté ou plusieurs ou si il y a eu un problème.  
+	/**
+	 * @date       16-Feb-2017
+	 * @brief      Initialise un player
+	 * @param      camera  Camera qui servira pour NiTE
+	 */
+	void init(Camera & camera);
+
+	/**
+     * @brief 	Met à jour les articulations du joueur en lisant une nouvelle frame.
+	 * @return	Vrai si un seul joueur a été detecté.
+	 *			Faux si aucun joueur a été detecté ou plusieurs ou si il y a eu un problème.  
      */
     bool update();
 
@@ -65,9 +92,9 @@ public:
      * @param[in]     member l'articulation dont on souhaite connaitre la position.
      * @return        Le point correspondant à l'articulation. Le point (0 0 0) si l'articulation n'était pas visible. 
      */
-    Point getPointOf(PlayerMember member) const;
-    
-
+	Point getPointOf(PlayerMember member) const;
+	
+	Vector getCameraPositionOf(PlayerMember member) const;
 private:
     /**
      * @brief         Renvoi la position de l'articulation
