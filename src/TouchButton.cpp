@@ -31,10 +31,10 @@ TouchButton::TouchButton(Sprite* image) : Widget(), sprite(image)
 
 void TouchButton::init(Sprite* image, int x, int y, double seconde)
 {
-	this->sprite = image;
-	this->x() = x;
-	this->y() = y;
-	this->setActivationTime(seconde);
+    this->sprite = image;
+    this->x() = x;
+    this->y() = y;
+    this->setActivationTime(seconde);
 }
 
 bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor))

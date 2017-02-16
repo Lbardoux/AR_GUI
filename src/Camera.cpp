@@ -13,59 +13,59 @@ static bool OPENNI_INITIALISED = false;
 
 void __exit_Openni_message_()
 {
-	mtl::log::info("Shutting down OpenNI");
+    mtl::log::info("Shutting down OpenNI");
 }
 
 void OpenNIInitialiser()
 {
-	if(OPENNI_INITIALISED)
-		return;
+    if(OPENNI_INITIALISED)
+        return;
 
-	if (openni::OpenNI::initialize() != openni::STATUS_OK)
+    if (openni::OpenNI::initialize() != openni::STATUS_OK)
     {
         std::stringstream ss;
         ss << "Failed to initialize OpenNI : " << openni::OpenNI::getExtendedError();
         throw std::runtime_error(ss.str());
     }
 
-	mtl::log::info("OpenNI initisalised correctly");
-	OPENNI_INITIALISED = true;
-	atexit(openni::OpenNI::shutdown);
-	atexit(__exit_Openni_message_);
+    mtl::log::info("OpenNI initisalised correctly");
+    OPENNI_INITIALISED = true;
+    atexit(openni::OpenNI::shutdown);
+    atexit(__exit_Openni_message_);
 }
 
 void printStatusOpenni(openni::Status status)
 {
-	switch(status)
-	{
-		case openni::STATUS_OK :
-			mtl::log::info("Status returned : STATUS_OK");
-			break;
-		case openni::STATUS_ERROR :
-			mtl::log::info("Status returned : STATUS_ERROR");
-			break;
-		case openni::STATUS_NOT_IMPLEMENTED :
-			mtl::log::info("Status returned : STATUS_NOT_IMPLEMENTED");
-			break;
-		case openni::STATUS_NOT_SUPPORTED :
-			mtl::log::info("Status returned : STATUS_NOT_SUPPORTED");
-			break;
-		case openni::STATUS_BAD_PARAMETER :
-			mtl::log::info("Status returned : STATUS_BAD_PARAMETER");
-			break;
-		case openni::STATUS_OUT_OF_FLOW :
-			mtl::log::info("Status returned : STATUS_OUT_OF_FLOW");
-			break;
-		case openni::STATUS_NO_DEVICE :
-			mtl::log::info("Status returned : STATUS_NO_DEVICE");
-			break;
-		case openni::STATUS_TIME_OUT :
-			mtl::log::info("Status returned : STATUS_TIME_OUT");
-			break;
-		default:
-			mtl::log::info("Unknown status ", status);
-			break;
-	}
+    switch(status)
+    {
+        case openni::STATUS_OK :
+            mtl::log::info("Status returned : STATUS_OK");
+            break;
+        case openni::STATUS_ERROR :
+            mtl::log::info("Status returned : STATUS_ERROR");
+            break;
+        case openni::STATUS_NOT_IMPLEMENTED :
+            mtl::log::info("Status returned : STATUS_NOT_IMPLEMENTED");
+            break;
+        case openni::STATUS_NOT_SUPPORTED :
+            mtl::log::info("Status returned : STATUS_NOT_SUPPORTED");
+            break;
+        case openni::STATUS_BAD_PARAMETER :
+            mtl::log::info("Status returned : STATUS_BAD_PARAMETER");
+            break;
+        case openni::STATUS_OUT_OF_FLOW :
+            mtl::log::info("Status returned : STATUS_OUT_OF_FLOW");
+            break;
+        case openni::STATUS_NO_DEVICE :
+            mtl::log::info("Status returned : STATUS_NO_DEVICE");
+            break;
+        case openni::STATUS_TIME_OUT :
+            mtl::log::info("Status returned : STATUS_TIME_OUT");
+            break;
+        default:
+            mtl::log::info("Unknown status ", status);
+            break;
+    }
 }
 
 
@@ -80,7 +80,7 @@ namespace
 
 void Camera::init(const char* uri)
 {
-	OpenNIInitialiser();
+    OpenNIInitialiser();
 
     this->initCamera(uri);
     this->initColorStream();
@@ -94,7 +94,7 @@ void Camera::init(const char* uri)
 // #define __DEPTH_FORMAT__ openni::PIXEL_FORMAT_DEPTH_1_MM
 bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode, bool printMods)
 {
-	const openni::SensorInfo* sinfo = this->device.getSensorInfo(sensorType);
+    const openni::SensorInfo* sinfo = this->device.getSensorInfo(sensorType);
 
     if (sinfo == NULL)
     {
@@ -110,17 +110,17 @@ bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType
     std::vector<int> item;
     for (int i = 0; i < modesDepth.getSize(); i++) {
         if(printMods)
-        	mtl::log::info(i, ": ", modesDepth[i].getResolutionX(), 'x', modesDepth[i].getResolutionY(), ", ", modesDepth[i].getFps(), " fps, ", modesDepth[i].getPixelFormat(), " format", mtl::log::hold_on());
-        	// printf("%i: %ix%i, %i fps, %i format\n", i, modesDepth[i].getResolutionX(), modesDepth[i].getResolutionY(),
-         //    	modesDepth[i].getFps(), modesDepth[i].getPixelFormat()); //PIXEL_FORMAT_DEPTH_1_MM = 100, PIXEL_FORMAT_DEPTH_100_UM
+            mtl::log::info(i, ": ", modesDepth[i].getResolutionX(), 'x', modesDepth[i].getResolutionY(), ", ", modesDepth[i].getFps(), " fps, ", modesDepth[i].getPixelFormat(), " format", mtl::log::hold_on());
+            // printf("%i: %ix%i, %i fps, %i format\n", i, modesDepth[i].getResolutionX(), modesDepth[i].getResolutionY(),
+         //        modesDepth[i].getFps(), modesDepth[i].getPixelFormat()); //PIXEL_FORMAT_DEPTH_1_MM = 100, PIXEL_FORMAT_DEPTH_100_UM
         if (modesDepth[i].getResolutionX() == width && modesDepth[i].getResolutionY() == height)
         {
             item.push_back(i);
             if(printMods)
-            	mtl::log::info(" : Ajouté");
+                mtl::log::info(" : Ajouté");
         }
         else if(printMods)
-        		mtl::log::info();
+                mtl::log::info();
 
     }
 
@@ -140,41 +140,41 @@ bool Camera::findVideoModes(int width, int height, openni::SensorType sensorType
 
 void Camera::start(int width, int height)
 {
-	openni::VideoMode videoMode;
-	openni::Status status;
+    openni::VideoMode videoMode;
+    openni::Status status;
 
-	// if(findVideoModes(width / 2, height / 2, openni::SENSOR_DEPTH, videoMode))
-	// {
-	// 	status = this->depth.setVideoMode(videoMode);
-	// 	if(status != openni::STATUS_OK)
-	// 	{
-	// 		mtl::log::error("Unable to set VideoMode for depth stream");
-	// 		printStatusOpenni(status);
-	// 	}
-	// 	else
-	// 		mtl::log::info("Resolution sets to [", width, ',', height, "] for depth stream");
- // 	}
-	if(findVideoModes(width, height, openni::SENSOR_COLOR, videoMode, true))
-	{
-		status = this->color.setVideoMode(videoMode);
-		if(status != openni::STATUS_OK)
-		{
-			mtl::log::error("Unable to set VideoMode for color stream");
-			printStatusOpenni(status);
-		}
-		else
-			mtl::log::info("Resolution sets to [", width, ',', height, "] for color stream");
-	}
+    // if(findVideoModes(width / 2, height / 2, openni::SENSOR_DEPTH, videoMode))
+    // {
+    //     status = this->depth.setVideoMode(videoMode);
+    //     if(status != openni::STATUS_OK)
+    //     {
+    //         mtl::log::error("Unable to set VideoMode for depth stream");
+    //         printStatusOpenni(status);
+    //     }
+    //     else
+    //         mtl::log::info("Resolution sets to [", width, ',', height, "] for depth stream");
+ //     }
+    if(findVideoModes(width, height, openni::SENSOR_COLOR, videoMode, true))
+    {
+        status = this->color.setVideoMode(videoMode);
+        if(status != openni::STATUS_OK)
+        {
+            mtl::log::error("Unable to set VideoMode for color stream");
+            printStatusOpenni(status);
+        }
+        else
+            mtl::log::info("Resolution sets to [", width, ',', height, "] for color stream");
+    }
 
-	// if (this->depth.start() != openni::STATUS_OK)
+    // if (this->depth.start() != openni::STATUS_OK)
  //    {
- //    	mtl::log::error("Couldn't start depth stream:\n", openni::OpenNI::getExtendedError());
+ //        mtl::log::error("Couldn't start depth stream:\n", openni::OpenNI::getExtendedError());
  //        // printf("Couldn't start depth stream:\n%s\n", openni::OpenNI::getExtendedError());
  //        this->depth.destroy();
  //    }
     if (this->color.start() != openni::STATUS_OK)
     {
-    	mtl::log::error("Couldn't start color stream:\n", openni::OpenNI::getExtendedError());
+        mtl::log::error("Couldn't start color stream:\n", openni::OpenNI::getExtendedError());
         // printf("Couldn't start color stream:\n%s\n", openni::OpenNI::getExtendedError());
         this->color.destroy();
     }
@@ -221,7 +221,7 @@ void Camera::initCamera(const char* uri)
 // {
 //     if (this->depth.create(this->device, openni::SENSOR_DEPTH) != openni::STATUS_OK)
 //     {
-//     	mtl::log::error("Couldn't find depth stream:\n", openni::OpenNI::getExtendedError());
+//         mtl::log::error("Couldn't find depth stream:\n", openni::OpenNI::getExtendedError());
 //         // printf("Couldn't find depth stream:\n%s\n", openni::OpenNI::getExtendedError());
 //     }
 // }
@@ -230,32 +230,32 @@ void Camera::initColorStream(void)
 {
     if (this->color.create(this->device, openni::SENSOR_COLOR) != openni::STATUS_OK)
     {
-    	mtl::log::error("Couldn't find color stream:\n", openni::OpenNI::getExtendedError());
+        mtl::log::error("Couldn't find color stream:\n", openni::OpenNI::getExtendedError());
         // printf("Couldn't find color stream:\n%s\n", openni::OpenNI::getExtendedError());
     }
 }
 
 // const cv::Mat& Camera::depthFrame(void) const
 // {
-// 	return this->depthMat;
+//     return this->depthMat;
 // }
 
 // cv::Mat& Camera::depthFrame(void)
 // {
-// 	return this->depthMat;
+//     return this->depthMat;
 // }
 
 const cv::Mat& Camera::colorFrame(void) const
 {
-	return this->colorMat;
+    return this->colorMat;
 }
 
 cv::Mat& Camera::colorFrame(void)
 {
-	return this->colorMat;
+    return this->colorMat;
 }
 
 openni::Device& Camera::getDevice()
 {
-	return this->device;
+    return this->device;
 }

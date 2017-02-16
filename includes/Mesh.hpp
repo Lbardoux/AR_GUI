@@ -33,7 +33,7 @@
 class Mesh
 {
 public:
-	/**
+    /**
       * @brief      Construit le mesh
       * @param[in]  path_to_obj      le chemin vers le fichier .obj
       * @param[in]  path_to_texture  le chemin vers le fichier de texture (doit
@@ -41,7 +41,7 @@ public:
       * @param[in]  program          le shader
       * @param[in]  offset           le décallage
       */
-	Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
+    Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
             const Vector & offset = Vector());
 
     /**
@@ -54,10 +54,10 @@ public:
     Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
             const Vector & offset = Vector());
 
-	/**
+    /**
      * @brief Déstructeur par défaut.
      */
-	~Mesh() = default;
+    ~Mesh() = default;
 
     /**
      * @brief      Initialise ou rafraichie la texture
@@ -65,13 +65,13 @@ public:
      */
     void readTextureFromCamera(Camera & camera);
 
-	/**
+    /**
      * @brief Affiche le mesh.r
      * @param[in] model la matrice modele
-   	 * @param[in] view la matrice vue
+        * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
-	void draw(const Transform & model, const Transform & view, const Transform & projection) const;
+    void draw(const Transform & model, const Transform & view, const Transform & projection) const;
 
 private:
     /**
@@ -84,7 +84,7 @@ private:
     /**
      * @brief      Initialise la VAO
      */
-	void initVAO();
+    void initVAO();
 
     /**
      * @brief      Initialise la texture
@@ -92,7 +92,7 @@ private:
      */
     void initTexture(const char * path);
 
-	GLuint              m_program;  //!< Le shader   
+    GLuint              m_program;  //!< Le shader   
     GLuint              m_vao;      //!< Le VAO.
     GLuint              m_vbo;      //!< Le VBO.
     std::vector<vec3>   m_vertices; //!< Les coordonnées des points.

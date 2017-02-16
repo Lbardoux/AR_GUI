@@ -21,11 +21,11 @@
 // Définition des maccros
 
 #ifndef UNUSED
-	#ifdef __GNUC__
-		#define UNUSED(x) x __attribute__((__unused__))
-	#else
-		#define UNUSED(x) x
-	#endif
+    #ifdef __GNUC__
+        #define UNUSED(x) x __attribute__((__unused__))
+    #else
+        #define UNUSED(x) x
+    #endif
 #endif
 
 // ############################################################################

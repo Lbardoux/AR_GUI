@@ -34,18 +34,18 @@ typedef cv::Mat Sprite; //!< Beaucoup plus simple à manipuler.
 class Sprites final
 {
     public:
-		static Sprite test;
-		/**
-		 * @brief Charge les sprites en un coup.
-		 * @throw std::runtime_error Si un chargement a échoué.
-		 */
+        static Sprite test;
+        /**
+         * @brief Charge les sprites en un coup.
+         * @throw std::runtime_error Si un chargement a échoué.
+         */
         static void init(void);
-		/**
-		 * @brief Vide les images.
-		 */
-		static void empty(void);
+        /**
+         * @brief Vide les images.
+         */
+        static void empty(void);
 
-		static Sprite spr_touchButton; //!< Sprite pour le TouchButton
+        static Sprite spr_touchButton; //!< Sprite pour le TouchButton
 };
 
 /**

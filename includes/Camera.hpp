@@ -40,7 +40,7 @@ struct Camera final
          * @post       Si la hauteur et la largeur pour le flux sont
          *             disponibles, alors ils sont mis en place, sinon les
          *             paramètres par défaut sont laissés
-         */	
+         */    
         void start(int width, int height);
         //! @brief Détruit la caméra et tout le tintouin.
         ~Camera(void);
@@ -49,29 +49,29 @@ struct Camera final
          * Cela va remplir depthMat en recalant correctement l'image.
          */
         void readFrame(void);
-		// /**
-		//  * @brief Récupère la frame enregistrée en lecture seule.
-		//  * @return Une référence sur l'image capturée.
-		//  */
-		// const cv::Mat& depthFrame(void) const;
-		// /**
-		//  * @brief Récupère la frame enregistrée en lecture/écriture.
-		//  * @return Une référence sur l'image capturée.
-		//  */
-		// cv::Mat& depthFrame(void);
-		/**
-		 * @brief Récupère la frame enregistrée en lecture seule.
-		 * @return Une référence sur l'image capturée.
-		 */
-		const cv::Mat& colorFrame(void) const;
-		/**
-		 * @date       15-Feb-2017
-		 * @brief      Récupère la frame enregistrée en lecture/écriture.
-		 * @return     Une référence sur l'image capturée.
-		 */
-		cv::Mat& colorFrame(void);
+        // /**
+        //  * @brief Récupère la frame enregistrée en lecture seule.
+        //  * @return Une référence sur l'image capturée.
+        //  */
+        // const cv::Mat& depthFrame(void) const;
+        // /**
+        //  * @brief Récupère la frame enregistrée en lecture/écriture.
+        //  * @return Une référence sur l'image capturée.
+        //  */
+        // cv::Mat& depthFrame(void);
+        /**
+         * @brief Récupère la frame enregistrée en lecture seule.
+         * @return Une référence sur l'image capturée.
+         */
+        const cv::Mat& colorFrame(void) const;
+        /**
+         * @date       15-Feb-2017
+         * @brief      Récupère la frame enregistrée en lecture/écriture.
+         * @return     Une référence sur l'image capturée.
+         */
+        cv::Mat& colorFrame(void);
 
-		friend class Player;
+        friend class Player;
 
     private:
         void initCamera(const char *uri);      //!< @brief Initialise le composant caméra.
@@ -102,12 +102,12 @@ struct Camera final
          */
         bool findVideoModes(int width, int height, openni::SensorType sensorType, openni::VideoMode& videoMode, bool printMods = false);
 
-		/**
-		 * @date       15-Feb-2017
-		 * @brief      Récupère le device
-		 * @return     Le device
-		 */
-		openni::Device& getDevice();
+        /**
+         * @date       15-Feb-2017
+         * @brief      Récupère le device
+         * @return     Le device
+         */
+        openni::Device& getDevice();
 
 };
 

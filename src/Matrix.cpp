@@ -10,150 +10,150 @@
 #include "Matrix.hpp"
 
 Matrix::Matrix(const float& a, const float& b, const float& c, const float& d,
-	           const float& e, const float& f, const float& g, const float& h,
-	           const float& i, const float& j, const float& k, const float& l,
-	           const float& m, const float& n, const float& o, const float& p) noexcept
+               const float& e, const float& f, const float& g, const float& h,
+               const float& i, const float& j, const float& k, const float& l,
+               const float& m, const float& n, const float& o, const float& p) noexcept
 {
-	this->buffer.at(0)  = a;
-	this->buffer.at(1)  = b;
-	this->buffer.at(2)  = c;
-	this->buffer.at(3)  = d;
-	this->buffer.at(4)  = e;
-	this->buffer.at(5)  = f;
-	this->buffer.at(6)  = g;
-	this->buffer.at(7)  = h;
-	this->buffer.at(8)  = i;
-	this->buffer.at(9)  = j;
-	this->buffer.at(10) = k;
-	this->buffer.at(11) = l;
-	this->buffer.at(12) = m;
-	this->buffer.at(13) = n;
-	this->buffer.at(14) = o;
-	this->buffer.at(15) = p;
+    this->buffer.at(0)  = a;
+    this->buffer.at(1)  = b;
+    this->buffer.at(2)  = c;
+    this->buffer.at(3)  = d;
+    this->buffer.at(4)  = e;
+    this->buffer.at(5)  = f;
+    this->buffer.at(6)  = g;
+    this->buffer.at(7)  = h;
+    this->buffer.at(8)  = i;
+    this->buffer.at(9)  = j;
+    this->buffer.at(10) = k;
+    this->buffer.at(11) = l;
+    this->buffer.at(12) = m;
+    this->buffer.at(13) = n;
+    this->buffer.at(14) = o;
+    this->buffer.at(15) = p;
 }
 
 Matrix::~Matrix(void) noexcept
 {
-	this->buffer.fill(0.0f);
+    this->buffer.fill(0.0f);
 }
 
 float& Matrix::at(int x, int y) noexcept
 {
-	return this->buffer.at(y*4 + x);
+    return this->buffer.at(y*4 + x);
 }
 
 const float& Matrix::at(int x, int y) const noexcept
 {
-	return this->buffer.at(y*4 + x);
+    return this->buffer.at(y*4 + x);
 }
 
 Matrix::Matrix(const Matrix& other) noexcept
 {
-	std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
+    std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
 }
 
 Matrix::Matrix(Matrix&& other) noexcept
 {
-	std::swap(this->buffer, other.buffer);
+    std::swap(this->buffer, other.buffer);
 }
 
 Matrix& Matrix::operator=(const Matrix& other) noexcept
 {
-	std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
-	return *this;
+    std::copy(other.buffer.begin(), other.buffer.end(), this->buffer.begin());
+    return *this;
 }
 
 Matrix& Matrix::operator=(Matrix&& other) noexcept
 {
-	std::swap(this->buffer, other.buffer);
-	return *this;
+    std::swap(this->buffer, other.buffer);
+    return *this;
 }
 
 Matrix operator*(const Matrix& m1, const Matrix& m2) noexcept
 {
-	Matrix result;
-	for(int ym1=0;ym1<4;++ym1)
-	{
-		for(int xm2=0;xm2<4;++xm2)
-		{
-			for(int ym2=0;ym2<4;++ym2)
-			{
-				result.at(xm2, ym1) += m1.at(ym2, ym1) * m2.at(xm2, ym2);
-			}
-		}
-	}
-	return result;
+    Matrix result;
+    for(int ym1=0;ym1<4;++ym1)
+    {
+        for(int xm2=0;xm2<4;++xm2)
+        {
+            for(int ym2=0;ym2<4;++ym2)
+            {
+                result.at(xm2, ym1) += m1.at(ym2, ym1) * m2.at(xm2, ym2);
+            }
+        }
+    }
+    return result;
 }
 
 Matrix& Matrix::operator*=(float v) noexcept
 {
-	*this = (*this)*v;
-	return *this;
+    *this = (*this)*v;
+    return *this;
 }
 
 Matrix& Matrix::operator/=(float v) noexcept
 {
-	*this = (*this)/v;
-	return *this;
+    *this = (*this)/v;
+    return *this;
 }
 
 Matrix& Matrix::operator*=(const Matrix& other) noexcept
 {
-	*this = (*this) * other;
-	return *this;
+    *this = (*this) * other;
+    return *this;
 }
 
 Matrix identityMatrix(void)
 {
-	return Matrix(1.0f, 0.0f, 0.0f, 0.0f,
-				  0.0f, 1.0f, 0.0f, 0.0f,
-				  0.0f, 0.0f, 1.0f, 0.0f,
-				  0.0f, 0.0f, 0.0f, 1.0f);
+    return Matrix(1.0f, 0.0f, 0.0f, 0.0f,
+                  0.0f, 1.0f, 0.0f, 0.0f,
+                  0.0f, 0.0f, 1.0f, 0.0f,
+                  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Matrix translationMatrix(const Vector& v)
 {
-	return translationMatrix(v.x(), v.y(), v.z());
+    return translationMatrix(v.x(), v.y(), v.z());
 }
 
 Matrix rotationXMatrix(float angle)
 {
-	return Matrix(1.0f, 0.0f,            0.0f,             0.0f,
-				  0.0f, std::cos(angle), -std::sin(angle), 0.0f,
-				  0.0f, std::sin(angle), std::cos(angle),  0.0f,
-				  0.0f, 0.0f,            0.0f,             1.0f);
+    return Matrix(1.0f, 0.0f,            0.0f,             0.0f,
+                  0.0f, std::cos(angle), -std::sin(angle), 0.0f,
+                  0.0f, std::sin(angle), std::cos(angle),  0.0f,
+                  0.0f, 0.0f,            0.0f,             1.0f);
 }
 
 Matrix rotationYMatrix(float angle)
 {
-	return Matrix(std::cos(angle),  0.0f, std::sin(angle), 0.0f,
-				  0.0f,             1.0f, 0.0f,            0.0f,
-				  -std::sin(angle), 0.0f, std::cos(angle), 0.0f,
-				  0.0f,             0.0f, 0.0f,            1.0f);
+    return Matrix(std::cos(angle),  0.0f, std::sin(angle), 0.0f,
+                  0.0f,             1.0f, 0.0f,            0.0f,
+                  -std::sin(angle), 0.0f, std::cos(angle), 0.0f,
+                  0.0f,             0.0f, 0.0f,            1.0f);
 }
 
 Matrix rotationZMatrix(float angle)
 {
-	return Matrix(std::cos(angle), -std::sin(angle), 0.0f, 0.0f,
-				  std::sin(angle), std::cos(angle),  0.0f, 0.0f,
-				  0.0f,            0.0f,             1.0f, 0.0f,
-				  0.0f,            0.0f,             0.0f, 1.0f);
+    return Matrix(std::cos(angle), -std::sin(angle), 0.0f, 0.0f,
+                  std::sin(angle), std::cos(angle),  0.0f, 0.0f,
+                  0.0f,            0.0f,             1.0f, 0.0f,
+                  0.0f,            0.0f,             0.0f, 1.0f);
 }
 
 Matrix translationMatrix(float x, float y, float z)
 {
-	return Matrix(1.0f, 0.0f, 0.0f, x,
-				  0.0f, 1.0f, 0.0f, y,
-				  0.0f, 0.0f, 1.0f, z,
-				  0.0f, 0.0f, 0.0f, 1.0f);
+    return Matrix(1.0f, 0.0f, 0.0f, x,
+                  0.0f, 1.0f, 0.0f, y,
+                  0.0f, 0.0f, 1.0f, z,
+                  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Matrix scaleMatrix(float x, float y, float z)
 {
-	return Matrix(x,    0.0f, 0.0f, 0.0f,
-				  0.0f, y,    0.0f, 0.0f,
-				  0.0f, 0.0f, z,    0.0f,
-				  0.0f, 0.0f, 0.0f, 1.0f);
+    return Matrix(x,    0.0f, 0.0f, 0.0f,
+                  0.0f, y,    0.0f, 0.0f,
+                  0.0f, 0.0f, z,    0.0f,
+                  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Matrix& Matrix::inverse()
@@ -183,7 +183,7 @@ Matrix& Matrix::inverse()
         }
 
         if(!(irow >= 0 && irow < 4) || !(icol >= 0 && icol < 4))
-        	throw std::invalid_argument("La matrice est non inversible");
+            throw std::invalid_argument("La matrice est non inversible");
 
         ++ipiv[icol];
         // Swap rows _irow_ and _icol_ for pivot
@@ -227,7 +227,7 @@ Matrix& Matrix::inverse()
 
 Vector cross(Vector & u, Vector & v)
 {
-	return Vector(
+    return Vector(
         (u.y() * v.z()) - (u.z() * v.y()),
         (u.z() * v.x()) - (u.x() * v.z()),
         (u.x() * v.y()) - (u.y() * v.x()));
@@ -298,5 +298,5 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m)
 
 const float* Matrix::getBuffer() const noexcept
 {
-	return this->buffer.data();
+    return this->buffer.data();
 }

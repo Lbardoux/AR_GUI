@@ -143,37 +143,37 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
     //Fond
     //
     Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
-	Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-	Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
+    Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+    Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
     fond.readTextureFromCamera(camera);
     fond.draw(model, view, projection);
 
-   	//Joueur
+       //Joueur
     //
-   	player.update();
+       player.update();
     //Epaule 1
     //Point position_1(-100, 300, 1000);// = player.getPointOf(LEFT_SHOULDER);
     Point position_1 = player.getPointOf(RIGHT_SHOULDER);
     if(position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0)
     {
-	    model = translationMatrix(position_1) * scaleMatrix(50, 50, 50);
-	    mesh_test.draw(model, view, projection);
-	}
-	//Epaule 2
+        model = translationMatrix(position_1) * scaleMatrix(50, 50, 50);
+        mesh_test.draw(model, view, projection);
+    }
+    //Epaule 2
     //Point position_2(100, 200, 1000);// = player.getPointOf(RIGHT_SHOULDER);
-	Point position_2 = player.getPointOf(LEFT_SHOULDER);
+    Point position_2 = player.getPointOf(LEFT_SHOULDER);
     if(position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
-	    model = translationMatrix(position_2) * scaleMatrix(50, 50, 50);
-	    mesh_test.draw(model, view, projection);
-	}
+        model = translationMatrix(position_2) * scaleMatrix(50, 50, 50);
+        mesh_test.draw(model, view, projection);
+    }
 
     //Vetement
-    if(	position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 || 
-    	position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
+    if(    position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 || 
+        position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
-	    clothe.draw(position_1, position_2, view, projection);
-	}
+        clothe.draw(position_1, position_2, view, projection);
+    }
 
     return false;
 }
@@ -182,10 +182,10 @@ int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
     mtl::log::info("Ligne de commande valide");
-	mtl::log::info("Chargement des sprites...");
-	Sprites::init();
-	mtl::log::info("Chargement des sprites terminé");
-	
+    mtl::log::info("Chargement des sprites...");
+    Sprites::init();
+    mtl::log::info("Chargement des sprites terminé");
+    
     if (std::string(argv[1]) == "cv")
     {
         mtl::log::info("Lancement avec OpenCV");
@@ -197,26 +197,26 @@ int main(int argc, char** argv)
     }
     else if (std::string(argv[1]) == "test")
     {
-		//QApplication app(argc, argv);
+        //QApplication app(argc, argv);
         cv::namedWindow("test");
-		cv::resizeWindow("test", 640u, 640u);
-		cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
-//		cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
-		blit(img, Sprites::test, 0, 0);
-		cv::imshow("test", img);
-		cv::waitKey(0);
-		cv::destroyWindow("test");
+        cv::resizeWindow("test", 640u, 640u);
+        cv::Mat img = cv::Mat(640u, 640u, CV_8UC4, cv::Scalar(0));
+//        cv::Mat img2 = cv::Mat(40u, 40u, CV_8UC4, cv::Scalar(1));
+        blit(img, Sprites::test, 0, 0);
+        cv::imshow("test", img);
+        cv::waitKey(0);
+        cv::destroyWindow("test");
     }
     else
     {
         Camera camera;
-	    camera.init();
-	    camera.start(640, 480);
-    	Player player(camera);
+        camera.init();
+        camera.start(640, 480);
+        Player player(camera);
 
-    	GlContext::initGL(640, 480);
-		GlContext::windowCaption("OpenGL window");
-		Pipeline::fromXML("assets/PipelineConfig.xml");
+        GlContext::initGL(640, 480);
+        GlContext::windowCaption("OpenGL window");
+        Pipeline::fromXML("assets/PipelineConfig.xml");
 
         VertexShader vertex("assets/shaders/vertex.cpp");
         FragmentShader fragment("assets/shaders/fragment.cpp");
@@ -235,7 +235,7 @@ int main(int argc, char** argv)
     }
 
     Sprites::empty();
-	mtl::log::info("Vidage des sprites");
+    mtl::log::info("Vidage des sprites");
     return EXIT_SUCCESS;
 }
 
