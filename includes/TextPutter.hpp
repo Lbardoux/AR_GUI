@@ -1,17 +1,18 @@
 /**
- * @file textPutter.hpp
- * @brief Utilise OpenCV pour afficher du texte d'une manière plus facile sur une cv::Mat.
- * @author Laurent BARDOUX p1108365
+ * @file TextPutter.hpp
+ * @brief Offers a more simplier way to display text on a cv::Mat
+ * @author MTLCRBN
+ * @author Zelnes
  * @version 1.0
  */
-#ifndef TEXTPUTTER_HPP_INCLUDED
-#define TEXTPUTTER_HPP_INCLUDED
+#ifndef OPENCV_TEXTPUTTER_HPP_INCLUDED
+#define OPENCV_TEXTPUTTER_HPP_INCLUDED
 
 #include <cstdint>
 #include <string>
-
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+
 
 #if CV_MAJOR_VERSION < 3
     #define _HERSHEY_FONT_NS_ cv
@@ -24,40 +25,39 @@
 
 /**
  * @class TextPutter
- * @brief Cache les appels à cv::putText.
- * dans quelque chose de plus simple à utiliser.
+ * @brief Embeds calls to cv::putText by simplyfying arguments settings.
  */
 class TextPutter final
 {
     public:
-        //! @brief Crée un simple TextPutter pour enchainer les appels et écrire.
+        //! @brief Create a simple TextPutter to work with.
         TextPutter(void) noexcept;
         /**
-         * @brief Configure la couleur du texte qui sera affiché.
-         * @param[in] r la variante rouge voulue.
-         * @param[in] g la variante verte voulue.
-         * @param[in] b la variante bleue voulue.
+         * @brief Sets the color of the text.
+         * @param[in] r The red   value.
+         * @param[in] g The green value.
+         * @param[in] b The blue  value.
          * @return *this
          */
         TextPutter& rgb(uint8_t r, uint8_t g, uint8_t b) noexcept;
         /**
-         * @brief Change la taille de la police du texte.
-         * @param[in] s La taille voulue.
+         * @brief Multiply the default font size by @b s.
+         * @param[in] s The desired size factor.
          * @return *this
+         * 
+         * As an example, 1.2f will increase the default size by 20%.
          */
         TextPutter& fontSize(float s) noexcept;
         /**
-         * @brief Change la position du texte (aligné à gauche).
-         * @param[in] x La colonne à laquelle commencer.
-         * @param[in] y La ligne   à laquelle commencer.
+         * @brief Sets the origin of the text (centered at bottom-left).
+         * @param[in] x The column number.
+         * @param[in] y The row    number.
          * @return *this
          */
-        TextPutter& pos(int x, int y) noexcept;
+        TextPutter& pos(int32_t x, int32_t y) noexcept;
         /**
-         * @brief Change la police avec une valeur énumérée.
-         * @param[in] enumValue Une valeur énumérée concernant les polices disponibles.
-         * 
-         * Les valeurs possibles sont (préfixées par cv::HersheyFonts::)
+         * @brief Sets the font type to use.
+         * @param[in] enumValue One of the following values (prefixed by _HERSHEY_FONT_NS_::).
          *    - FONT_HERSHEY_SIMPLEX
          *    - FONT_HERSHEY_PLAIN
          *    - FONT_HERSHEY_DUPLEX
@@ -72,24 +72,22 @@ class TextPutter final
          */
         TextPutter& font(_HERSHEY_TYPE_NS_ enumValue) noexcept;
         /**
-         * @brief Ecrit @b text sur @b dst avec les paramètres actuels.
-         * @param[in,out] dst  La frame sur laquelle dessiner.
-         * @param[in]     text Le texte à afficher.
+         * @brief Put @b text on @b dst, using the currently setted values.
+         * @param[in,out] dst  The cv::Mat to display on.
+         * @param[in]     text The text you wanna display..
          * @return *this
          */
         TextPutter& write(cv::Mat& dst, const std::string& text);
-        
-        
+    
     private:
-        uint8_t red;   //!< La variante rouge de la couleur du texte.
-        uint8_t green; //!< La variante verte de la couleur du texte.
-        uint8_t blue;  //!< La variante bleue de la couleur du texte.
-        int     x;     //!< La position x à laquelle on commence à écrire le texte.
-        int     y;     //!< La position y à laquelle on commence à écrire le texte.
-        int     face;  //!< La police employe (5 par défaut).
-        float   size;  //!< La taille de la police.
+        uint8_t           red;   //!< The red   value [0, 255] for the text color.
+        uint8_t           green; //!< The green value [0, 255] for the text color.
+        uint8_t           blue;  //!< The blue  value [0, 255] for the text color.
+        int32_t           x;     //!< The <b>x</b>th column for the text origin.
+        int32_t           y;     //!< The <b>y</b>th row    for the text origin.
+        _HERSHEY_TYPE_NS_ face;  //!< The font setting.
+        float             size;  //!< The font size factor.
+    
 };
 
-
 #endif
-

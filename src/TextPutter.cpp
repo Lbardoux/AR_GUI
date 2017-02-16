@@ -4,7 +4,7 @@
 
 
 #include "TextPutter.hpp"
-// cv::HersheyFonts
+
 
 TextPutter::TextPutter(void) noexcept : red(0), green(0), blue(0),
                                         x(0), y(0),
@@ -28,7 +28,7 @@ TextPutter& TextPutter::fontSize(float s) noexcept
     return *this;
 }
 
-TextPutter& TextPutter::pos(int x, int y) noexcept
+TextPutter& TextPutter::pos(int32_t x, int32_t y) noexcept
 {
     this->x = x;
     this->y = y;
