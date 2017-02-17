@@ -194,10 +194,10 @@ int main(int argc, char** argv)
     }
     else
     {
-        Camera camera;
-        camera.init();
-        camera.start(640, 480);
-        Player player(camera);
+        Camera *camera = new Camera();
+        camera->init();
+        camera->start(640, 480);
+        Player player(*camera);
 
         GlContext::initGL(640, 480);
         GlContext::windowCaption("OpenGL window");
@@ -209,14 +209,15 @@ int main(int argc, char** argv)
 
         Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
         Mesh cube("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
-        Mesh fond("assets/objs/squarre.obj", camera, program);
+        Mesh fond("assets/objs/squarre.obj", *camera, program);
 
         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
 
         program.use();
-        renderLoop(30, met_ton_code_la_charles, fond, cube, player, clothe, camera);
+        renderLoop(30, met_ton_code_la_charles, fond, cube, player, clothe, *camera);
 
         GlContext::endGL();
+        delete camera;
     }
     return EXIT_SUCCESS;
 }

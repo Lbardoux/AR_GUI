@@ -4,10 +4,10 @@
 #include "Player.hpp"
 #include "Matrix.hpp"
 
-Player::Player()
+Player::Player() : one_player_visible(false)
 {}
 
-Player::Player(Camera & camera)
+Player::Player(Camera & camera) : one_player_visible(false)
 {
 	init(camera);
 }
@@ -20,8 +20,8 @@ void Player::init(Camera & camera)
     mtl::log::info("Fait!");
 
     //Création du tracker
-    m_user_tracker = new nite::UserTracker;
-    if(m_user_tracker->create(&device) != nite::STATUS_OK)
+    //m_user_tracker = nite::UserTracker;
+    if(m_user_tracker.create(&device) != nite::STATUS_OK)
     {
         mtl::log::error("Failed to create tracker");
         assert(false);
@@ -33,8 +33,8 @@ void Player::init(Camera & camera)
 bool Player::update()
 {
 	//On choppe une frame
-	nite::UserTrackerFrameRef user_tracker_frame;
-	nite::Status status = m_user_tracker->readFrame(&user_tracker_frame);
+	nite::UserTrackerFrameRef user_tracker_frame;/////////////////////////////////////////////
+	nite::Status status = m_user_tracker.readFrame(&user_tracker_frame);/////////////////////////////////////////////
 	if(status != nite::STATUS_OK)
 	{
 		mtl::log::warning("GetNextData failed");
@@ -57,9 +57,8 @@ bool Player::update()
     //Si il est nouveau, on commence à le traquer
     if(m_user->isNew())
     {
-        m_user_tracker->startSkeletonTracking(m_user->getId());
-//        m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_CROSSED_HANDS);
-		m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_PSI);
+        m_user_tracker.startSkeletonTracking(m_user->getId());
+		m_user_tracker.startPoseDetection(m_user->getId(), nite::POSE_PSI);
     }
 
     one_player_visible = true;
@@ -68,7 +67,8 @@ bool Player::update()
 
 bool Player::isVisible() const
 {
-    return (m_user->isVisible() && one_player_visible);
+    return (m_user->isVisible()
+     && one_player_visible);
 }
 
 Point Player::getPointOf(PlayerMember member) const
@@ -116,10 +116,10 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
 nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
 	nite::Point3f afterConversion;
-	nite::Point3f beforeConversion = m_user->getSkeleton().getJoint(member).getPosition();
-	this->m_user_tracker->convertJointCoordinatesToDepth(beforeConversion.x, beforeConversion.y,
-														 beforeConversion.z, &afterConversion.x, &afterConversion.y);
-    return afterConversion;
+	// nite::Point3f beforeConversion = m_user->getSkeleton().getJoint(member).getPosition();
+	// m_user_tracker.this->m_user_tracker.convertJointCoordinatesToDepth(beforeConversion.x, beforeConversion.y,
+	// 													 beforeConversion.z, &afterConversion.x, &afterConversion.y);
+    return m_user->getSkeleton().getJoint(member).getPosition();
 }
 
 Point Player::getCameraPositionOf(PlayerMember member) const

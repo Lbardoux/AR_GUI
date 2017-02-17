@@ -4,23 +4,30 @@
 #include "Mesh.hpp"
 
 Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
-        const Vector & offset) : m_program(program)
+        const Vector & offset) : m_program(program), m_texture(0)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
     readWaveFront(path_to_obj, offset);
     initVAO();
+    glGenTextures(1, &m_texture);
     initTexture(path_to_texture);
     std::cout<<"Fait"<<std::endl;
 }
 
 Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
-        const Vector & offset) : m_program(program)
+        const Vector & offset) : m_program(program), m_texture(0)
 {
     std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
     readWaveFront(path_to_obj, offset);
     initVAO();
+    glGenTextures(1, &m_texture);
     readTextureFromCamera(camera);
     std::cout<<"Fait"<<std::endl;
+}
+
+Mesh::~Mesh()
+{
+    glDeleteTextures(1, &m_texture);
 }
 
 void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
@@ -141,7 +148,7 @@ void Mesh::initVAO()
     const float * vbo_texture_content = &m_uvs.front()[0];
 
     //On vérifie que notre buffer n'est pas déjà alloué, si c'est le cas, on libere l'espace
-    if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
+    //if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
     //On alloue un espace mémoire pour le vbo
     glGenBuffers(1, &m_vbo);
     //On bind le vbo afin de l'utiliser
@@ -162,7 +169,7 @@ void Mesh::initVAO()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     //On vérifie que notre array n'est pas déjà alloué, si c'est le cas, on libère l'espace
-    if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
+    //if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
     //On crée notre vao
     glGenVertexArrays(1, &m_vao);
     //On bind le vao, afin de l'utiliser
@@ -192,13 +199,9 @@ void Mesh::readTextureFromCamera(Camera & camera)
     GLenum minFilter = GL_NEAREST;
     GLenum magFilter = GL_NEAREST;
     GLenum wrapFilter = GL_CLAMP;
-
-    // Generate a number for our textureID's unique handle
-    GLuint textureID;
-    glGenTextures(1, &textureID);
  
     // Bind to our texture handle
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, m_texture);
  
     // Catch silly-mistake texture interpolation method for magnification
     if (magFilter == GL_LINEAR_MIPMAP_LINEAR  ||
@@ -206,7 +209,6 @@ void Mesh::readTextureFromCamera(Camera & camera)
         magFilter == GL_NEAREST_MIPMAP_LINEAR ||
         magFilter == GL_NEAREST_MIPMAP_NEAREST)
     {
-        std::cout << "You can't use MIPMAPs for magnification - setting filter to GL_LINEAR" << std::endl;
         magFilter = GL_LINEAR;
     }
  
@@ -247,14 +249,10 @@ void Mesh::readTextureFromCamera(Camera & camera)
     {
         glGenerateMipmap(GL_TEXTURE_2D);
     }
- 
-    m_texture = textureID;
 }
 
 void Mesh::initTexture(const char * path)
 {
-    printf("Reading image %s\n", path);
-
     // Data read from the header of the BMP file
     unsigned char header[54];
     unsigned int dataPos;
@@ -303,12 +301,8 @@ void Mesh::initTexture(const char * path)
     // Everything is in memory now, the file wan be closed
     fclose (file);
 
-    // Create one OpenGL texture
-    GLuint textureID;
-    glGenTextures(1, &textureID);
-
     // "Bind" the newly created texture : all future texture functions will modify this texture
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTexture(GL_TEXTURE_2D, m_texture);
 
     // Give the image to OpenGL
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
@@ -322,9 +316,6 @@ void Mesh::initTexture(const char * path)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glGenerateMipmap(GL_TEXTURE_2D);
-
-    // Return the ID of the texture we just created
-    m_texture = textureID;
 }
 
 void Mesh::draw(const Transform & model, const Transform & view, const Transform & projection) const

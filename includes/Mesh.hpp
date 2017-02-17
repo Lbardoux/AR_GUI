@@ -57,7 +57,7 @@ public:
     /**
      * @brief Déstructeur par défaut.
      */
-    ~Mesh() = default;
+    ~Mesh();
 
     /**
      * @brief      Initialise ou rafraichie la texture
@@ -82,7 +82,7 @@ private:
     void readWaveFront(const char * path_to_obj, const Vector & offset);
 
     /**
-     * @brief      Initialise la VAO
+     * @brief      Initialise la VAO à n'appeler que dans le constructeur
      */
     void initVAO();
 
