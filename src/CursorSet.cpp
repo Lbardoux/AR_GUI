@@ -4,22 +4,21 @@
 #include <algorithm>
 #include <functional>
 
-SetCursor::SetCursor()
+CursorSet::CursorSet()
 {}
 
-SetCursor::~SetCursor()
+CursorSet::~CursorSet()
 {}
 
-void SetCursor::init(const Player& player, const mat_data_t& color)
+void CursorSet::init(const mat_data_t& color)
 {
-	if(!player.isVisible())
-		return;
+    Cursor c;
 
 	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
-		addCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getCameraPositionOf(static_cast<PlayerMember>(p)), color));
+		addCursor(static_cast<PlayerMember>(p), ColoredCursor(c, color));
 }
 
-void SetCursor::addCursor(PlayerMember type, const ColoredCursor& cursor)
+void CursorSet::addCursor(PlayerMember type, const ColoredCursor& cursor)
 {
     mapCursor_t::iterator it = this->_cursors.find(type);
 
@@ -30,55 +29,55 @@ void SetCursor::addCursor(PlayerMember type, const ColoredCursor& cursor)
     this->_cursors[type].radius(4u);
 }
 
-void SetCursor::updateCursor(PlayerMember type, const ColoredCursor& cursor)
+void CursorSet::updateCursor(PlayerMember type, const ColoredCursor& cursor)
 {
     this->_cursors[type].x(cursor.x());
     this->_cursors[type].y(cursor.y());
 }
 
-void SetCursor::updateColor(PlayerMember type, const mat_data_t& color)
+void CursorSet::updateColor(PlayerMember type, const mat_data_t& color)
 {
     this->_cursors[type] = color;
 }
 
-const Cursor& SetCursor::getCursor(PlayerMember type) const
+const Cursor& CursorSet::getCursor(PlayerMember type) const
 {
     return this->_cursors.at(type);
 }
 
-Cursor& SetCursor::getCursor(PlayerMember type)
+Cursor& CursorSet::getCursor(PlayerMember type)
 {
     return this->_cursors[type];
 }
 
-mapCursor_t::const_iterator SetCursor::begin() const
+mapCursor_t::const_iterator CursorSet::begin() const
 {
     return this->_cursors.begin();
 }
 
-mapCursor_t::iterator SetCursor::begin()
+mapCursor_t::iterator CursorSet::begin()
 {
     return this->_cursors.begin();
 }
 
-mapCursor_t::const_iterator SetCursor::end() const
+mapCursor_t::const_iterator CursorSet::end() const
 {
     return this->_cursors.end();
 }
 
-mapCursor_t::iterator SetCursor::end()
+mapCursor_t::iterator CursorSet::end()
 {
     return this->_cursors.end();
 }
 
-void SetCursor::draw(cv::Mat& frame)
+void CursorSet::draw(cv::Mat& frame)
 {
     std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::value_type& val) {
         val.second.draw(frame);
     });
 }
 
-void SetCursor::update(const Player& player)
+void CursorSet::update(const Player& player)
 {
 	if(!player.isVisible())
 		return;

@@ -39,7 +39,7 @@ void TouchButton::init(Sprite* image, int x, int y, double seconde)
 
 bool TouchButton::isUnderCursor(UNUSED(const Cursor& cursor))
 {
-    return this->changeFirstActivation(cursor.x() >= x() && cursor.x() <= (x() + sprite->cols) && cursor.y() >= y() && cursor.y() <= (y() + sprite->rows));
+    return cursor.x() >= x() && cursor.x() <= (x() + sprite->cols) && cursor.y() >= y() && cursor.y() <= (y() + sprite->rows);
 }
 
 void TouchButton::action()
@@ -50,6 +50,27 @@ void TouchButton::action()
 void TouchButton::draw(UNUSED(Sprite& frame))
 {
     blit(frame, *(this->sprite), this->x(), this->y());
+}
+
+void TouchButton::update(void)
+{
+	if(this->isActivated())
+	{
+		this->action();
+	}
+}
+
+void TouchButton::updateTime(const CursorSet& cursors)
+{
+	bool under = false;
+
+	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
+	{
+		if(this->isUnderCursor(cursors.getCursor((PlayerMember) p)))
+			under = true;
+	}
+
+	this->changeFirstActivation(under);
 }
 
 

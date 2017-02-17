@@ -14,7 +14,9 @@
 #include "CameraWindow.hpp"
 #include "Player.hpp"
 #include "CursorSet.hpp"
+#include "WidgetManager.hpp"
 #include "ActionButton.hpp"
+#include "TouchButton.hpp"
 
 /**
  * @class App
@@ -54,11 +56,17 @@ class App final
 		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
 		CameraWindow 									 cameraW;      //!< Fenetre de la camera
 		Player 											 player;	   //!< Joueur
-		SetCursor 										 setCursor;    //!< Ensemble des Cursor liés au Player
 		ActionButton                                     actionCatch;
 		ActionButton                                     actionQuit;
 		
+		CursorSet 										 setCursor;    //!< Ensemble des Cursor liés au Player
 		
+		//---------------------------------------------------------------------
+		//----------------- Déclaration des Widgets ---------------------------
+		//---------------------------------------------------------------------
+		WidgetManager widgets; //!< Les Widgets de l'application.
+		TouchButton   testButton; //!< Bouton de test
+
 		/**
 		 * @brief Fais le mapping des évènements claviers.
 		 */

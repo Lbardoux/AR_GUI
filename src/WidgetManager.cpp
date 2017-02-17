@@ -1,9 +1,14 @@
 #include "WidgetManager.hpp"
 
 Widget::Widget() : firstActiveTime(0)
-{}
+{
+
+}
+
 Widget::~Widget()
-{}
+{
+
+}
 
 bool Widget::isUnderCursor(UNUSED(const Cursor& cursor))
 {
@@ -36,11 +41,25 @@ bool Widget::isActivated() const
     return (difftime(timer, this->firstActiveTime) >= (this->activationTime - 1.0f));
 }
 
+void Widget::update(void)
+{
+
+}
+
+void Widget::updateTime(const CursorSet &cursors)
+{
+
+}
+
 void Widget::action()
-{}
+{
+
+}
 
 void Widget::draw(UNUSED(cv::Mat& frame))
-{}
+{
+
+}
 
 uint32_t Widget::x() const
 {
@@ -57,4 +76,43 @@ uint32_t Widget::y() const
 uint32_t& Widget::y()
 {
     return _y;
+}
+
+
+/////////////////
+WidgetManager::WidgetManager(void) noexcept
+{
+
+}
+
+WidgetManager::~WidgetManager(void)
+{
+
+}
+
+void WidgetManager::updateWidgets(void)
+{
+    std::for_each(this->widgets.begin(), this->widgets.end(), [](Widget * w) {
+        w->update();
+    });
+}
+
+void WidgetManager::updateTime(const CursorSet& cursors)
+{
+    std::for_each(this->widgets.begin(), this->widgets.end(), [cursors](Widget * w) {
+        w->updateTime(cursors);
+    });
+}
+
+void WidgetManager::draw(cv::Mat& frame)
+{
+    std::for_each(this->widgets.begin(), this->widgets.end(), [&frame](Widget * w) {
+        w->draw(frame);
+    });
+}
+
+WidgetManager& WidgetManager::addWidget(Widget* widget)
+{
+    this->widgets.push_back(widget);
+    return *this;
 }

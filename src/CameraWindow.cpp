@@ -13,9 +13,7 @@ void CameraWindow::init(const std::string& name , int width, int height)
     this->camera.start(width, height);
     this->setName(name);
     this->open(width, height);
-
-    // Widget
-    this->touchButton.init(&Sprites::spr_touchButton, 5, 5, 4.0f);
+	mtl::log::info("CameraWindow initialisée!");
 }
 
 void CameraWindow::close(void)

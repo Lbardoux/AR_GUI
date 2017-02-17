@@ -99,7 +99,8 @@ class Cursor
 class ColoredCursor final : public Cursor
 {
     public:
-        ColoredCursor(uint32_t x=0u, uint32_t y=0u, uint32_t radius=3u);
+        ColoredCursor(const Cursor& cursor, const mat_data_t& color=matRedColor(), uint32_t radius=3u);
+        ColoredCursor(uint32_t x=0u, uint32_t y=0u, uint32_t radius=3u, const mat_data_t& color=matRedColor());
         template<typename T>
         ColoredCursor(const T& t, const mat_data_t& color=matRedColor()) : Cursor(t), _color(color)
         {

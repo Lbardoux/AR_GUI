@@ -42,6 +42,8 @@ class TouchButton : public Widget
         //virtual void setActivationTime(time_t time) override;
         virtual void action() override;
         virtual void draw(UNUSED(Sprite& frame)) override;
+        virtual void update(void);
+        virtual void updateTime(const CursorSet& cursors);
     
     protected:
         Sprite* sprite; //!< La représentation de ce widget.

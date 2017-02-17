@@ -94,11 +94,16 @@ Cursor& Cursor::operator=(const Cursor& cursor)
 ///////// Partie sur ColoredCursor
 //////////////////////////////////////////////////////////////////////////////////////
 
-ColoredCursor::ColoredCursor(uint32_t x, uint32_t y, uint32_t radius) :
+ColoredCursor::ColoredCursor(const Cursor& cursor, const mat_data_t& color, uint32_t radius) : ColoredCursor(cursor.x(), cursor.y(), radius, color)
+{
+
+}
+
+ColoredCursor::ColoredCursor(uint32_t x, uint32_t y, uint32_t radius, const mat_data_t& color) :
     Cursor(x, y),
     _radius(radius),
     _spr((radius * 2) + 1, (radius * 2) + 1, CV_8UC4),
-    _color(0, 0, 0, 1)
+    _color(color)
 {
     setColor(this->_color);
 }

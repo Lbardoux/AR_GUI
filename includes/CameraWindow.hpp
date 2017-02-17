@@ -46,7 +46,6 @@ public:
 
 private:
     Camera camera; //!< Camera de profondeur
-    TouchButton touchButton;  //!< Premier widget
 
 };
 

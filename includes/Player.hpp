@@ -11,24 +11,6 @@
 #include "vec.hpp"
 #include "Camera.hpp"
 
-/*
- * Petit message de la part de Mehdi :
- * Peux-tu vérifier ton update s'il te plait ?
- * Ou alors m'expliquer son retour (qui me plait pas mal !)
- * 
- * En gros mon problème est le suivant : 
- * 	J'ai cru comprendre qu'update de Player renvoyait vrai si quelqu'un est détecté
- * 	Faux si personne ou trop de monde. Du coup, je voulais afficher l'icone rouge/vert
- * 	en fonction de ce résultat. Sauf que quand je me mets devant la caméra, ça devient vert (niquel)
- * 	mais si j'en sors, ça reste vert au lieu de devenir rouge (tu renvoies toujours vrai après quoi)
- * 	
- * Du coup, est-ce que y'aurait quelque chose à changer, ou je dois changer mon utilisation ?
- * Merci :)
- * 
- * PS : j'ai fait quelques modifs dans ta classe (constructeur par défaut + fonction init). C'est juste 
- * du déplacement de code pour l'utiliser comme on veut derrière
- */
-
 /**
  * @enum PlayerMember
  * @brief Enumère toutes les articulations d'un joueur

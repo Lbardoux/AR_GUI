@@ -1,5 +1,5 @@
 /**
- * @file SetCursor.hpp
+ * @file CursorSet.hpp
  * @brief Classe regroupant un ensemble de Cursor
  * @author Mehdi GHESH p1209574
  * @version 1.0
@@ -15,19 +15,18 @@
 typedef ColoredCursor coloredCursor_t; //!< Encapsulation d'un curseur et de sa couleur
 typedef std::map<PlayerMember, coloredCursor_t> mapCursor_t; //!< Map contenant un ensemble de curseurs colorés
 
-class SetCursor final
+class CursorSet final
 {
 public:
-    SetCursor();
-    ~SetCursor();
+    CursorSet();
+    ~CursorSet();
 
 	/**
 	 * @date       16-Feb-2017
 	 * @brief      Initialise l'ensemble des Cursor à partir du Player
-	 * @param[in]  player  Le player
 	 * @param[in]  color   Couleur des Cursor
 	 */
-	void init(const Player& player, const mat_data_t& color=matRedColor());
+	void init(const mat_data_t& color=matRedColor());
 
     /**
      * @date       08-Feb-2017

@@ -29,12 +29,14 @@ void App::quit(void)
 
 void App::mainLoop(void)
 {
+	mtl::log::info("Démarrage de la Main loop");
 	this->process = true;
 	while(this->process)
 	{
 		this->cameraW.readFrame();
 		
 		this->player.update();
+		this->widgets.updateTime(this->setCursor);
 		this->programState.setState(this->player.isVisible());
 		this->actionCatch.draw(this->cameraW.getCamera().colorFrame());
 		this->actionQuit.draw(this->cameraW.getCamera().colorFrame());
@@ -45,6 +47,8 @@ void App::mainLoop(void)
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
 		}
 
+		this->widgets.updateWidgets();
+		this->widgets.draw(this->cameraW.getCamera().colorFrame());
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(25);
 	}
@@ -91,4 +95,8 @@ void App::initComponents(void)
 	this->actionQuit.x() = 96;
 	this->actionQuit.y() = 400;
 	// this->setCursor.init(this->player);
+	this->setCursor.init();
+
+	this->testButton.init(&Sprites::test, 50, 50, 3);
+	this->widgets.addWidget(&this->testButton);
 }

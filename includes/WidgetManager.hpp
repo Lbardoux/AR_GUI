@@ -39,15 +39,12 @@ public:
 	 * @return     Vrai si le Widget est sous le Cursor, Faux sinon
 	 */
 	virtual bool isUnderCursor(UNUSED(const Cursor& cursor));
-
-
     /**
      * @date       10-Feb-2017
      * @brief      Set pour le temps d'activation
      * @param[in]  seconde  Temps d'activation du Widget en seconde
      */
     virtual void setActivationTime(double seconde);
-
     /**
      * @date       15-Feb-2017
      * @brief      Change le temps auquel le Widget a été activé
@@ -55,7 +52,6 @@ public:
      * @return     Retour de underCursor
      */
     bool changeFirstActivation(bool underCursor);
-
     /**
      * @date       10-Feb-2017
      * @brief      Indique si le Widget est activé. Il est activé s'il est sous
@@ -63,19 +59,30 @@ public:
      * @return     Vrai si le Widget est activé, Faux sinon.
      */
     bool isActivated() const;
-
     /**
      * @date       10-Feb-2017
      * @brief      Action liée au Widget. C'est elle qui est appelée lorsque le Widget est activé
      */
     virtual void action();
-
     /**
      * @date       09-Feb-2017
      * @brief      Affiche le Widget sur la frame
      * @param      frame  La frame
      */
     virtual void draw(UNUSED(cv::Mat& frame));
+
+    /**
+     * @date       16-Feb-2017
+     * @brief      Met à jour le Widget en fonction des actions / du temps d'utilisation
+     */
+    virtual void update(void);
+    /**
+     * @date       16-Feb-2017
+     * @brief      Met à jour le temps du Widget en fonction du SetCursor
+     * 
+     * @param[in]  cursors  The cursors
+     */
+    virtual void updateTime(const CursorSet& cursors);
 
     uint32_t  x() const ;
     uint32_t& x();
@@ -95,22 +102,24 @@ class WidgetManager final
     public:
         //! @brief Crée juste le gestionnaire.
         WidgetManager(void) noexcept;
-        //! @brief Appelle la méthode close() de chaque widget.
+        //! @brief Appelle la méthode close() de chaque Widget.
         ~WidgetManager(void);
-        //! @brief Appelle la méthode update pour toutes les widgets.
+        //! @brief Appelle la méthode update pour tous les Widgets.
         void updateWidgets(void);
+        //! @brief Appelle la méthode updateTime pour tous les Widgets
+        void updateTime(const CursorSet& cursors);
+        //! @brief Appelle la méthode draw de tous les Widgets
+        void draw(cv::Mat& frame);
         /**
          * @brief Ajoute @b Widget au gestionnaire.
          * @param[in,out] Widget L'adresse du widget à ajouter.
          * Le gestionnaire ne désallouera rien !
          * @return *this
          */
-        WidgetManager& addWidget(Widget* Widget);
-        //! @brief Ferme tous les widgets.
-        void closeWidgets(void);
+        WidgetManager& addWidget(Widget* widget);
         
     private:
-        std::vector<Widget*> Widgets; //!< L'ensemble des widgets utilisées.
+        std::vector<Widget*> widgets; //!< L'ensemble des widgets utilisées.
         
         WidgetManager(const WidgetManager& other)            = delete;
         WidgetManager(WidgetManager&& other)                 = delete;
