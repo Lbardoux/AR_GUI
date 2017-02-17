@@ -171,12 +171,13 @@ bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clo
 
     //Vetement
     if (  position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 ||
-            position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
+          position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
     {
-    	nite::Point3f p = player.getCameraPositionOf(RIGHT_SHOULDER);
-    	std::cout<<"x:"<<(int)p.x<<" y:"<<(int)p.y<<std::endl;
         clothe.draw(position_1, position_2, view, projection);
     }
+
+    //Squellette
+    
 
     return false;
 }

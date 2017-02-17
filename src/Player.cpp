@@ -47,7 +47,7 @@ bool Player::update()
 
     //On vérifie qu'il n'y en a qu'un avant de le garder
     unsigned int nb_users = users.getSize();
-    if(nb_users != 1) 
+    if(nb_users < 1) 
     {
         one_player_visible = false;
         return false;
@@ -102,6 +102,10 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
             return getPositionOf(nite::JOINT_RIGHT_HIP);
         case RIGHT_KNEE:
             return getPositionOf(nite::JOINT_RIGHT_KNEE);
+        case LEFT_FOOT:
+            return getPositionOf(nite::JOINT_LEFT_FOOT);
+        case RIGHT_FOOT:
+            return getPositionOf(nite::JOINT_RIGHT_FOOT);
         default:
             assert(false);
     }
@@ -128,4 +132,30 @@ Point Player::getPointOf(PlayerMember member) const
 {
     nite::Point3f point = getPositionOf(member);
     return Point(-point.x, point.y, point.z);
+}
+
+void f(const Point & p)
+{
+    glVertex3f(p.x(), p.y(), p.z());
+}
+
+void Player::draw() const
+{
+    glBegin(GL_LINES);
+    	f(getPointOf(HEAD)); f(getPointOf(NECK));
+    	f(getPointOf(LEFT_ELBOW)); f(getPointOf(LEFT_ELBOW));
+    	f(getPointOf(LEFT_SHOULDER)); f(getPointOf(LEFT_HAND));
+   		f(getPointOf(RIGHT_ELBOW)); f(getPointOf(RIGHT_ELBOW));
+    	f(getPointOf(RIGHT_SHOULDER)); f(getPointOf(RIGHT_HAND));
+    	f(getPointOf(LEFT_SHOULDER)); f(getPointOf(RIGHT_SHOULDER));
+    	f(getPointOf(LEFT_SHOULDER)); f(getPointOf(TORSO));
+    	f(getPointOf(RIGHT_SHOULDER)); f(getPointOf(TORSO));
+    	f(getPointOf(TORSO)); f(getPointOf(LEFT_HIP));
+    	f(getPointOf(TORSO)); f(getPointOf(RIGHT_HIP));
+    	f(getPointOf(LEFT_HIP)); f(getPointOf(RIGHT_HIP));
+    	f(getPointOf(LEFT_HIP)); f(getPointOf(LEFT_KNEE));
+    	f(getPointOf(LEFT_KNEE)); f(getPointOf(LEFT_FOOT));
+    	f(getPointOf(RIGHT_HIP)); f(getPointOf(RIGHT_KNEE));
+    	f(getPointOf(RIGHT_KNEE)); f(getPointOf(RIGHT_FOOT));
+    glEnd();
 }
