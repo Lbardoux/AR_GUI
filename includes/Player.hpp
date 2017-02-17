@@ -10,6 +10,8 @@
 #include <NiTE.h>
 #include "vec.hpp"
 #include "Camera.hpp"
+#include "GlCore.hpp"
+#include "GlContext.hpp"
 
 /*
  * Petit message de la part de Mehdi :
@@ -36,8 +38,8 @@
 enum PlayerMember { HEAD = 0, NECK, TORSO, 
                     LEFT_SHOULDER, LEFT_ELBOW, LEFT_HAND, 
                     RIGHT_SHOULDER, RIGHT_ELBOW, RIGHT_HAND, 
-                    LEFT_HIP, LEFT_KNEE,
-                    RIGHT_HIP, RIGHT_KNEE,
+                    LEFT_HIP, LEFT_KNEE, LEFT_FOOT,
+                    RIGHT_HIP, RIGHT_KNEE, RIGHT_FOOT,
                     NB_PLAYER_MEMBER };  // L'enum NB_PLAYER_MEMBER doit etre en dernier, comme ça on peut les compter 
 
 /**
@@ -95,6 +97,11 @@ public:
 	Point getPointOf(PlayerMember member) const;
 	
 	nite::Point3f getCameraPositionOf(PlayerMember member) const;
+
+    /**
+     * @brief         Dessine le squelette
+     */
+    void draw() const;
 private:
     /**
      * @brief         Renvoi la position de l'articulation
