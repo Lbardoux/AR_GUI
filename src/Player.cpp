@@ -71,12 +71,6 @@ bool Player::isVisible() const
      && one_player_visible);
 }
 
-Point Player::getPointOf(PlayerMember member) const
-{
-    nite::Point3f point = getPositionOf(member);
-    return Point(-point.x, point.y, point.z);
-}
-
 nite::Point3f Player::getPositionOf(PlayerMember member) const
 {
     if(!isVisible() || !one_player_visible) return nite::Point3f();
@@ -115,15 +109,20 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
 
 nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
-	nite::Point3f afterConversion;
-	// nite::Point3f beforeConversion = m_user->getSkeleton().getJoint(member).getPosition();
-	// m_user_tracker.this->m_user_tracker.convertJointCoordinatesToDepth(beforeConversion.x, beforeConversion.y,
-	// 													 beforeConversion.z, &afterConversion.x, &afterConversion.y);
     return m_user->getSkeleton().getJoint(member).getPosition();
 }
 
-Point Player::getCameraPositionOf(PlayerMember member) const
+nite::Point3f Player::getCameraPositionOf(PlayerMember member) const
 {
-	Transform model = translationMatrix(getPointOf(member)) * scaleMatrix(50, 50, 50);
-	return model * Vector();
+	nite::Point3f afterConversion;
+	nite::Point3f beforeConversion = getPositionOf(member);
+	m_user_tracker.convertJointCoordinatesToDepth(	beforeConversion.x, beforeConversion.y, beforeConversion.z, 
+													&afterConversion.x, &afterConversion.y);
+	return afterConversion;
+}
+
+Point Player::getPointOf(PlayerMember member) const
+{
+    nite::Point3f point = getPositionOf(member);
+    return Point(-point.x, point.y, point.z);
 }

@@ -94,7 +94,7 @@ public:
      */
 	Point getPointOf(PlayerMember member) const;
 	
-	Vector getCameraPositionOf(PlayerMember member) const;
+	nite::Point3f getCameraPositionOf(PlayerMember member) const;
 private:
     /**
      * @brief         Renvoi la position de l'articulation
@@ -103,7 +103,7 @@ private:
      */
     nite::Point3f getPositionOf(nite::JointType member) const;
 
-    nite::UserTracker *     m_user_tracker;        //!< Le tracker.
+    nite::UserTracker      m_user_tracker;        //!< Le tracker.
     const nite::UserData *     m_user;                //!< Le joueur detecté. 
     bool                     one_player_visible;    //!< Permet de savoir si lors du dernier update, la caméra a bien decté un et un seul joueur.
 };
