@@ -56,8 +56,8 @@ class App final
 		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
 		CameraWindow 									 cameraW;      //!< Fenetre de la camera
 		Player 											 player;	   //!< Joueur
-		ActionButton                                     actionCatch;
-		ActionButton                                     actionQuit;
+		// ActionButton                                     actionCatch;
+		// ActionButton                                     actionQuit;
 		
 		CursorSet 										 setCursor;    //!< Ensemble des Cursor liés au Player
 		

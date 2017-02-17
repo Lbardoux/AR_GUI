@@ -9,7 +9,7 @@
 #include "Pipeline.hpp"
 
 
-App::App(void) noexcept : process(true), actionCatch(&Sprites::test, "Saisir"), actionQuit(&Sprites::test, "Quitter")
+App::App(void) noexcept : process(true)//, actionCatch(&Sprites::test, "Saisir"), actionQuit(&Sprites::test, "Quitter")
 {
     this->initLibs();
     this->initInputs();
@@ -36,15 +36,15 @@ void App::mainLoop(void)
 		this->cameraW.readFrame();
 		
 		this->player.update();
-		this->widgets.updateTime(this->setCursor);
 		this->programState.setState(this->player.isVisible());
-		this->actionCatch.draw(this->cameraW.getCamera().colorFrame());
-		this->actionQuit.draw(this->cameraW.getCamera().colorFrame());
+		// this->actionCatch.draw(this->cameraW.getCamera().colorFrame());
+		// this->actionQuit.draw(this->cameraW.getCamera().colorFrame());
 		
 		if (this->player.isVisible())
 		{
 			this->setCursor.update(this->player);
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
+			this->widgets.updateTime(this->setCursor);
 		}
 
 		this->widgets.updateWidgets();
@@ -90,10 +90,10 @@ void App::initComponents(void)
 	this->windows.addWindow(&this->cameraW);
 
 	this->player.init(this->cameraW.getCamera());
-	this->actionCatch.x() = 0;
-	this->actionCatch.y() = 400;
-	this->actionQuit.x() = 96;
-	this->actionQuit.y() = 400;
+	// this->actionCatch.x() = 0;
+	// this->actionCatch.y() = 400;
+	// this->actionQuit.x() = 96;
+	// this->actionQuit.y() = 400;
 	// this->setCursor.init(this->player);
 	this->setCursor.init();
 
