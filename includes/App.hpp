@@ -14,6 +14,7 @@
 #include "CameraWindow.hpp"
 #include "Player.hpp"
 #include "CursorSet.hpp"
+#include "ActionButton.hpp"
 
 /**
  * @class App
@@ -54,6 +55,9 @@ class App final
 		CameraWindow 									 cameraW;      //!< Fenetre de la camera
 		Player 											 player;	   //!< Joueur
 		SetCursor 										 setCursor;    //!< Ensemble des Cursor liés au Player
+		ActionButton                                     actionCatch;
+		ActionButton                                     actionQuit;
+		
 		
 		/**
 		 * @brief Fais le mapping des évènements claviers.

@@ -14,7 +14,7 @@ Sprite Sprites::spr_touchButton;
 
 void Sprites::init(void)
 {
-    loadSprite("assets/images/valid.png", Sprites::test);
+    loadSprite("assets/images/spr_shield.png", Sprites::test);
     loadSprite("assets/images/valid.png", Sprites::spr_touchButton);
 }
 

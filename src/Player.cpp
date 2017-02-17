@@ -58,7 +58,8 @@ bool Player::update()
     if(m_user->isNew())
     {
         m_user_tracker->startSkeletonTracking(m_user->getId());
-        m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_CROSSED_HANDS);
+//        m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_CROSSED_HANDS);
+		m_user_tracker->startPoseDetection(m_user->getId(), nite::POSE_PSI);
     }
 
     one_player_visible = true;
@@ -114,7 +115,11 @@ nite::Point3f Player::getPositionOf(PlayerMember member) const
 
 nite::Point3f Player::getPositionOf(nite::JointType member) const
 {
-    return m_user->getSkeleton().getJoint(member).getPosition();
+	nite::Point3f afterConversion;
+	nite::Point3f beforeConversion = m_user->getSkeleton().getJoint(member).getPosition();
+	this->m_user_tracker->convertJointCoordinatesToDepth(beforeConversion.x, beforeConversion.y,
+														 beforeConversion.z, &afterConversion.x, &afterConversion.y);
+    return afterConversion;
 }
 
 Point Player::getCameraPositionOf(PlayerMember member) const

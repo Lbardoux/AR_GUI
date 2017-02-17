@@ -64,6 +64,9 @@ class Cursor
             x(t.x());
             y(t.y());
         }
+		
+		
+
         //! @brief Remet tout à zéro.
         ~Cursor(void) noexcept;
         
@@ -84,6 +87,8 @@ class Cursor
         virtual void reset(void) noexcept;
     
 };
+
+
 
 class ColoredCursor final : public Cursor
 {

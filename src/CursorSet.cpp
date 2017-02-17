@@ -1,5 +1,6 @@
 #include "CursorSet.hpp"
 #include "Player.hpp"
+#include "logs.hpp"
 #include <algorithm>
 #include <functional>
 
@@ -72,6 +73,8 @@ mapCursor_t::iterator SetCursor::end()
 void SetCursor::draw(cv::Mat& frame)
 {
     std::for_each(this->_cursors.begin(), this->_cursors.end(),    [&frame] (mapCursor_t::value_type& val) {
+        if (val.second.x() > 0.0f || val.second.y() > 0.0f)
+            mtl::log::info(val.second.x(), val.second.y());
         val.second.draw(frame);
     });
 }
@@ -83,6 +86,7 @@ void SetCursor::update(const Player& player)
 	
 	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
 	{
-		updateCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getCameraPositionOf(static_cast<PlayerMember>(p))));
+		//updateCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getPositionOf(static_cast<PlayerMember>(p))));
+        updateCursor(static_cast<PlayerMember>(p), ColoredCursor(player.getCameraPositionOf(static_cast<PlayerMember>(p))));
 	}
 }

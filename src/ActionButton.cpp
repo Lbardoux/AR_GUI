@@ -22,7 +22,7 @@ void ActionButton::draw(UNUSED(Sprite& frame))
 	const int PIXELS_DOWN = 12;
     this->TouchButton::draw(frame);
 	TextPutter().pos(this->x(), this->y() + this->sprite->rows + PIXELS_DOWN)
-	            .fontSize(1.2f)
+	            .fontSize(0.6f)
 	            .rgb(25, 25, 25)
 	            .write(frame, this->text);
 }
