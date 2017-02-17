@@ -27,6 +27,7 @@ void SetCursor::addCursor(PlayerMember type, const ColoredCursor& cursor)
         this->_cursors.erase(type);
 
     this->_cursors[type] = coloredCursor_t(cursor);
+    this->_cursors[type].radius(4u);
 }
 
 void SetCursor::updateCursor(PlayerMember type, const ColoredCursor& cursor)

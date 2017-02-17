@@ -58,6 +58,12 @@ class Cursor
          */
         Cursor(Cursor&& other) noexcept;
 
+		Cursor(const nite::Point3f& p)
+		{
+			x(p.x);
+            y(p.y);
+		}
+
         template<typename T>
         Cursor(const T& t)
         {
@@ -93,7 +99,7 @@ class Cursor
 class ColoredCursor final : public Cursor
 {
     public:
-        ColoredCursor(uint32_t x=0u, uint32_t y=0u, uint32_t radius=0u);
+        ColoredCursor(uint32_t x=0u, uint32_t y=0u, uint32_t radius=3u);
         template<typename T>
         ColoredCursor(const T& t, const mat_data_t& color=matRedColor()) : Cursor(t), _color(color)
         {

@@ -118,6 +118,9 @@ nite::Point3f Player::getCameraPositionOf(PlayerMember member) const
 	nite::Point3f beforeConversion = getPositionOf(member);
 	m_user_tracker.convertJointCoordinatesToDepth(	beforeConversion.x, beforeConversion.y, beforeConversion.z, 
 													&afterConversion.x, &afterConversion.y);
+	//return afterConversion;
+	afterConversion.x *= 2;
+	afterConversion.y *= 2;
 	return afterConversion;
 }
 
