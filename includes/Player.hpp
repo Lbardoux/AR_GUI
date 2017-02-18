@@ -93,6 +93,7 @@ private:
     nite::Point3f getPositionOf(nite::JointType member) const;
 
     nite::UserTracker      m_user_tracker;        //!< Le tracker.
+    nite::UserTrackerFrameRef m_user_tracker_frame; //!< La frame
     const nite::UserData *     m_user;                //!< Le joueur detecté. 
     bool                     one_player_visible;    //!< Permet de savoir si lors du dernier update, la caméra a bien decté un et un seul joueur.
 };

@@ -7,7 +7,7 @@
 #include "Sprite.hpp"
 
 
-TouchButton::TouchButton(void) : Widget(), sprite(nullptr)
+TouchButton::TouchButton(void) : Widget(), sprite(nullptr), membres()
 {
     
 }
@@ -64,14 +64,20 @@ void TouchButton::updateTime(const CursorSet& cursors)
 {
 	bool under = false;
 
-	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
+	// for (unsigned int i = 0; i < this->membres.size(); ++i)
+	for (unsigned int i = 0; i < PlayerMember::NB_PLAYER_MEMBER; ++i)
 	{
-		if(this->isUnderCursor(cursors.getCursor((PlayerMember) p)))
+		// if(this->isUnderCursor(cursors.getCursor((PlayerMember) this->membres[i])))
+		if(this->isUnderCursor(cursors.getCursor((PlayerMember) i)))
 			under = true;
 	}
 
 	this->changeFirstActivation(under);
 }
 
-
+TouchButton& TouchButton::addMembre(int membre)
+{
+	this->membres.push_back(membre);
+	return *this;
+}
 

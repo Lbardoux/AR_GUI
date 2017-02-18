@@ -4,7 +4,7 @@
 #include "Player.hpp"
 #include "Matrix.hpp"
 
-Player::Player() : one_player_visible(false)
+Player::Player() : m_user_tracker(), m_user_tracker_frame(), one_player_visible(false)
 {}
 
 Player::Player(Camera & camera) : one_player_visible(false)
@@ -33,26 +33,28 @@ void Player::init(Camera & camera)
 bool Player::update()
 {
 	//On choppe une frame
-	nite::UserTrackerFrameRef user_tracker_frame;/////////////////////////////////////////////
-	nite::Status status = m_user_tracker.readFrame(&user_tracker_frame);/////////////////////////////////////////////
-	if(status != nite::STATUS_OK)
-	{
-		mtl::log::warning("GetNextData failed");
-		one_player_visible = false;
+	one_player_visible = false;
+
+    if(!m_user_tracker.isValid())
+        return false;
+
+    nite::Status status = m_user_tracker.readFrame(&m_user_tracker_frame);/////////////////////////////////////////////
+    if(status != nite::STATUS_OK)
+    {
+        mtl::log::warning("GetNextData failed");
 		return false;
 	}
 
     //On choppe les utilisateurs
-    const nite::Array<nite::UserData>& users = user_tracker_frame.getUsers();
+    const nite::Array<nite::UserData>* users = &m_user_tracker_frame.getUsers();
 
     //On vérifie qu'il n'y en a qu'un avant de le garder
-    unsigned int nb_users = users.getSize();
+    unsigned int nb_users = users->getSize();
     if(nb_users < 1) 
     {
-        one_player_visible = false;
         return false;
     }
-    m_user = &(users[0]);
+    m_user = &((*users)[0]);
 
     //Si il est nouveau, on commence à le traquer
     if(m_user->isNew())
@@ -67,8 +69,7 @@ bool Player::update()
 
 bool Player::isVisible() const
 {
-    return (m_user->isVisible()
-     && one_player_visible);
+    return (one_player_visible && m_user->isVisible());
 }
 
 nite::Point3f Player::getPositionOf(PlayerMember member) const

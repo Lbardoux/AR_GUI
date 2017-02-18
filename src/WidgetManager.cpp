@@ -35,9 +35,9 @@ void Widget::setActivationTime(double seconde)
 
 bool Widget::isActivated() const
 {
-    if(this->firstActiveTime == 0)
+    if(this->activationTime <= .0f || this->firstActiveTime == 0)
         return false;
-    
+
     time_t timer;
     timer = time(NULL);  /* get current time; same as: timer = time(NULL)  */
     // mtl::log::info("timer : ", timer ,"this->firstActiveTime : ", this->firstActiveTime, "|",difftime(this->firstActiveTime, timer));

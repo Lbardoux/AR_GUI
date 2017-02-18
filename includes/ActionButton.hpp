@@ -7,6 +7,7 @@
 #define ACTIONBUTTON_HPP_INCLUDED
 
 #include <string>
+#include <functional>
 #include "Sprite.hpp"
 #include "TouchButton.hpp"
 #include "Cv_core.hpp"
@@ -20,9 +21,10 @@
 class ActionButton : public TouchButton
 {
     public:
-        ActionButton(void) = delete;
+        ActionButton(void);
         ActionButton(Sprite* image, const std::string& action);
         
+        void init(const std::string& action, std::function<void(void)> function, Sprite* image, int x, int y, double seconde);
         virtual void action() override;
         virtual void draw(UNUSED(Sprite& frame)) override;
         
@@ -31,6 +33,7 @@ class ActionButton : public TouchButton
         
     protected:
         std::string text; //!< Le texte explicatif associé à cette action
+        std::function<void(void)> function;
     
 };
 

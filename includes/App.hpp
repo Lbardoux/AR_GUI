@@ -65,7 +65,7 @@ class App final
 		//----------------- Déclaration des Widgets ---------------------------
 		//---------------------------------------------------------------------
 		WidgetManager widgets; //!< Les Widgets de l'application.
-		TouchButton   testButton; //!< Bouton de test
+		ActionButton  quitter; //!< Bouton qui quitte l'application
 
 		/**
 		 * @brief Fais le mapping des évènements claviers.

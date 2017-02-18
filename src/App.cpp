@@ -97,6 +97,9 @@ void App::initComponents(void)
 	// this->setCursor.init(this->player);
 	this->setCursor.init();
 
-	this->testButton.init(&Sprites::test, 50, 50, 3);
-	this->widgets.addWidget(&this->testButton);
+	this->quitter.init("Quitter", [this]() { this->process = false; }, &Sprites::test, 5, 5, 3);
+	// this->quitter.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
+	// this->quitter.membres.push_back(PlayerMember::LEFT_HAND);
+	// this->quitter.membres.push_back(PlayerMember::RIGHT_HAND);
+	this->widgets.addWidget(&this->quitter);
 }

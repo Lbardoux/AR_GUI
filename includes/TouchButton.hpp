@@ -10,6 +10,7 @@
 #include "WidgetManager.hpp"
 #include "Sprite.hpp"
 #include "logs.hpp"
+#include <vector>
 
 /**
  * @class TouchButton
@@ -44,9 +45,17 @@ class TouchButton : public Widget
         virtual void draw(UNUSED(Sprite& frame)) override;
         virtual void update(void);
         virtual void updateTime(const CursorSet& cursors);
+        /**
+         * @date       17-Feb-2017
+         * @brief      Ajoute un membre aux membres pouvant intéragir avec le Widget
+         * @param[in]  membre Membre à ajouter
+         * @return     *this
+         */
+        TouchButton& addMembre(int membre);
     
     protected:
         Sprite* sprite; //!< La représentation de ce widget.
+        std::vector<int> membres; //!< Contient les valeurs des membres pouvant intéragir avec le Widget
         
         TouchButton& operator=(const TouchButton& other) = delete;
         TouchButton& operator=(TouchButton&& other) = delete;
