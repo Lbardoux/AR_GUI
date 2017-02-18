@@ -64,11 +64,11 @@ void TouchButton::updateTime(const CursorSet& cursors)
 {
 	bool under = false;
 
-	// for (unsigned int i = 0; i < this->membres.size(); ++i)
-	for (unsigned int i = 0; i < PlayerMember::NB_PLAYER_MEMBER; ++i)
+	for (unsigned int i = 0; i < this->membres.size(); ++i)
+	// for (unsigned int i = 0; i < PlayerMember::NB_PLAYER_MEMBER; ++i)
 	{
-		// if(this->isUnderCursor(cursors.getCursor((PlayerMember) this->membres[i])))
-		if(this->isUnderCursor(cursors.getCursor((PlayerMember) i)))
+		if(this->isUnderCursor(cursors.getCursor(static_cast<PlayerMember>(this->membres[i]))))
+		// if(this->isUnderCursor(cursors.getCursor((PlayerMember) i)))
 			under = true;
 	}
 
