@@ -169,7 +169,7 @@ void PaintModule::init(int width, int height, PlayerMember membre)
 	this->sauvegarde.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->sauvegarde);
 
-	this->setEmplacement(Emplacement::BAS_DROIT);
+	this->setEmplacement(Emplacement::HAUT_GAUCHE);
 	this->membre = membre;
 
 	this->peintureActif = false;
