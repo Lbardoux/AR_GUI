@@ -11,11 +11,25 @@
 Sprite Sprites::test;
 
 Sprite Sprites::spr_touchButton;
+Sprite Sprites::spr_peinture_on;
+Sprite Sprites::spr_peinture_off;
+Sprite Sprites::spr_peinture_reset;
+Sprite Sprites::spr_peinture_save;
+
+cv::Size Sprites::tailleIcone = {56, 56};
 
 void Sprites::init(void)
 {
     loadSprite("assets/images/spr_shield.png", Sprites::test);
     loadSprite("assets/images/valid.png", Sprites::spr_touchButton);
+    loadSprite("assets/images/peinture_on.png", Sprites::spr_peinture_on);
+    cv::resize(Sprites::spr_peinture_on, Sprites::spr_peinture_on, Sprites::tailleIcone);
+    loadSprite("assets/images/peinture_off.png", Sprites::spr_peinture_off);
+    cv::resize(Sprites::spr_peinture_off, Sprites::spr_peinture_off, Sprites::tailleIcone);
+    loadSprite("assets/images/button_reset.png", Sprites::spr_peinture_reset);
+    cv::resize(Sprites::spr_peinture_reset, Sprites::spr_peinture_reset, Sprites::tailleIcone);
+    loadSprite("assets/images/peinture_sauvegarde.png", Sprites::spr_peinture_save);
+    cv::resize(Sprites::spr_peinture_save, Sprites::spr_peinture_save, Sprites::tailleIcone);
 }
 
 void Sprites::empty(void)

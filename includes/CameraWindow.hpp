@@ -44,8 +44,23 @@ public:
 	 */
 	Camera& getCamera();
 
+	/**
+	 * @date       18-Feb-2017
+	 * @brief      Retourne la Largeur de la fenetre
+	 * @return     La Largeur de la fenetre
+	 */
+	int largeur();
+	/**
+	 * @date       18-Feb-2017
+	 * @brief      Retourne la Hauteur de la fenetre
+	 * @return     La Hauteur de la fenetre
+	 */
+	int hauteur();
+
 private:
     Camera camera; //!< Camera de profondeur
+    int _width;	   //!< Largeur de la fenetre de la caméra
+    int _height;    //!< Hauteur de la fenetre de la caméra
 
 };
 

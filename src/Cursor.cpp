@@ -6,6 +6,7 @@
 #include "Cursor.hpp"
 #include "clamp.hpp"
 #include "Cv_core.hpp"
+#include "logs.hpp"
 
 Interval Cursor::horizontal;
 Interval Cursor::vertical;
@@ -117,9 +118,7 @@ void ColoredCursor::setColor(const mat_data_t& color)
 {
     this->_color = color;
 
-    for(int i = 0; i < _spr.cols; ++i)
-        for(int j = 0; j < _spr.rows; ++j)
-            matAt(_spr, i, j) = color;
+    fillMat(_spr, color);
 }
 
 uint32_t ColoredCursor::radius(void) const noexcept
@@ -142,16 +141,15 @@ ColoredCursor& ColoredCursor::operator=(const ColoredCursor& c)
 {
     (Cursor)*this = (Cursor)c;
     this->_radius = c.radius();
-    this->_spr    = c._spr;
-    this->_color  = c._color;
+    this->_spr    = c._spr.clone();
+    setColor(c._color);
 
     return *this;
 }
 
 ColoredCursor& ColoredCursor::operator=(const mat_data_t& c)
 {
-    this->_color = c;
-
+    setColor(c);
     return *this;
 }
 

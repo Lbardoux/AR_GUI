@@ -9,6 +9,9 @@ CameraWindow::~CameraWindow()
 
 void CameraWindow::init(const std::string& name , int width, int height)
 {
+	this->_width  = width;
+	this->_height = height;
+
     this->camera.init();
     this->camera.start(width, height);
     this->setName(name);
@@ -35,4 +38,14 @@ void CameraWindow::readFrame(void)
 Camera& CameraWindow::getCamera()
 {
     return this->camera;
+}
+
+int CameraWindow::largeur()
+{
+	return this->_width;
+}
+
+int CameraWindow::hauteur()
+{
+	return this->_height;
 }

@@ -29,6 +29,11 @@ TouchButton::TouchButton(Sprite* image) : Widget(), sprite(image)
     
 }
 
+TouchButton::~TouchButton()
+{
+	this->membres.clear();
+}
+
 void TouchButton::init(Sprite* image, int x, int y, double seconde)
 {
     this->sprite = image;
@@ -47,13 +52,13 @@ void TouchButton::action()
 	mtl::log::info("Bouton activé");
 }
 
-void TouchButton::draw(UNUSED(Sprite& frame))
+void TouchButton::draw(Sprite& frame)
 {
     blit(frame, *(this->sprite), this->x(), this->y());
 }
 
 void TouchButton::update(void)
-{
+{	
 	if(this->isActivated())
 	{
 		this->action();
@@ -81,3 +86,7 @@ TouchButton& TouchButton::addMembre(int membre)
 	return *this;
 }
 
+void TouchButton::setSprite(Sprite* sprite)
+{
+	this->sprite = sprite;
+}

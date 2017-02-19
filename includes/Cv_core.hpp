@@ -56,22 +56,48 @@ const mat_data_t matAt(const cv::Mat& mat, int x, int y);
 mat_data_t& matAt(cv::Mat& mat, int x, int y);
 
 /**
+ * @date       18-Feb-2017
+ * @brief      Foncion qui remplie une cv::Mat d'une meme couleur
+ * @param      mat    La matrice à remplir
+ * @param[in]  color  Couleur à mettre
+ */
+void fillMat(cv::Mat& mat, const mat_data_t& color);
+
+/**
  * @date       08-Feb-2017
  * @brief      Fonction qui donne une couleur rouge
- * @return     Renvoie la couleur rouge selon le format stockée dans nos matrices
+ * @return     Renvoie la couleur rouge selon le format stockée dans nos
+ *             matrices
  */
 mat_data_t matRedColor(void);
 /**
  * @date       08-Feb-2017
  * @brief      Fonction qui donne une couleur bleue
- * @return     Renvoie la couleur bleue selon le format stockée dans nos matrices
+ * @return     Renvoie la couleur bleue selon le format stockée dans nos
+ *             matrices
  */
 mat_data_t matBlueColor(void);
 /**
  * @date       08-Feb-2017
  * @brief      Fonction qui donne une couleur verte
- * @return     Renvoie la couleur verte selon le format stockée dans nos matrices
+ * @return     Renvoie la couleur verte selon le format stockée dans nos
+ *             matrices
  */
 mat_data_t matGreenColor(void);
+/**
+ * @date       08-Feb-2017
+ * @brief      Fonction qui donne une couleur noire
+ * @return     Renvoie la couleur noire selon le format stockée dans nos
+ *             matrices
+ */
+mat_data_t matBlackColor(void);
+/**
+ * @date       08-Feb-2017
+ * @brief      Fonction qui donne une couleur vide par transparence
+ * @return     Renvoie une couleur complètement transparente selon le format
+ *             stockée dans nos matrices
+ */
+mat_data_t matEmptyColor(void);
+
 
 #endif

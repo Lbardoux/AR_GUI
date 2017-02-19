@@ -63,14 +63,14 @@ public:
      * @param[in]  type  Type du curseur
      * @return     Le curseur
      */
-    const Cursor& getCursor(PlayerMember type) const;
+    const ColoredCursor& getCursor(PlayerMember type) const;
     /**
      * @date       08-Feb-2017
      * @brief      Récupère le curseur en lecture/écriture pour le type demandé
      * @param[in]  type  Type du curseur
      * @return     Le curseur
      */
-    Cursor& getCursor(PlayerMember type);
+    ColoredCursor& getCursor(PlayerMember type);
 
     mapCursor_t::const_iterator begin() const;
     mapCursor_t::iterator begin();

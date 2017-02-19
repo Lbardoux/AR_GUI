@@ -28,6 +28,7 @@ class TouchButton : public Widget
          * @param[in] image L'aresse d'une cv::Mat préalablement chargée.
          */
         TouchButton(Sprite* image);
+        ~TouchButton();
 
         /**
          * @date       15-Feb-2017
@@ -42,7 +43,7 @@ class TouchButton : public Widget
         virtual bool isUnderCursor(UNUSED(const Cursor& cursor)) override;
         //virtual void setActivationTime(time_t time) override;
         virtual void action() override;
-        virtual void draw(UNUSED(Sprite& frame)) override;
+        virtual void draw(Sprite& frame) override;
         virtual void update(void);
         virtual void updateTime(const CursorSet& cursors);
         /**
@@ -52,6 +53,12 @@ class TouchButton : public Widget
          * @return     *this
          */
         TouchButton& addMembre(int membre);
+        /**
+         * @date       18-Feb-2017
+         * @brief      Change le Sprite
+         * @param      sprite  Nouveau Sprite du Widget
+         */
+        void setSprite(Sprite* sprite);
     
     protected:
         Sprite* sprite; //!< La représentation de ce widget.

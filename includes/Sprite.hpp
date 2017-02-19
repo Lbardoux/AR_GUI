@@ -35,6 +35,7 @@ class Sprites final
 {
     public:
         static Sprite test;
+        static cv::Size tailleIcone;
         /**
          * @brief Charge les sprites en un coup.
          * @throw std::runtime_error Si un chargement a échoué.
@@ -45,7 +46,11 @@ class Sprites final
          */
         static void empty(void);
 
-        static Sprite spr_touchButton; //!< Sprite pour le TouchButton
+        static Sprite spr_touchButton;  //!< Sprite pour le TouchButton
+        static Sprite spr_peinture_on;  //!< Sprite pour la peinture ON
+        static Sprite spr_peinture_off; //!< Sprite pour la peinture OFF
+        static Sprite spr_peinture_reset; //!< Sprite pour réinitialiser la toile
+        static Sprite spr_peinture_save;  //!< Sprite pour la sauvegarde de l'image
 };
 
 /**

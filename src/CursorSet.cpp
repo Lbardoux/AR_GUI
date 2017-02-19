@@ -40,12 +40,12 @@ void CursorSet::updateColor(PlayerMember type, const mat_data_t& color)
     this->_cursors[type] = color;
 }
 
-const Cursor& CursorSet::getCursor(PlayerMember type) const
+const ColoredCursor& CursorSet::getCursor(PlayerMember type) const
 {
     return this->_cursors.at(type);
 }
 
-Cursor& CursorSet::getCursor(PlayerMember type)
+ColoredCursor& CursorSet::getCursor(PlayerMember type)
 {
     return this->_cursors[type];
 }

@@ -22,7 +22,7 @@ class Widget
 {
 public:
     Widget();
-    ~Widget();
+    virtual ~Widget();
 
     /**Cursor dessus
     Temps que le curseur reste dessus -> vdirtuelle
@@ -69,7 +69,7 @@ public:
      * @brief      Affiche le Widget sur la frame
      * @param      frame  La frame
      */
-    virtual void draw(UNUSED(cv::Mat& frame));
+    virtual void draw(cv::Mat& frame);
 
     /**
      * @date       16-Feb-2017
@@ -103,13 +103,15 @@ class WidgetManager final
         //! @brief Crée juste le gestionnaire.
         WidgetManager(void) noexcept;
         //! @brief Appelle la méthode close() de chaque Widget.
-        ~WidgetManager(void);
+        virtual ~WidgetManager(void);
         //! @brief Appelle la méthode update pour tous les Widgets.
         void updateWidgets(void);
         //! @brief Appelle la méthode updateTime pour tous les Widgets
         void updateTime(const CursorSet& cursors);
         //! @brief Appelle la méthode draw de tous les Widgets
         void draw(cv::Mat& frame);
+        //! @brief Renseigne sur le nombre de Widget géré par le Manager
+        int size();
         /**
          * @brief Ajoute @b Widget au gestionnaire.
          * @param[in,out] Widget L'adresse du widget à ajouter.
@@ -121,10 +123,10 @@ class WidgetManager final
     private:
         std::vector<Widget*> widgets; //!< L'ensemble des widgets utilisées.
         
-        WidgetManager(const WidgetManager& other)            = delete;
-        WidgetManager(WidgetManager&& other)                 = delete;
-        WidgetManager& operator=(const WidgetManager& other) = delete;
-        WidgetManager& operator=(WidgetManager&& other)      = delete;
+        // WidgetManager(const WidgetManager& other)            = delete;
+        // WidgetManager(WidgetManager&& other)                 = delete;
+        // WidgetManager& operator=(const WidgetManager& other) = delete;
+        // WidgetManager& operator=(WidgetManager&& other)      = delete;
         
 };
 

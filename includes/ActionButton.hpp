@@ -23,10 +23,11 @@ class ActionButton : public TouchButton
     public:
         ActionButton(void);
         ActionButton(Sprite* image, const std::string& action);
+        ~ActionButton();
         
         void init(const std::string& action, std::function<void(void)> function, Sprite* image, int x, int y, double seconde);
         virtual void action() override;
-        virtual void draw(UNUSED(Sprite& frame)) override;
+        virtual void draw(Sprite& frame) override;
         
         std::string& getText(void) noexcept;
         const std::string& getText(void) const noexcept;

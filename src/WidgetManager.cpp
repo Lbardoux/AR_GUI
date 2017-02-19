@@ -46,10 +46,10 @@ bool Widget::isActivated() const
 
 void Widget::update(void)
 {
-
+    
 }
 
-void Widget::updateTime(const CursorSet &cursors)
+void Widget::updateTime(UNUSED(const CursorSet &cursors))
 {
 
 }
@@ -102,7 +102,7 @@ void WidgetManager::updateWidgets(void)
 
 void WidgetManager::updateTime(const CursorSet& cursors)
 {
-    std::for_each(this->widgets.begin(), this->widgets.end(), [cursors](Widget * w) {
+    std::for_each(this->widgets.begin(), this->widgets.end(), [&cursors](Widget * w) {
         w->updateTime(cursors);
     });
 }
@@ -112,6 +112,11 @@ void WidgetManager::draw(cv::Mat& frame)
     std::for_each(this->widgets.begin(), this->widgets.end(), [&frame](Widget * w) {
         w->draw(frame);
     });
+}
+
+int WidgetManager::size()
+{
+    return static_cast<int>(this->widgets.size());
 }
 
 WidgetManager& WidgetManager::addWidget(Widget* widget)

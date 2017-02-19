@@ -45,9 +45,13 @@ void App::mainLoop(void)
 			this->setCursor.update(this->player);
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
 			this->widgets.updateTime(this->setCursor);
+			this->peinture.updateTime(this->setCursor);
 		}
 
+		this->peinture.updateWidgets();
 		this->widgets.updateWidgets();
+
+		this->peinture.draw(this->cameraW.getCamera().colorFrame());
 		this->widgets.draw(this->cameraW.getCamera().colorFrame());
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(25);
@@ -81,6 +85,22 @@ void App::initLibs(void)
 
 void App::initComponents(void)
 {
+	this->initWindows();
+	this->initWidgets();
+
+	this->player.init(this->cameraW.getCamera());
+	this->setCursor.init();
+	this->peinture.init(this->cameraW.largeur(), this->cameraW.hauteur());
+	// this->actionCatch.x() = 0;
+	// this->actionCatch.y() = 400;
+	// this->actionQuit.x() = 96;
+	// this->actionQuit.y() = 400;
+	// this->setCursor.init(this->player);
+}
+
+
+void App::initWindows(void)
+{
     this->programState.setName("RED = KO / GREEN = OK");
     this->programState.open(0u, 0u);
     this->windows.addWindow(&this->programState);
@@ -88,18 +108,13 @@ void App::initComponents(void)
 	// Fenetre de la camera
 	this->cameraW.init("Camera", 640, 480);
 	this->windows.addWindow(&this->cameraW);
+}
 
-	this->player.init(this->cameraW.getCamera());
-	// this->actionCatch.x() = 0;
-	// this->actionCatch.y() = 400;
-	// this->actionQuit.x() = 96;
-	// this->actionQuit.y() = 400;
-	// this->setCursor.init(this->player);
-	this->setCursor.init();
-
-	this->quitter.init("Quitter", [this]() { this->process = false; }, &Sprites::test, 5, 5, 3);
+void App::initWidgets(void)
+{
+	this->quitter.init("Quitter", [this]() { this->process = false; }, &Sprites::test,
+		this->cameraW.largeur() - Sprites::test.cols - 10,
+		this->cameraW.hauteur() - Sprites::test.rows - 25, 3);
 	this->quitter.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
-	// this->quitter.membres.push_back(PlayerMember::LEFT_HAND);
-	// this->quitter.membres.push_back(PlayerMember::RIGHT_HAND);
 	this->widgets.addWidget(&this->quitter);
 }

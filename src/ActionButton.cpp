@@ -16,6 +16,11 @@ ActionButton::ActionButton(Sprite* image, const std::string& action) : TouchButt
     
 }
 
+ActionButton::~ActionButton()
+{
+
+}
+
 void ActionButton::action()
 {
     this->function();
@@ -28,7 +33,7 @@ void ActionButton::init(const std::string& action, std::function<void(void)> fun
 	this->function = function;
 }
 
-void ActionButton::draw(UNUSED(Sprite& frame))
+void ActionButton::draw(Sprite& frame)
 {
 	const int PIXELS_DOWN = 12;
     this->TouchButton::draw(frame);

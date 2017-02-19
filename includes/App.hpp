@@ -17,6 +17,7 @@
 #include "WidgetManager.hpp"
 #include "ActionButton.hpp"
 #include "TouchButton.hpp"
+#include "PaintModule.hpp"
 
 /**
  * @class App
@@ -50,22 +51,38 @@ class App final
 		
 		
 	private:
-		KeyboardMapping<char, std::function<void(void)>> keyboard;     //!< Les actions pour le clavier.
-		WindowsManager                                   windows;      //!< Les fenetres de l'application.
-		SkeletonStateWindow                              programState; //!< La fenetre qui affiche l'état du programme.
-		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
-		CameraWindow 									 cameraW;      //!< Fenetre de la camera
-		Player 											 player;	   //!< Joueur
-		// ActionButton                                     actionCatch;
-		// ActionButton                                     actionQuit;
-		
-		CursorSet 										 setCursor;    //!< Ensemble des Cursor liés au Player
+		//---------------------------------------------------------------------
+		//----------------- Déclaration des Windows ---------------------------
+		//---------------------------------------------------------------------
+		/**
+		 * @date       18-Feb-2017
+		 * @brief      Initialise les Fenetres de l'application
+		 */
+		void initWindows(void);
+		WindowsManager      windows;      //!< Les fenetres de l'application.
+		SkeletonStateWindow programState; //!< La fenetre qui affiche l'état du programme.
+		CameraWindow        cameraW;      //!< Fenetre de la camera
 		
 		//---------------------------------------------------------------------
 		//----------------- Déclaration des Widgets ---------------------------
 		//---------------------------------------------------------------------
+		/**
+		 * @date       18-Feb-2017
+		 * @brief      Initialise les Widgets de l'application
+		 */
+		void initWidgets(void);
 		WidgetManager widgets; //!< Les Widgets de l'application.
 		ActionButton  quitter; //!< Bouton qui quitte l'application
+		ActionButton  paint;   //!< Bouton qui active la peinture
+		
+		KeyboardMapping<char, std::function<void(void)>> keyboard;     //!< Les actions pour le clavier.
+		bool                                             process;      //!< Etat de l'application (true on continue, false on quitte).
+		Player 											 player;	   //!< Joueur
+		// ActionButton                                     actionCatch;
+		// ActionButton                                     actionQuit;
+		PaintModule 									 peinture; //!< Module de peinture
+		
+		CursorSet 										 setCursor;    //!< Ensemble des Cursor liés au Player
 
 		/**
 		 * @brief Fais le mapping des évènements claviers.
@@ -79,6 +96,7 @@ class App final
 		 * @brief Applique les opérations supplémentaires pour l'initialisation des composants.
 		 */
 		void initComponents(void);
+		
 };
 
 
