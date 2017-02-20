@@ -199,7 +199,7 @@ void PaintModule::saveToile()
 	fileName << "o_mon_beau_dessin_" << this->pidSauvegarde << "_" << (this->numeroSauvegarde++) << ".png";
 	cv::Mat file;
 	cv::cvtColor(this->toile, file, CV_RGBA2RGB);
-	file.convertTo(file, CV_16U);
+	file.convertTo(file, CV_8UC3);
 	cv::imwrite(fileName.str(), file);
 	mtl::log::info("Image sauvegardée sous :", fileName.str());
 	this->resetToile();
