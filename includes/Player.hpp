@@ -31,7 +31,6 @@ enum PlayerMember { HEAD = 0, NECK, TORSO,
 class Player
 {
 public:
-
 	Player();
 	/**
      * @brief 		Construit un nouveau player 

@@ -66,9 +66,9 @@ public:
     void readTextureFromCamera(Camera & camera);
 
     /**
-     * @brief Affiche le mesh.r
+     * @brief Affiche le mesh
      * @param[in] model la matrice modele
-        * @param[in] view la matrice vue
+     * @param[in] view la matrice vue
      * @param[in] projection la matrice projection
      */
     void draw(const Transform & model, const Transform & view, const Transform & projection) const;

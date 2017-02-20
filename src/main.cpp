@@ -131,56 +131,8 @@
 #include "Pipeline.hpp"
 #include "Loop.hpp"
 #include "Shader.hpp"
-#include "Mesh.hpp"
-#include "Player.hpp"
-#include "Clothe.hpp"
 #include "Sprite.hpp"
-
-bool met_ton_code_la_charles(Mesh & fond, Mesh & mesh_test, Player & player, Clothe & clothe, Camera & camera)
-{
-    Pipeline::clear(true, true);
-
-    //Fond
-    //
-    Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
-    Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-    Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
-    fond.readTextureFromCamera(camera);
-    fond.draw(model, view, projection);
-
-    //Joueur
-    //
-    player.update();
-    //Epaule 1
-    //Point position_1(-100, 300, 1000);// = player.getPointOf(LEFT_SHOULDER);
-    Point position_1 = player.getPointOf(RIGHT_SHOULDER);
-    if (position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0)
-    {
-        model = translationMatrix(position_1) * scaleMatrix(50, 50, 50);
-        mesh_test.draw(model, view, projection);
-    }
-
-    //Epaule 2
-    //Point position_2(100, 200, 1000);// = player.getPointOf(RIGHT_SHOULDER);
-    Point position_2 = player.getPointOf(LEFT_SHOULDER);
-    if(position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
-    {
-        model = translationMatrix(position_2) * scaleMatrix(50, 50, 50);
-        mesh_test.draw(model, view, projection);
-    }
-
-    //Vetement
-    if (  position_1.x() != 0 || position_1.y() != 0 || position_1.z() != 0 ||
-          position_2.x() != 0 || position_2.y() != 0 || position_2.z() != 0)
-    {
-        clothe.draw(position_1, position_2, view, projection);
-    }
-
-    //Squellette
-    
-
-    return false;
-}
+#include "MaidDrawer.hpp"
 
 int main(int argc, char** argv)
 {
@@ -203,7 +155,6 @@ int main(int argc, char** argv)
         Player player(*camera);
 
         GlContext::initGL(640, 480);
-        GlContext::windowCaption("OpenGL window");
         Pipeline::fromXML("assets/PipelineConfig.xml");
 
         VertexShader vertex("assets/shaders/vertex.cpp");
@@ -211,13 +162,11 @@ int main(int argc, char** argv)
         ShaderProgram program({vertex, fragment});
 
         Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
-        Mesh cube("assets/objs/cube.obj", "assets/objs/texture.bmp", program);
-        Mesh fond("assets/objs/squarre.obj", *camera, program);
 
         Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
 
-        program.use();
-        renderLoop(30, met_ton_code_la_charles, fond, cube, player, clothe, *camera);
+        MaidDrawer maid_drawer(player, clothe, program);
+        maid_drawer.draw();
 
         GlContext::endGL();
         delete camera;
