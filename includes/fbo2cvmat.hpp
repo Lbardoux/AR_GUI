@@ -125,10 +125,7 @@ GL_DATATYPE_SIZE(GL_UNSIGNED_INT,   sizeof(unsigned int));
 GL_DATATYPE_SIZE(GL_INT,            sizeof(int));
 GL_DATATYPE_SIZE(GL_FLOAT,          sizeof(float));
 
-//8UC1,,3,4
-//16UC1,,3,4
-//32UC1,,3,4
-//32FC1,,3,4
+
 struct _OpenGL2OpenCV final
 {
     std::array<int, 12> cv_const;

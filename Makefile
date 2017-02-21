@@ -19,7 +19,7 @@ LXX       = $(LINK_$(VERBOSE))
 WARNINGS := -Wall -Wextra
 STD      := -std=c++11
 TARGET   := -g
-CXXFLAGS := $(TARGET) $(STD) $(WARNINGS) -DQT_NO_DEBUG_OUTPUT
+CXXFLAGS := $(TARGET) $(STD) $(WARNINGS) -DQT_NO_DEBUG_OUTPUT -DINCLUDE_GL_CONTEXT=#include "GlContext.hpp"
 
 SRC       := src
 OBJ       := obj

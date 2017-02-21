@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <algorithm>
+#include <cstdint>
 
 #include "Sprite.hpp"
 #include "logs.hpp"
@@ -20,7 +21,7 @@ cv::Size Sprites::tailleIcone = {56, 56};
 
 void Sprites::init(void)
 {
-    loadSprite("assets/images/spr_shield.png", Sprites::test);
+    loadSprite("assets/images/exit.png", Sprites::test);
     loadSprite("assets/images/valid.png", Sprites::spr_touchButton);
     loadSprite("assets/images/peinture_on.png", Sprites::spr_peinture_on);
     cv::resize(Sprites::spr_peinture_on, Sprites::spr_peinture_on, Sprites::tailleIcone);
@@ -60,13 +61,17 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
     {
         for(int row=beginY;row<endY;++row)
         {
-			double alpha = static_cast<double>(sprite.at<mat_data_t>(row, col)[3])/255.0;
+            uint8_t alpha = sprite.at<mat_data_t>(row, col)[3];
+            mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
+            mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
+            matAt(dst, col + x, row + y) = fromSprite + fromDst;
+			/*double alpha = static_cast<double>(sprite.at<mat_data_t>(row, col)[3])/255.0;
 			if (alpha > 0.0)
 			{
 				mat_data_t fromSprite = (1.0 - alpha)*matAt(sprite, col, row);
 				mat_data_t fromDst    = alpha*matAt(dst, col + x, row + y);
 				matAt(dst, col + x, row + y) = fromSprite + fromDst;
-			}
+			}*/
 		}
     }
 }

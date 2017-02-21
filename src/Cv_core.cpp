@@ -20,22 +20,22 @@ void fillMat(cv::Mat& mat, const mat_data_t& color)
 
 mat_data_t matRedColor(void)
 {
-    return mat_data_t(0, 0, 255, 1);
+    return mat_data_t(0, 0, 255, 255);
 }
 
 mat_data_t matBlueColor(void)
 {
-    return mat_data_t(255, 0, 0, 1);
+    return mat_data_t(255, 0, 0, 255);
 }
 
 mat_data_t matGreenColor(void)
 {
-    return mat_data_t(0, 255, 0, 1);
+    return mat_data_t(0, 255, 0, 255);
 }
 
 mat_data_t matBlackColor(void)
 {
-	return mat_data_t(0, 0, 0, 1);
+	return mat_data_t(0, 0, 0, 255);
 }
 
 mat_data_t matEmptyColor(void)

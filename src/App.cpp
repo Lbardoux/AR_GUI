@@ -52,13 +52,39 @@ void App::mainLoop(void)
 		this->widgets.updateWidgets();
 
 		this->peinture.draw(this->cameraW.getCamera().colorFrame());
+        if (this->player.isVisible())
+		{
+            this->setCursor.draw(this->cameraW.getCamera().colorFrame());
+        }
 		this->widgets.draw(this->cameraW.getCamera().colorFrame());
 		this->windows.updateWindows();
-		this->keyboard.checkInputs(25);
+		this->keyboard.checkInputs(12);
 	}
 	this->windows.closeWindows();
 }
 
+/*
+        Camera *camera = new Camera();
+        camera->init();
+        camera->start(640, 480);
+        Player player(*camera);
+
+        GlContext::initGL(640, 480);
+        Pipeline::fromXML("assets/PipelineConfig.xml");
+
+        VertexShader vertex("assets/shaders/vertex.cpp");
+        FragmentShader fragment("assets/shaders/fragment.cpp");
+        ShaderProgram program({vertex, fragment});
+
+        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
+
+        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
+
+        MaidDrawer maid_drawer(player, clothe, program);
+        maid_drawer.draw();
+
+        GlContext::endGL();
+*/
 
 KeyboardMapping<char, std::function<void(void)>>& App::getKeyboard(void) noexcept
 {
@@ -91,11 +117,6 @@ void App::initComponents(void)
 	this->player.init(this->cameraW.getCamera());
 	this->setCursor.init();
 	this->peinture.init(this->cameraW.largeur(), this->cameraW.hauteur());
-	// this->actionCatch.x() = 0;
-	// this->actionCatch.y() = 400;
-	// this->actionQuit.x() = 96;
-	// this->actionQuit.y() = 400;
-	// this->setCursor.init(this->player);
 }
 
 
@@ -113,8 +134,9 @@ void App::initWindows(void)
 void App::initWidgets(void)
 {
 	this->quitter.init("Quitter", [this]() { this->process = false; }, &Sprites::test,
-		this->cameraW.largeur() - Sprites::test.cols - 10,
-		this->cameraW.hauteur() - Sprites::test.rows - 25, 3);
-	this->quitter.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
+	                   this->cameraW.largeur() - Sprites::test.cols - 10,
+	                   this->cameraW.hauteur() - Sprites::test.rows - 25, 3);
+	this->quitter.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND)
+                 .addMembre(PlayerMember::LEFT_FOOT).addMembre(PlayerMember::RIGHT_FOOT);
 	this->widgets.addWidget(&this->quitter);
 }

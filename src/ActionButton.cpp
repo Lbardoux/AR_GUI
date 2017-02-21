@@ -41,10 +41,10 @@ void ActionButton::draw(Sprite& frame)
     if(this->text.empty())
     	return;
 
-	TextPutter().pos(this->x(), this->y() + this->sprite->rows + PIXELS_DOWN)
+	/*TextPutter().pos(this->x(), this->y() + this->sprite->rows + PIXELS_DOWN)
 	            .fontSize(0.6f)
-	            .rgb(25, 25, 25)
-	            .write(frame, this->text);
+	            .rgb(255, 255, 255)
+	            .write(frame, this->text);*/
 }
 
 std::string& ActionButton::getText(void) noexcept

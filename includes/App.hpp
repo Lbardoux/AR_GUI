@@ -19,6 +19,7 @@
 #include "TouchButton.hpp"
 #include "PaintModule.hpp"
 
+
 /**
  * @class App
  * @brief Embarque les modules essentiels de l'application et gère la logiqe applicative.

@@ -31,7 +31,6 @@ PaletteCouleur& PaletteCouleur::addCouleur(const mat_data_t& color)
 	Sprite* spr = new Sprite(COULEUR_HAUTEUR, COULEUR_LONGUEUR, CV_8UC4);
 	fillMat(*spr, color);
 
-	// this->ensembleSprite.push_back(coloredButton_t(ActionButton(), spr));
 	int ind = static_cast<int>(this->ensembleSprite.size());
 	int col = (ind % this->_cols);
 	int row = (ind / this->_cols);
