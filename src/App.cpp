@@ -18,7 +18,7 @@
 #include "fbo2cvmat.hpp"
 
 
-App::App(void) noexcept : process(true)//, actionCatch(&Sprites::test, "Saisir"), actionQuit(&Sprites::test, "Quitter")
+App::App(void) noexcept : process(true)
 {
     this->initLibs();
     this->initInputs();
