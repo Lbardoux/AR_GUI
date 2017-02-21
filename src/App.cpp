@@ -116,7 +116,7 @@ void App::initComponents(void)
 
 	this->player.init(this->cameraW.getCamera());
 	this->setCursor.init();
-	this->peinture.init(this->cameraW.largeur(), this->cameraW.hauteur());
+	this->peinture.init(this->cameraW.largeur(), this->cameraW.hauteur(), "assets/ModulePeinture.xml");
 }
 
 

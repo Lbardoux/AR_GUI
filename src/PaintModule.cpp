@@ -1,23 +1,88 @@
 #include "PaintModule.hpp"
 #include <sys/types.h>
 #include <sstream>
-// #include <unistd.h>
 
-PaletteCouleur::PaletteCouleur()
+PaletteCouleur::PaletteCouleur() : couleur(NULL), visible(false)
 {
-	init(NULL, 2, 2);
 }
 
-void PaletteCouleur::init(Sprite* couleur, uint32_t rows, uint32_t cols, uint32_t x, uint32_t y)
+int clampChannel(int value)
 {
-	this->_x = x;
-	this->_y = y;
-	this->visible = false;
+	if(value < 0)
+		return 0;
+	else if (value > 255)
+		return 255;
+	else
+		return value;
+}
 
-	this->_rows = rows;
-	this->_cols = cols;
+mat_data_t readColor(XmlLoader& loader)
+{
+    return
+    mat_data_t(
+        clampChannel(loader.element("rouge").text<int>()),
+        clampChannel(loader.element("vert").text<int>()),
+        clampChannel(loader.element("bleu").text<int>()),
+        255
+    );
+}
 
+void PaletteCouleur::readConfig(const std::string& fileName)
+{
+	// Lecture de la palette
+    XmlLoader pLoader(fileName);
+    mtl::log::info("Chargement de la Palette ", fileName);
+
+    pLoader.node("parametres");
+
+	this->_cols = pLoader.element("colonnes").text<int>();
+	this->_rows = pLoader.element("lignes").text<int>();
+
+	pLoader.node("taille");
+	this->_square_width  = pLoader.element("width").text<int>();
+	this->_square_height = pLoader.element("height").text<int>();
+	pLoader.prev();
+
+	pLoader.node("membres");
+	pLoader.forEachElementNamed("membre", [this, &pLoader]() {
+		this->ensembleMembre.push_back(static_cast<PlayerMember>(pLoader.text<int>()));
+	});
+	pLoader.prev();
+
+	this->_activation_peinture = pLoader.element("tempsActivation").text<int>();
+
+	// Node parametres
+    pLoader.prev();
+    pLoader.node("couleursPossibles");
+
+    uint32_t nbCoul = 0;
+    mtl::log::info("Chargement des couleurs de la Palette...");
+
+    pLoader.forEachNodeNamed("couleur", [this, &pLoader, &nbCoul]() {
+    	if(nbCoul < this->_cols * this->_rows)
+    	{
+	        std::string str = pLoader.attribute<std::string>("name");
+	        mat_data_t color = readColor(pLoader);
+	        mtl::log::info("---- Couleur : ", str, color);
+	        this->addCouleur(color);
+	        ++nbCoul;
+	    }
+    });
+
+    mtl::log::info("Lecture de ", nbCoul, " couleur(s) sur les ", this->_cols * this->_rows, " requises");
+
+    for(uint32_t i = nbCoul; i < this->_cols * this->_rows; ++i)
+    	addCouleur(matBlackColor());
+}
+
+void PaletteCouleur::setCouleur(Sprite* couleur)
+{
 	this->couleur = couleur;
+}
+
+void PaletteCouleur::setEmplacement(int x, int y)
+{
+	this->x(x).y(y);
 }
 
 PaletteCouleur& PaletteCouleur::addCouleur(const mat_data_t& color)
@@ -28,7 +93,7 @@ PaletteCouleur& PaletteCouleur::addCouleur(const mat_data_t& color)
 		return *this;
 	}
 
-	Sprite* spr = new Sprite(COULEUR_HAUTEUR, COULEUR_LONGUEUR, CV_8UC4);
+	Sprite* spr = new Sprite(this->_square_width, this->_square_height, CV_8UC4);
 	fillMat(*spr, color);
 
 	int ind = static_cast<int>(this->ensembleSprite.size());
@@ -38,13 +103,14 @@ PaletteCouleur& PaletteCouleur::addCouleur(const mat_data_t& color)
 	ActionButton* bouton = new ActionButton;
 
 	bouton->init("", [this, ind]() {
-        this->ensembleSprite[ind].first->changeFirstActivation(false);
-        fillMat(*this->couleur, matAt(*this->ensembleSprite[ind].second, 0, 0));
+		this->ensembleSprite[ind].first->changeFirstActivation(false);
+		fillMat(*this->couleur, matAt(*this->ensembleSprite[ind].second, 0, 0));
+		this->visible = false;
 	},
 	spr,
-	this->_x + (COULEUR_LONGUEUR * col),
-	this->_y + (COULEUR_HAUTEUR  * row),
-	ACTIVATION_PEINTURE);
+	this->_x + (this->_square_width  * col),
+	this->_y + (this->_square_height * row),
+	this->_activation_peinture);
 	bouton->addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
 
 	this->ensembleSprite.push_back(coloredButton_t(bouton, spr));
@@ -130,18 +196,30 @@ PaintModule::~PaintModule()
 
 }
 
-void PaintModule::init(int width, int height, PlayerMember membre)
+void PaintModule::init(int width, int height, const std::string& fileName)
 {
 	this->width = width;
 	this->height = height;
 
-	this->palette.init(&this->spr_palette, 2, 2, 150, 150);
-	this->palette.addCouleur(matRedColor()).addCouleur(matBlackColor())
-	.addCouleur(matBlueColor()).addCouleur(matGreenColor());
+	this->toile = cv::Mat(height - Sprites::spr_peinture_on.rows - 35, width, CV_8UC4);
+	fillBordure();
 
+	// this->palette.init(&this->spr_palette, 2, 2, 150, 150);
+	this->palette.setCouleur(&this->spr_palette);
+
+	this->peintureActif = false;
+	this->visible = true;
+
+	this->readConfig(fileName);
+	this->initWidgets();
+}
+
+void PaintModule::initWidgets()
+{
+	// Initialisation des widgets
 	this->activePeinture.init("", [this]() {
 		this->peinture(!this->peintureActif);
-	}, NULL, 0, 0, ACTIVATION_PEINTURE);
+	}, NULL, this->activePeinture.x(), this->activePeinture.y(), this->_activation_module);
 	// On force la désactivation de la peinture
 	peinture(false);
 	this->activePeinture.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
@@ -152,30 +230,22 @@ void PaintModule::init(int width, int height, PlayerMember membre)
 	this->ouvrePalette.init("Couleurs", [this]() {
 		this->ouvrePalette.changeFirstActivation(false);
 		this->palette.visible = !this->palette.visible;
-	}, &this->spr_palette, 100 + Sprites::spr_peinture_on.cols + 50, 100, ACTIVATION_PEINTURE);
+		mtl::log::info("Affichage de la palette : ", this->palette.visible);
+	}, &this->spr_palette, this->ouvrePalette.x(), this->ouvrePalette.y(), this->_activation_module);
 	this->ouvrePalette.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->ouvrePalette);
 
 	this->reset.init("Reset", [this]() {
 		this->resetToile();
-	}, &Sprites::spr_peinture_reset, 0, 0, ACTIVATION_PEINTURE);
+	}, &Sprites::spr_peinture_reset, this->reset.x(), this->reset.y(), this->_activation_module);
 	this->reset.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->reset);
 
 	this->sauvegarde.init("Save", [this]() {
 		this->saveToile();
-	} , &Sprites::spr_peinture_save, 0, 0, ACTIVATION_PEINTURE);
+	} , &Sprites::spr_peinture_save, this->sauvegarde.x(), this->sauvegarde.y(), this->_activation_module);
 	this->sauvegarde.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->sauvegarde);
-
-	this->setEmplacement(Emplacement::HAUT_GAUCHE);
-	this->membre = membre;
-
-	this->peintureActif = false;
-	this->visible = true;
-
-	this->toile = cv::Mat(height - Sprites::spr_peinture_on.rows - 35, width, CV_8UC4);
-	fillBordure();
 }
 
 void PaintModule::membreQuiPeint(PlayerMember p)
@@ -213,6 +283,28 @@ void PaintModule::resetToile()
     this->fillBordure();
 }
 
+void PaintModule::readConfig(const std::string& fileName)
+{
+	// XmlLoader loader("ModulePeinture.xml");
+    XmlLoader loader(fileName);
+    mtl::log::info("Chargement du module de Peinture ", fileName);
+
+    this->_activation_module = loader.element("tempsActivation").text<int>();
+
+    loader.node("profilUtilisateurice");
+    int habilite = loader.element("habilite").text<int>();
+    // habilite == 0 -> Droitier
+    if(habilite == 0)
+    	this->membre = PlayerMember::RIGHT_HAND;
+    else
+    	this->membre = PlayerMember::LEFT_HAND;
+    loader.prev();
+
+    this->setEmplacement(static_cast<Emplacement>(loader.element("emplacement").text<int>()));
+    // this->setEmplacement(Emplacement::HAUT_DROIT);
+    this->palette.readConfig(loader.element("Palette").text<std::string>());
+}
+
 void PaintModule::rendVisible(bool val)
 {
 	this->visible = val;
@@ -247,7 +339,9 @@ void PaintModule::setEmplacement(Emplacement e)
 		y = BAS;
 		break;
 	default:
-		return;
+		x = GAUCHE;
+		y = HAUT;
+		break;
 	}
 
 	this->toileX = 0;
@@ -262,18 +356,26 @@ void PaintModule::setEmplacement(Emplacement e)
 		decalage = this->width - Sprites::tailleIcone.width;
 
 	this->activePeinture.x() = (20 * x) + decalage;
+	mtl::log::info("this->activePeinture.x() : ", this->activePeinture.x());
 	this->activePeinture.y() = y;
+	mtl::log::info("this->activePeinture.y() : ", this->activePeinture.y());
 
 	decalage = 8;
 
 	this->ouvrePalette.x() = this->activePeinture.x() + (x * (Sprites::tailleIcone.width + decalage));
+	mtl::log::info("this->ouvrePalette.x() : ", this->ouvrePalette.x());
 	this->ouvrePalette.y() = y;
+	mtl::log::info("this->ouvrePalette.y() : ", this->ouvrePalette.y());
 
 	this->reset.x() = this->ouvrePalette.x() + (x * (Sprites::tailleIcone.width + decalage));
+	mtl::log::info("this->reset.x() : ", this->reset.x());
 	this->reset.y() = y;
+	mtl::log::info("this->reset.y() : ", this->reset.y());
 
 	this->sauvegarde.x() = this->reset.x() + (x * (Sprites::tailleIcone.width + decalage));
 	this->sauvegarde.y() = y;
+
+	this->palette.setEmplacement(this->toileX + 2, this->toileY + 2);
 }
 
 void PaintModule::updateWidgets(void)

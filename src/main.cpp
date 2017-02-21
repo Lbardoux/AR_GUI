@@ -134,10 +134,12 @@
 #include "Sprite.hpp"
 #include "MaidDrawer.hpp"
 
+
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
     mtl::log::info("Ligne de commande valide");
+
     if (std::string(argv[1]) == "cv")
     {
         mtl::log::info("Lancement avec OpenCV");
