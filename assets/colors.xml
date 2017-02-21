@@ -1,0 +1,2127 @@
+<Couleurs>
+	<couleur name="Bleu">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Aigue-marine">
+		<rouge>121</rouge>
+		<vert>248</vert>
+		<bleu>248</bleu>
+	</couleur>
+	<couleur name="Azur">
+		<rouge>0</rouge>
+		<vert>127</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Azur">
+		<rouge>30</rouge>
+		<vert>127</vert>
+		<bleu>203</bleu>
+	</couleur>
+	<couleur name="Azur clair">
+		<rouge>116</rouge>
+		<vert>208</vert>
+		<bleu>241</bleu>
+	</couleur>
+	<couleur name="Azurin">
+		<rouge>169</rouge>
+		<vert>234</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Bleu acier">
+		<rouge>58</rouge>
+		<vert>142</vert>
+		<bleu>186</bleu>
+	</couleur>
+	<couleur name="Bleu ardoise">
+		<rouge>104</rouge>
+		<vert>111</vert>
+		<bleu>140</bleu>
+	</couleur>
+	<couleur name="Bleu barbeau">
+		<rouge>84</rouge>
+		<vert>114</vert>
+		<bleu>174</bleu>
+	</couleur>
+	<couleur name="Bleu bleuet">
+		<rouge>84</rouge>
+		<vert>114</vert>
+		<bleu>174</bleu>
+	</couleur>
+	<couleur name="Bleu bondi">
+		<rouge>0</rouge>
+		<vert>149</vert>
+		<bleu>182</bleu>
+	</couleur>
+	<couleur name="Bleu celeste">
+		<rouge>38</rouge>
+		<vert>196</vert>
+		<bleu>236</bleu>
+	</couleur>
+	<couleur name="Bleu ceruleen">
+		<rouge>15</rouge>
+		<vert>157</vert>
+		<bleu>232</bleu>
+	</couleur>
+	<couleur name="Bleu ceruleen">
+		<rouge>53</rouge>
+		<vert>122</vert>
+		<bleu>183</bleu>
+	</couleur>
+	<couleur name="Bleu charrette">
+		<rouge>142</rouge>
+		<vert>162</vert>
+		<bleu>198</bleu>
+	</couleur>
+	<couleur name="Bleu charron">
+		<rouge>23</rouge>
+		<vert>101</vert>
+		<bleu>125</bleu>
+	</couleur>
+	<couleur name="Bleu charron">
+		<rouge>142</rouge>
+		<vert>162</vert>
+		<bleu>198</bleu>
+	</couleur>
+	<couleur name="Bleu ciel">
+		<rouge>119</rouge>
+		<vert>181</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Bleu cobalt">
+		<rouge>34</rouge>
+		<vert>66</vert>
+		<bleu>124</bleu>
+	</couleur>
+	<couleur name="Bleu de Berlin">
+		<rouge>36</rouge>
+		<vert>68</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Bleu de France">
+		<rouge>49</rouge>
+		<vert>140</vert>
+		<bleu>231</bleu>
+	</couleur>
+	<couleur name="Bleu de minuit">
+		<rouge>0</rouge>
+		<vert>51</vert>
+		<bleu>102</bleu>
+	</couleur>
+	<couleur name="Bleu de Prusse">
+		<rouge>36</rouge>
+		<vert>68</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Bleu denim">
+		<rouge>21</rouge>
+		<vert>96</vert>
+		<bleu>189</bleu>
+	</couleur>
+	<couleur name="Bleu des mers du sud">
+		<rouge>0</rouge>
+		<vert>204</vert>
+		<bleu>203</bleu>
+	</couleur>
+	<couleur name="Bleu dragee">
+		<rouge>223</rouge>
+		<vert>242</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Bleu egyptien">
+		<rouge>16</rouge>
+		<vert>52</vert>
+		<bleu>166</bleu>
+	</couleur>
+	<couleur name="Bleu electrique">
+		<rouge>44</rouge>
+		<vert>117</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Bleu guede">
+		<rouge>86</rouge>
+		<vert>115</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Bleu horizon">
+		<rouge>127</rouge>
+		<vert>143</vert>
+		<bleu>166</bleu>
+	</couleur>
+	<couleur name="Bleu majorelle">
+		<rouge>96</rouge>
+		<vert>80</vert>
+		<bleu>220</bleu>
+	</couleur>
+	<couleur name="Bleu marine">
+		<rouge>3</rouge>
+		<vert>34</vert>
+		<bleu>76</bleu>
+	</couleur>
+	<couleur name="Bleu maya">
+		<rouge>115</rouge>
+		<vert>194</vert>
+		<bleu>251</bleu>
+	</couleur>
+	<couleur name="Bleu mineral">
+		<rouge>36</rouge>
+		<vert>68</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Bleu nuit">
+		<rouge>15</rouge>
+		<vert>5</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Bleu outremer">
+		<rouge>27</rouge>
+		<vert>1</vert>
+		<bleu>155</bleu>
+	</couleur>
+	<couleur name="Bleu outremer">
+		<rouge>43</rouge>
+		<vert>0</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Bleu paon">
+		<rouge>6</rouge>
+		<vert>119</vert>
+		<bleu>144</bleu>
+	</couleur>
+	<couleur name="Bleu persan">
+		<rouge>102</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Bleu petrole">
+		<rouge>29</rouge>
+		<vert>72</vert>
+		<bleu>81</bleu>
+	</couleur>
+	<couleur name="Bleu roi">
+		<rouge>49</rouge>
+		<vert>140</vert>
+		<bleu>231</bleu>
+	</couleur>
+	<couleur name="Bleu saphir">
+		<rouge>1</rouge>
+		<vert>49</vert>
+		<bleu>180</bleu>
+	</couleur>
+	<couleur name="Bleu sarcelle">
+		<rouge>0</rouge>
+		<vert>142</vert>
+		<bleu>142</bleu>
+	</couleur>
+	<couleur name="Bleu smalt">
+		<rouge>0</rouge>
+		<vert>51</vert>
+		<bleu>153</bleu>
+	</couleur>
+	<couleur name="Bleu tiffany">
+		<rouge>10</rouge>
+		<vert>186</vert>
+		<bleu>181</bleu>
+	</couleur>
+	<couleur name="Bleu turquin">
+		<rouge>66</rouge>
+		<vert>91</vert>
+		<bleu>138</bleu>
+	</couleur>
+	<couleur name="Ceruleum">
+		<rouge>38</rouge>
+		<vert>196</vert>
+		<bleu>236</bleu>
+	</couleur>
+	<couleur name="Canard">
+		<rouge>4</rouge>
+		<vert>139</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Cerule">
+		<rouge>116</rouge>
+		<vert>208</vert>
+		<bleu>241</bleu>
+	</couleur>
+	<couleur name="Cyan">
+		<rouge>0</rouge>
+		<vert>255</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Cyan">
+		<rouge>43</rouge>
+		<vert>250</vert>
+		<bleu>250</bleu>
+	</couleur>
+	<couleur name="Fumee">
+		<rouge>187</rouge>
+		<vert>210</vert>
+		<bleu>225</bleu>
+	</couleur>
+	<couleur name="Givre">
+		<rouge>128</rouge>
+		<vert>208</vert>
+		<bleu>208</bleu>
+	</couleur>
+	<couleur name="Indigo">
+		<rouge>121</rouge>
+		<vert>28</vert>
+		<bleu>248</bleu>
+	</couleur>
+	<couleur name="Indigo">
+		<rouge>46</rouge>
+		<vert>0</vert>
+		<bleu>108</bleu>
+	</couleur>
+	<couleur name="Indigo du web">
+		<rouge>75</rouge>
+		<vert>0</vert>
+		<bleu>130</bleu>
+	</couleur>
+	<couleur name="Klein">
+		<rouge>0</rouge>
+		<vert>47</vert>
+		<bleu>167</bleu>
+	</couleur>
+	<couleur name="Klein">
+		<rouge>33</rouge>
+		<vert>23</vert>
+		<bleu>125</bleu>
+	</couleur>
+	<couleur name="Lapis-lazuli">
+		<rouge>38</rouge>
+		<vert>97</vert>
+		<bleu>156</bleu>
+	</couleur>
+	<couleur name="Lavande">
+		<rouge>150</rouge>
+		<vert>131</vert>
+		<bleu>236</bleu>
+	</couleur>
+	<couleur name="Pastel">
+		<rouge>86</rouge>
+		<vert>115</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Pervenche">
+		<rouge>204</rouge>
+		<vert>204</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Turquoise">
+		<rouge>37</rouge>
+		<vert>253</vert>
+		<bleu>233</bleu>
+	</couleur>
+	<couleur name="Blanc">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Albatre">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Argile">
+		<rouge>239</rouge>
+		<vert>239</vert>
+		<bleu>239</bleu>
+	</couleur>
+	<couleur name="Azur brume">
+		<rouge>240</rouge>
+		<vert>255</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Beige clair">
+		<rouge>245</rouge>
+		<vert>245</vert>
+		<bleu>220</bleu>
+	</couleur>
+	<couleur name="Blanc casse">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>226</bleu>
+	</couleur>
+	<couleur name="Blanc ceruse">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc creme">
+		<rouge>253</rouge>
+		<vert>241</vert>
+		<bleu>184</bleu>
+	</couleur>
+	<couleur name="Blanc d'argent">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc de lait">
+		<rouge>251</rouge>
+		<vert>252</vert>
+		<bleu>250</bleu>
+	</couleur>
+	<couleur name="Blanc de lin">
+		<rouge>250</rouge>
+		<vert>240</vert>
+		<bleu>230</bleu>
+	</couleur>
+	<couleur name="Blanc de platine">
+		<rouge>250</rouge>
+		<vert>240</vert>
+		<bleu>197</bleu>
+	</couleur>
+	<couleur name="Blanc de plomb">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc de Saturne">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc de Troyes">
+		<rouge>254</rouge>
+		<vert>253</vert>
+		<bleu>240</bleu>
+	</couleur>
+	<couleur name="Blanc de Zinc">
+		<rouge>246</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc d'Espagne">
+		<rouge>254</rouge>
+		<vert>253</vert>
+		<bleu>240</bleu>
+	</couleur>
+	<couleur name="Blanc d'ivoire">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>212</bleu>
+	</couleur>
+	<couleur name="Blanc ecru">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>224</bleu>
+	</couleur>
+	<couleur name="Blanc lunaire">
+		<rouge>244</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc neige">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Blanc opalin">
+		<rouge>242</rouge>
+		<vert>255</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Blanc-bleu">
+		<rouge>254</rouge>
+		<vert>254</vert>
+		<bleu>254</bleu>
+	</couleur>
+	<couleur name="Coquille d'oeuf">
+		<rouge>253</rouge>
+		<vert>233</vert>
+		<bleu>224</bleu>
+	</couleur>
+	<couleur name="Cuisse de nymphe">
+		<rouge>254</rouge>
+		<vert>231</vert>
+		<bleu>240</bleu>
+	</couleur>
+	<couleur name="Brun">
+		<rouge>91</rouge>
+		<vert>60</vert>
+		<bleu>17</bleu>
+	</couleur>
+	<couleur name="Acajou">
+		<rouge>136</rouge>
+		<vert>66</vert>
+		<bleu>29</bleu>
+	</couleur>
+	<couleur name="Alezan">
+		<rouge>167</rouge>
+		<vert>103</vert>
+		<bleu>38</bleu>
+	</couleur>
+	<couleur name="Ambre">
+		<rouge>240</rouge>
+		<vert>195</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Auburn">
+		<rouge>157</rouge>
+		<vert>62</vert>
+		<bleu>12</bleu>
+	</couleur>
+	<couleur name="Basane">
+		<rouge>139</rouge>
+		<vert>108</vert>
+		<bleu>66</bleu>
+	</couleur>
+	<couleur name="Beige">
+		<rouge>200</rouge>
+		<vert>173</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Beige clair">
+		<rouge>245</rouge>
+		<vert>245</vert>
+		<bleu>220</bleu>
+	</couleur>
+	<couleur name="Beigeasse">
+		<rouge>175</rouge>
+		<vert>167</vert>
+		<bleu>123</bleu>
+	</couleur>
+	<couleur name="Bistre">
+		<rouge>61</rouge>
+		<vert>43</vert>
+		<bleu>31</bleu>
+	</couleur>
+	<couleur name="Bistre">
+		<rouge>133</rouge>
+		<vert>109</vert>
+		<bleu>77</bleu>
+	</couleur>
+	<couleur name="Bitume">
+		<rouge>78</rouge>
+		<vert>61</vert>
+		<bleu>40</bleu>
+	</couleur>
+	<couleur name="Blet">
+		<rouge>91</rouge>
+		<vert>60</vert>
+		<bleu>17</bleu>
+	</couleur>
+	<couleur name="Brique">
+		<rouge>132</rouge>
+		<vert>46</vert>
+		<bleu>27</bleu>
+	</couleur>
+	<couleur name="Bronze">
+		<rouge>97</rouge>
+		<vert>78</vert>
+		<bleu>26</bleu>
+	</couleur>
+	<couleur name="Brou de noix">
+		<rouge>63</rouge>
+		<vert>34</vert>
+		<bleu>4</bleu>
+	</couleur>
+	<couleur name="Bureau">
+		<rouge>107</rouge>
+		<vert>87</vert>
+		<bleu>49</bleu>
+	</couleur>
+	<couleur name="Cacao">
+		<rouge>97</rouge>
+		<vert>75</vert>
+		<bleu>58</bleu>
+	</couleur>
+	<couleur name="Cachou">
+		<rouge>47</rouge>
+		<vert>27</vert>
+		<bleu>12</bleu>
+	</couleur>
+	<couleur name="Cafe">
+		<rouge>70</rouge>
+		<vert>46</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Cafe au lait">
+		<rouge>120</rouge>
+		<vert>94</vert>
+		<bleu>47</bleu>
+	</couleur>
+	<couleur name="Cannelle">
+		<rouge>126</rouge>
+		<vert>88</vert>
+		<bleu>53</bleu>
+	</couleur>
+	<couleur name="Caramel">
+		<rouge>126</rouge>
+		<vert>51</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Chataigne">
+		<rouge>128</rouge>
+		<vert>109</vert>
+		<bleu>90</bleu>
+	</couleur>
+	<couleur name="Chatain">
+		<rouge>139</rouge>
+		<vert>108</vert>
+		<bleu>66</bleu>
+	</couleur>
+	<couleur name="Chaudron">
+		<rouge>133</rouge>
+		<vert>83</vert>
+		<bleu>15</bleu>
+	</couleur>
+	<couleur name="Chocolat">
+		<rouge>90</rouge>
+		<vert>58</vert>
+		<bleu>34</bleu>
+	</couleur>
+	<couleur name="Citrouille">
+		<rouge>223</rouge>
+		<vert>109</vert>
+		<bleu>20</bleu>
+	</couleur>
+	<couleur name="Fauve">
+		<rouge>173</rouge>
+		<vert>79</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Feuille-morte">
+		<rouge>153</rouge>
+		<vert>81</vert>
+		<bleu>43</bleu>
+	</couleur>
+	<couleur name="Grege">
+		<rouge>187</rouge>
+		<vert>174</vert>
+		<bleu>152</bleu>
+	</couleur>
+	<couleur name="Gris de maure">
+		<rouge>104</rouge>
+		<vert>94</vert>
+		<bleu>67</bleu>
+	</couleur>
+	<couleur name="Lavalliere">
+		<rouge>143</rouge>
+		<vert>89</vert>
+		<bleu>34</bleu>
+	</couleur>
+	<couleur name="Marron">
+		<rouge>88</rouge>
+		<vert>41</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Mordore">
+		<rouge>135</rouge>
+		<vert>89</vert>
+		<bleu>26</bleu>
+	</couleur>
+	<couleur name="Noisette">
+		<rouge>149</rouge>
+		<vert>86</vert>
+		<bleu>40</bleu>
+	</couleur>
+	<couleur name="Orange brûlee">
+		<rouge>204</rouge>
+		<vert>85</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Puce">
+		<rouge>78</rouge>
+		<vert>22</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Rouge bismarck">
+		<rouge>165</rouge>
+		<vert>38</vert>
+		<bleu>10</bleu>
+	</couleur>
+	<couleur name="Rouge tomette">
+		<rouge>174</rouge>
+		<vert>74</vert>
+		<bleu>52</bleu>
+	</couleur>
+	<couleur name="Rouille">
+		<rouge>152</rouge>
+		<vert>87</vert>
+		<bleu>23</bleu>
+	</couleur>
+	<couleur name="Sang de boeuf">
+		<rouge>115</rouge>
+		<vert>8</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Senois">
+		<rouge>141</rouge>
+		<vert>64</vert>
+		<bleu>36</bleu>
+	</couleur>
+	<couleur name="Sepia">
+		<rouge>169</rouge>
+		<vert>140</vert>
+		<bleu>120</bleu>
+	</couleur>
+	<couleur name="Sepia">
+		<rouge>174</rouge>
+		<vert>137</vert>
+		<bleu>100</bleu>
+	</couleur>
+	<couleur name="Tabac">
+		<rouge>159</rouge>
+		<vert>85</vert>
+		<bleu>30</bleu>
+	</couleur>
+	<couleur name="Terre de Sienne">
+		<rouge>142</rouge>
+		<vert>84</vert>
+		<bleu>52</bleu>
+	</couleur>
+	<couleur name="Terre d'ombre">
+		<rouge>98</rouge>
+		<vert>91</vert>
+		<bleu>72</bleu>
+	</couleur>
+	<couleur name="Terre d'ombre">
+		<rouge>146</rouge>
+		<vert>109</vert>
+		<bleu>39</bleu>
+	</couleur>
+	<couleur name="Vanille">
+		<rouge>225</rouge>
+		<vert>206</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Gris">
+		<rouge>96</rouge>
+		<vert>96</vert>
+		<bleu>96</bleu>
+	</couleur>
+	<couleur name="Ardoise">
+		<rouge>90</rouge>
+		<vert>94</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Argent">
+		<rouge>206</rouge>
+		<vert>206</vert>
+		<bleu>206</bleu>
+	</couleur>
+	<couleur name="Argile">
+		<rouge>239</rouge>
+		<vert>239</vert>
+		<bleu>239</bleu>
+	</couleur>
+	<couleur name="Bis">
+		<rouge>118</rouge>
+		<vert>111</vert>
+		<bleu>100</bleu>
+	</couleur>
+	<couleur name="Bistre">
+		<rouge>61</rouge>
+		<vert>43</vert>
+		<bleu>31</bleu>
+	</couleur>
+	<couleur name="Bistre">
+		<rouge>133</rouge>
+		<vert>109</vert>
+		<bleu>77</bleu>
+	</couleur>
+	<couleur name="Bitume">
+		<rouge>78</rouge>
+		<vert>61</vert>
+		<bleu>40</bleu>
+	</couleur>
+	<couleur name="Celadon">
+		<rouge>131</rouge>
+		<vert>166</vert>
+		<bleu>151</bleu>
+	</couleur>
+	<couleur name="Chataigne">
+		<rouge>128</rouge>
+		<vert>109</vert>
+		<bleu>90</bleu>
+	</couleur>
+	<couleur name="Etain oxyde">
+		<rouge>186</rouge>
+		<vert>186</vert>
+		<bleu>186</bleu>
+	</couleur>
+	<couleur name="Etain pur">
+		<rouge>237</rouge>
+		<vert>237</vert>
+		<bleu>237</bleu>
+	</couleur>
+	<couleur name="Fumee">
+		<rouge>187</rouge>
+		<vert>210</vert>
+		<bleu>225</bleu>
+	</couleur>
+	<couleur name="Grege">
+		<rouge>187</rouge>
+		<vert>174</vert>
+		<bleu>152</bleu>
+	</couleur>
+	<couleur name="Gris acier">
+		<rouge>175</rouge>
+		<vert>175</vert>
+		<bleu>175</bleu>
+	</couleur>
+	<couleur name="Gris anthracite">
+		<rouge>48</rouge>
+		<vert>48</vert>
+		<bleu>48</bleu>
+	</couleur>
+	<couleur name="Gris de Payne">
+		<rouge>103</rouge>
+		<vert>113</vert>
+		<bleu>121</bleu>
+	</couleur>
+	<couleur name="Gris fer">
+		<rouge>132</rouge>
+		<vert>132</vert>
+		<bleu>132</bleu>
+	</couleur>
+	<couleur name="Gris Fer">
+		<rouge>127</rouge>
+		<vert>127</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Gris Perle">
+		<rouge>206</rouge>
+		<vert>206</vert>
+		<bleu>206</bleu>
+	</couleur>
+	<couleur name="Gris Perle">
+		<rouge>199</rouge>
+		<vert>208</vert>
+		<bleu>204</bleu>
+	</couleur>
+	<couleur name="Gris souris">
+		<rouge>158</rouge>
+		<vert>158</vert>
+		<bleu>158</bleu>
+	</couleur>
+	<couleur name="Gris tourterelle">
+		<rouge>187</rouge>
+		<vert>172</vert>
+		<bleu>172</bleu>
+	</couleur>
+	<couleur name="Mastic">
+		<rouge>179</rouge>
+		<vert>177</vert>
+		<bleu>145</bleu>
+	</couleur>
+	<couleur name="Pinchard">
+		<rouge>204</rouge>
+		<vert>204</vert>
+		<bleu>204</bleu>
+	</couleur>
+	<couleur name="Plomb">
+		<rouge>121</rouge>
+		<vert>128</vert>
+		<bleu>129</bleu>
+	</couleur>
+	<couleur name="Rose Mountbatten">
+		<rouge>153</rouge>
+		<vert>122</vert>
+		<bleu>144</bleu>
+	</couleur>
+	<couleur name="Taupe">
+		<rouge>70</rouge>
+		<vert>63</vert>
+		<bleu>50</bleu>
+	</couleur>
+	<couleur name="Tourdille">
+		<rouge>193</rouge>
+		<vert>191</vert>
+		<bleu>177</bleu>
+	</couleur>
+	<couleur name="Jaune">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Ambre">
+		<rouge>240</rouge>
+		<vert>195</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Aurore">
+		<rouge>255</rouge>
+		<vert>203</vert>
+		<bleu>96</bleu>
+	</couleur>
+	<couleur name="Beurre">
+		<rouge>240</rouge>
+		<vert>227</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Beurre frais">
+		<rouge>255</rouge>
+		<vert>244</vert>
+		<bleu>141</bleu>
+	</couleur>
+	<couleur name="Ble">
+		<rouge>232</rouge>
+		<vert>214</vert>
+		<bleu>48</bleu>
+	</couleur>
+	<couleur name="Blond">
+		<rouge>226</rouge>
+		<vert>188</vert>
+		<bleu>116</bleu>
+	</couleur>
+	<couleur name="Boutton d'or">
+		<rouge>252</rouge>
+		<vert>220</vert>
+		<bleu>18</bleu>
+	</couleur>
+	<couleur name="Bulle">
+		<rouge>237</rouge>
+		<vert>211</vert>
+		<bleu>140</bleu>
+	</couleur>
+	<couleur name="Caca d'oie">
+		<rouge>205</rouge>
+		<vert>205</vert>
+		<bleu>13</bleu>
+	</couleur>
+	<couleur name="Chamois">
+		<rouge>208</rouge>
+		<vert>192</vert>
+		<bleu>122</bleu>
+	</couleur>
+	<couleur name="Champagne">
+		<rouge>251</rouge>
+		<vert>242</vert>
+		<bleu>183</bleu>
+	</couleur>
+	<couleur name="Chrome">
+		<rouge>237</rouge>
+		<vert>255</vert>
+		<bleu>12</bleu>
+	</couleur>
+	<couleur name="Chrome">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>5</bleu>
+	</couleur>
+	<couleur name="Citron">
+		<rouge>247</rouge>
+		<vert>255</vert>
+		<bleu>60</bleu>
+	</couleur>
+	<couleur name="Fauve">
+		<rouge>173</rouge>
+		<vert>79</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Flave">
+		<rouge>230</rouge>
+		<vert>230</vert>
+		<bleu>151</bleu>
+	</couleur>
+	<couleur name="Fleur de soufre">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Gomme-gutte">
+		<rouge>239</rouge>
+		<vert>155</vert>
+		<bleu>15</bleu>
+	</couleur>
+	<couleur name="Jaune aureolin">
+		<rouge>239</rouge>
+		<vert>210</vert>
+		<bleu>66</bleu>
+	</couleur>
+	<couleur name="Jaune banane">
+		<rouge>209</rouge>
+		<vert>182</vert>
+		<bleu>6</bleu>
+	</couleur>
+	<couleur name="Jaune canari">
+		<rouge>231</rouge>
+		<vert>240</vert>
+		<bleu>13</bleu>
+	</couleur>
+	<couleur name="Jaune chartreuse">
+		<rouge>223</rouge>
+		<vert>255</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Jaune de cobalt">
+		<rouge>253</rouge>
+		<vert>238</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="jaune de Naples">
+		<rouge>255</rouge>
+		<vert>240</vert>
+		<bleu>188</bleu>
+	</couleur>
+	<couleur name="Jaune d'or">
+		<rouge>239</rouge>
+		<vert>216</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Jaune imperial">
+		<rouge>255</rouge>
+		<vert>228</vert>
+		<bleu>54</bleu>
+	</couleur>
+	<couleur name="Jaune mimosa">
+		<rouge>254</rouge>
+		<vert>248</vert>
+		<bleu>108</bleu>
+	</couleur>
+	<couleur name="Jaune moutarde">
+		<rouge>199</rouge>
+		<vert>207</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Jaune nankin">
+		<rouge>247</rouge>
+		<vert>226</vert>
+		<bleu>105</bleu>
+	</couleur>
+	<couleur name="Jaune olive">
+		<rouge>128</rouge>
+		<vert>128</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Jaune paille">
+		<rouge>254</rouge>
+		<vert>227</vert>
+		<bleu>71</bleu>
+	</couleur>
+	<couleur name="Jaune poussin">
+		<rouge>247</rouge>
+		<vert>227</vert>
+		<bleu>95</bleu>
+	</couleur>
+	<couleur name="Mais">
+		<rouge>255</rouge>
+		<vert>222</vert>
+		<bleu>117</bleu>
+	</couleur>
+	<couleur name="Mars">
+		<rouge>239</rouge>
+		<vert>209</vert>
+		<bleu>83</bleu>
+	</couleur>
+	<couleur name="Mastic">
+		<rouge>179</rouge>
+		<vert>177</vert>
+		<bleu>145</bleu>
+	</couleur>
+	<couleur name="Miel">
+		<rouge>218</rouge>
+		<vert>179</vert>
+		<bleu>10</bleu>
+	</couleur>
+	<couleur name="Ocre jaune">
+		<rouge>223</rouge>
+		<vert>175</vert>
+		<bleu>44</bleu>
+	</couleur>
+	<couleur name="Ocre rouge">
+		<rouge>221</rouge>
+		<vert>152</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Or">
+		<rouge>255</rouge>
+		<vert>215</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Orpiment">
+		<rouge>252</rouge>
+		<vert>210</vert>
+		<bleu>28</bleu>
+	</couleur>
+	<couleur name="Poil de chameau">
+		<rouge>182</rouge>
+		<vert>120</vert>
+		<bleu>35</bleu>
+	</couleur>
+	<couleur name="Queue de vache">
+		<rouge>195</rouge>
+		<vert>180</vert>
+		<bleu>112</bleu>
+	</couleur>
+	<couleur name="Queue de vache">
+		<rouge>168</rouge>
+		<vert>152</vert>
+		<bleu>116</bleu>
+	</couleur>
+	<couleur name="Sable">
+		<rouge>224</rouge>
+		<vert>205</vert>
+		<bleu>169</bleu>
+	</couleur>
+	<couleur name="Safran">
+		<rouge>243</rouge>
+		<vert>214</vert>
+		<bleu>23</bleu>
+	</couleur>
+	<couleur name="Soufre">
+		<rouge>255</rouge>
+		<vert>255</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Topaze">
+		<rouge>250</rouge>
+		<vert>234</vert>
+		<bleu>115</bleu>
+	</couleur>
+	<couleur name="Vanille">
+		<rouge>225</rouge>
+		<vert>206</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Venitien">
+		<rouge>231</rouge>
+		<vert>168</vert>
+		<bleu>84</bleu>
+	</couleur>
+	<couleur name="Noir">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Aile de corbeau">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Brou de noix">
+		<rouge>63</rouge>
+		<vert>34</vert>
+		<bleu>4</bleu>
+	</couleur>
+	<couleur name="Cassis">
+		<rouge>44</rouge>
+		<vert>3</vert>
+		<bleu>11</bleu>
+	</couleur>
+	<couleur name="Cassis">
+		<rouge>58</rouge>
+		<vert>2</vert>
+		<bleu>13</bleu>
+	</couleur>
+	<couleur name="Dorian">
+		<rouge>11</rouge>
+		<vert>22</vert>
+		<bleu>22</bleu>
+	</couleur>
+	<couleur name="Ebene">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noir animal">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noir charbon">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noir d'aniline">
+		<rouge>18</rouge>
+		<vert>13</vert>
+		<bleu>22</bleu>
+	</couleur>
+	<couleur name="Noir de carbone">
+		<rouge>19</rouge>
+		<vert>14</vert>
+		<bleu>10</bleu>
+	</couleur>
+	<couleur name="Noir de fumee">
+		<rouge>19</rouge>
+		<vert>14</vert>
+		<bleu>10</bleu>
+	</couleur>
+	<couleur name="Noir de jais">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noir d'encre">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noir d'ivoire">
+		<rouge>0</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Noiraud">
+		<rouge>47</rouge>
+		<vert>30</vert>
+		<bleu>14</bleu>
+	</couleur>
+	<couleur name="Reglisse">
+		<rouge>45</rouge>
+		<vert>36</vert>
+		<bleu>30</bleu>
+	</couleur>
+	<couleur name="Orange">
+		<rouge>237</rouge>
+		<vert>127</vert>
+		<bleu>16</bleu>
+	</couleur>
+	<couleur name="Abricot">
+		<rouge>230</rouge>
+		<vert>126</vert>
+		<bleu>48</bleu>
+	</couleur>
+	<couleur name="Aurore">
+		<rouge>255</rouge>
+		<vert>203</vert>
+		<bleu>96</bleu>
+	</couleur>
+	<couleur name="Bis">
+		<rouge>241</rouge>
+		<vert>226</vert>
+		<bleu>190</bleu>
+	</couleur>
+	<couleur name="Bisque">
+		<rouge>255</rouge>
+		<vert>228</vert>
+		<bleu>196</bleu>
+	</couleur>
+	<couleur name="Carotte">
+		<rouge>244</rouge>
+		<vert>102</vert>
+		<bleu>27</bleu>
+	</couleur>
+	<couleur name="Citrouille">
+		<rouge>223</rouge>
+		<vert>109</vert>
+		<bleu>20</bleu>
+	</couleur>
+	<couleur name="Corail">
+		<rouge>231</rouge>
+		<vert>62</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Cuivre">
+		<rouge>179</rouge>
+		<vert>103</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Gomme-gutte">
+		<rouge>239</rouge>
+		<vert>155</vert>
+		<bleu>15</bleu>
+	</couleur>
+	<couleur name="Mandarine">
+		<rouge>254</rouge>
+		<vert>163</vert>
+		<bleu>71</bleu>
+	</couleur>
+	<couleur name="Melon">
+		<rouge>222</rouge>
+		<vert>152</vert>
+		<bleu>22</bleu>
+	</couleur>
+	<couleur name="Orange">
+		<rouge>250</rouge>
+		<vert>164</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Orange brûlee">
+		<rouge>204</rouge>
+		<vert>85</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Roux">
+		<rouge>173</rouge>
+		<vert>79</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Safran">
+		<rouge>243</rouge>
+		<vert>214</vert>
+		<bleu>23</bleu>
+	</couleur>
+	<couleur name="Saumon">
+		<rouge>248</rouge>
+		<vert>142</vert>
+		<bleu>85</bleu>
+	</couleur>
+	<couleur name="Tangerine">
+		<rouge>255</rouge>
+		<vert>127</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Tanne">
+		<rouge>167</rouge>
+		<vert>85</vert>
+		<bleu>2</bleu>
+	</couleur>
+	<couleur name="Vanille">
+		<rouge>225</rouge>
+		<vert>206</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Ventre de biche">
+		<rouge>233</rouge>
+		<vert>201</vert>
+		<bleu>177</bleu>
+	</couleur>
+	<couleur name="Rose">
+		<rouge>253</rouge>
+		<vert>108</vert>
+		<bleu>158</bleu>
+	</couleur>
+	<couleur name="Bisque">
+		<rouge>255</rouge>
+		<vert>228</vert>
+		<bleu>196</bleu>
+	</couleur>
+	<couleur name="Cerise">
+		<rouge>222</rouge>
+		<vert>49</vert>
+		<bleu>99</bleu>
+	</couleur>
+	<couleur name="Chair">
+		<rouge>254</rouge>
+		<vert>195</vert>
+		<bleu>172</bleu>
+	</couleur>
+	<couleur name="Coquille d'oeuf">
+		<rouge>253</rouge>
+		<vert>233</vert>
+		<bleu>224</bleu>
+	</couleur>
+	<couleur name="Cuisse de nymphe">
+		<rouge>254</rouge>
+		<vert>231</vert>
+		<bleu>240</bleu>
+	</couleur>
+	<couleur name="Framboise">
+		<rouge>199</rouge>
+		<vert>44</vert>
+		<bleu>72</bleu>
+	</couleur>
+	<couleur name="Fushia">
+		<rouge>253</rouge>
+		<vert>63</vert>
+		<bleu>146</bleu>
+	</couleur>
+	<couleur name="Heliotrope">
+		<rouge>223</rouge>
+		<vert>115</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Incarnadin">
+		<rouge>254</rouge>
+		<vert>150</vert>
+		<bleu>160</bleu>
+	</couleur>
+	<couleur name="Magenta">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Magenta fonce">
+		<rouge>128</rouge>
+		<vert>0</vert>
+		<bleu>128</bleu>
+	</couleur>
+	<couleur name="Magenta fushia">
+		<rouge>219</rouge>
+		<vert>0</vert>
+		<bleu>115</bleu>
+	</couleur>
+	<couleur name="Mauve">
+		<rouge>212</rouge>
+		<vert>115</vert>
+		<bleu>212</bleu>
+	</couleur>
+	<couleur name="Peche">
+		<rouge>253</rouge>
+		<vert>191</vert>
+		<bleu>183</bleu>
+	</couleur>
+	<couleur name="Rose balais">
+		<rouge>196</rouge>
+		<vert>105</vert>
+		<bleu>143</bleu>
+	</couleur>
+	<couleur name="Rose bonbon">
+		<rouge>249</rouge>
+		<vert>66</vert>
+		<bleu>158</bleu>
+	</couleur>
+	<couleur name="Rose dragee">
+		<rouge>254</rouge>
+		<vert>191</vert>
+		<bleu>210</bleu>
+	</couleur>
+	<couleur name="Rose Mountbatten">
+		<rouge>153</rouge>
+		<vert>122</vert>
+		<bleu>144</bleu>
+	</couleur>
+	<couleur name="Rose the">
+		<rouge>255</rouge>
+		<vert>134</vert>
+		<bleu>106</bleu>
+	</couleur>
+	<couleur name="Rose vif">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Saumon">
+		<rouge>248</rouge>
+		<vert>142</vert>
+		<bleu>85</bleu>
+	</couleur>
+	<couleur name="Rouge">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Amarante">
+		<rouge>145</rouge>
+		<vert>40</vert>
+		<bleu>59</bleu>
+	</couleur>
+	<couleur name="Bordeaux">
+		<rouge>109</rouge>
+		<vert>7</vert>
+		<bleu>26</bleu>
+	</couleur>
+	<couleur name="Brique">
+		<rouge>132</rouge>
+		<vert>46</vert>
+		<bleu>27</bleu>
+	</couleur>
+	<couleur name="Cerise">
+		<rouge>187</rouge>
+		<vert>11</vert>
+		<bleu>11</bleu>
+	</couleur>
+	<couleur name="Corail">
+		<rouge>231</rouge>
+		<vert>62</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Ecarlate">
+		<rouge>237</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Fraise">
+		<rouge>191</rouge>
+		<vert>48</vert>
+		<bleu>48</bleu>
+	</couleur>
+	<couleur name="Fraise ecrasee">
+		<rouge>164</rouge>
+		<vert>36</vert>
+		<bleu>36</bleu>
+	</couleur>
+	<couleur name="Framboise">
+		<rouge>199</rouge>
+		<vert>44</vert>
+		<bleu>72</bleu>
+	</couleur>
+	<couleur name="Fushia">
+		<rouge>253</rouge>
+		<vert>63</vert>
+		<bleu>146</bleu>
+	</couleur>
+	<couleur name="Grenadine">
+		<rouge>233</rouge>
+		<vert>56</vert>
+		<bleu>63</bleu>
+	</couleur>
+	<couleur name="Grenat">
+		<rouge>110</rouge>
+		<vert>11</vert>
+		<bleu>20</bleu>
+	</couleur>
+	<couleur name="Incarnadin">
+		<rouge>254</rouge>
+		<vert>150</vert>
+		<bleu>160</bleu>
+	</couleur>
+	<couleur name="Incarnat">
+		<rouge>255</rouge>
+		<vert>111</vert>
+		<bleu>125</bleu>
+	</couleur>
+	<couleur name="Magenta">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Magenta fonce">
+		<rouge>128</rouge>
+		<vert>0</vert>
+		<bleu>128</bleu>
+	</couleur>
+	<couleur name="Magenta fushia">
+		<rouge>219</rouge>
+		<vert>0</vert>
+		<bleu>115</bleu>
+	</couleur>
+	<couleur name="Mauve">
+		<rouge>212</rouge>
+		<vert>115</vert>
+		<bleu>212</bleu>
+	</couleur>
+	<couleur name="Nacarat">
+		<rouge>252</rouge>
+		<vert>93</vert>
+		<bleu>93</bleu>
+	</couleur>
+	<couleur name="Ocre rouge">
+		<rouge>221</rouge>
+		<vert>152</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Passe-velours">
+		<rouge>145</rouge>
+		<vert>40</vert>
+		<bleu>59</bleu>
+	</couleur>
+	<couleur name="Pourpre">
+		<rouge>158</rouge>
+		<vert>14</vert>
+		<bleu>64</bleu>
+	</couleur>
+	<couleur name="Prune">
+		<rouge>129</rouge>
+		<vert>20</vert>
+		<bleu>83</bleu>
+	</couleur>
+	<couleur name="Rose vif">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Rouge alizarine">
+		<rouge>217</rouge>
+		<vert>1</vert>
+		<bleu>21</bleu>
+	</couleur>
+	<couleur name="Rouge anglais">
+		<rouge>247</rouge>
+		<vert>35</vert>
+		<bleu>12</bleu>
+	</couleur>
+	<couleur name="Rouge bismarck">
+		<rouge>165</rouge>
+		<vert>38</vert>
+		<bleu>10</bleu>
+	</couleur>
+	<couleur name="Rouge bourgogne">
+		<rouge>107</rouge>
+		<vert>13</vert>
+		<bleu>13</bleu>
+	</couleur>
+	<couleur name="Rouge capucine">
+		<rouge>255</rouge>
+		<vert>94</vert>
+		<bleu>77</bleu>
+	</couleur>
+	<couleur name="Rouge cardinal">
+		<rouge>184</rouge>
+		<vert>32</vert>
+		<bleu>16</bleu>
+	</couleur>
+	<couleur name="Rouge carmin">
+		<rouge>150</rouge>
+		<vert>0</vert>
+		<bleu>24</bleu>
+	</couleur>
+	<couleur name="Rouge cinabre">
+		<rouge>219</rouge>
+		<vert>23</vert>
+		<bleu>2</bleu>
+	</couleur>
+	<couleur name="Rouge cinabre">
+		<rouge>253</rouge>
+		<vert>70</vert>
+		<bleu>38</bleu>
+	</couleur>
+	<couleur name="Rouge coquelicot">
+		<rouge>198</rouge>
+		<vert>8</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Rouge cramoisi">
+		<rouge>150</rouge>
+		<vert>0</vert>
+		<bleu>24</bleu>
+	</couleur>
+	<couleur name="Rouge cramoisi">
+		<rouge>220</rouge>
+		<vert>20</vert>
+		<bleu>60</bleu>
+	</couleur>
+	<couleur name="Rouge d'Andrinople">
+		<rouge>169</rouge>
+		<vert>17</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Rouge d'aniline">
+		<rouge>235</rouge>
+		<vert>0</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Rouge de falun">
+		<rouge>128</rouge>
+		<vert>24</vert>
+		<bleu>24</bleu>
+	</couleur>
+	<couleur name="Rouge de mars">
+		<rouge>247</rouge>
+		<vert>35</vert>
+		<bleu>12</bleu>
+	</couleur>
+	<couleur name="Rouge ecrevisse">
+		<rouge>188</rouge>
+		<vert>32</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Rouge feu">
+		<rouge>254</rouge>
+		<vert>27</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Rouge feu">
+		<rouge>255</rouge>
+		<vert>73</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Rouge garance">
+		<rouge>238</rouge>
+		<vert>16</vert>
+		<bleu>16</bleu>
+	</couleur>
+	<couleur name="Rouge groseille">
+		<rouge>207</rouge>
+		<vert>10</vert>
+		<bleu>29</bleu>
+	</couleur>
+	<couleur name="Rouge ponceau">
+		<rouge>198</rouge>
+		<vert>8</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Rouge rubis">
+		<rouge>224</rouge>
+		<vert>17</vert>
+		<bleu>95</bleu>
+	</couleur>
+	<couleur name="Rouge sang">
+		<rouge>133</rouge>
+		<vert>6</vert>
+		<bleu>6</bleu>
+	</couleur>
+	<couleur name="Rouge tomate">
+		<rouge>222</rouge>
+		<vert>41</vert>
+		<bleu>22</bleu>
+	</couleur>
+	<couleur name="Rouge tomette">
+		<rouge>174</rouge>
+		<vert>74</vert>
+		<bleu>52</bleu>
+	</couleur>
+	<couleur name="Rouge turc">
+		<rouge>169</rouge>
+		<vert>17</vert>
+		<bleu>1</bleu>
+	</couleur>
+	<couleur name="Rouge vermillon">
+		<rouge>219</rouge>
+		<vert>23</vert>
+		<bleu>2</bleu>
+	</couleur>
+	<couleur name="Rouge vermillon">
+		<rouge>253</rouge>
+		<vert>70</vert>
+		<bleu>38</bleu>
+	</couleur>
+	<couleur name="Rouge-violet">
+		<rouge>199</rouge>
+		<vert>21</vert>
+		<bleu>133</bleu>
+	</couleur>
+	<couleur name="Rouille">
+		<rouge>152</rouge>
+		<vert>87</vert>
+		<bleu>23</bleu>
+	</couleur>
+	<couleur name="Sang de boeuf">
+		<rouge>115</rouge>
+		<vert>8</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Senois">
+		<rouge>141</rouge>
+		<vert>64</vert>
+		<bleu>36</bleu>
+	</couleur>
+	<couleur name="Terracotta">
+		<rouge>204</rouge>
+		<vert>78</vert>
+		<bleu>92</bleu>
+	</couleur>
+	<couleur name="Vermeil">
+		<rouge>255</rouge>
+		<vert>9</vert>
+		<bleu>33</bleu>
+	</couleur>
+	<couleur name="Zizolin">
+		<rouge>108</rouge>
+		<vert>2</vert>
+		<bleu>119</bleu>
+	</couleur>
+	<couleur name="Vert">
+		<rouge>0</rouge>
+		<vert>255</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Aigue-marine">
+		<rouge>121</rouge>
+		<vert>248</vert>
+		<bleu>248</bleu>
+	</couleur>
+	<couleur name="Asperge">
+		<rouge>123</rouge>
+		<vert>160</vert>
+		<bleu>91</bleu>
+	</couleur>
+	<couleur name="Bleu sarcelle">
+		<rouge>0</rouge>
+		<vert>142</vert>
+		<bleu>142</bleu>
+	</couleur>
+	<couleur name="Canard">
+		<rouge>4</rouge>
+		<vert>139</vert>
+		<bleu>154</bleu>
+	</couleur>
+	<couleur name="Celadon">
+		<rouge>131</rouge>
+		<vert>166</vert>
+		<bleu>151</bleu>
+	</couleur>
+	<couleur name="Givre">
+		<rouge>128</rouge>
+		<vert>208</vert>
+		<bleu>208</bleu>
+	</couleur>
+	<couleur name="Glauque">
+		<rouge>100</rouge>
+		<vert>155</vert>
+		<bleu>136</bleu>
+	</couleur>
+	<couleur name="Hooker">
+		<rouge>27</rouge>
+		<vert>79</vert>
+		<bleu>8</bleu>
+	</couleur>
+	<couleur name="Jade">
+		<rouge>135</rouge>
+		<vert>233</vert>
+		<bleu>144</bleu>
+	</couleur>
+	<couleur name="Kaki">
+		<rouge>148</rouge>
+		<vert>129</vert>
+		<bleu>43</bleu>
+	</couleur>
+	<couleur name="Menthe">
+		<rouge>22</rouge>
+		<vert>184</vert>
+		<bleu>78</bleu>
+	</couleur>
+	<couleur name="Menthe a l'eau">
+		<rouge>84</rouge>
+		<vert>249</vert>
+		<bleu>141</bleu>
+	</couleur>
+	<couleur name="Sinople">
+		<rouge>20</rouge>
+		<vert>148</vert>
+		<bleu>20</bleu>
+	</couleur>
+	<couleur name="Turquoise">
+		<rouge>37</rouge>
+		<vert>253</vert>
+		<bleu>233</bleu>
+	</couleur>
+	<couleur name="Vert absinthe">
+		<rouge>127</rouge>
+		<vert>221</vert>
+		<bleu>76</bleu>
+	</couleur>
+	<couleur name="Vert amande">
+		<rouge>130</rouge>
+		<vert>196</vert>
+		<bleu>108</bleu>
+	</couleur>
+	<couleur name="Vert anglais">
+		<rouge>24</rouge>
+		<vert>57</vert>
+		<bleu>30</bleu>
+	</couleur>
+	<couleur name="Vert anis">
+		<rouge>159</rouge>
+		<vert>232</vert>
+		<bleu>85</bleu>
+	</couleur>
+	<couleur name="Vert avocat">
+		<rouge>86</rouge>
+		<vert>130</vert>
+		<bleu>3</bleu>
+	</couleur>
+	<couleur name="Vert bouteille">
+		<rouge>9</rouge>
+		<vert>106</vert>
+		<bleu>9</bleu>
+	</couleur>
+	<couleur name="Vert chartreuse">
+		<rouge>194</rouge>
+		<vert>247</vert>
+		<bleu>50</bleu>
+	</couleur>
+	<couleur name="Vert citron">
+		<rouge>0</rouge>
+		<vert>255</vert>
+		<bleu>0</bleu>
+	</couleur>
+	<couleur name="Vert de chrome">
+		<rouge>24</rouge>
+		<vert>57</vert>
+		<bleu>30</bleu>
+	</couleur>
+	<couleur name="Vert de gris">
+		<rouge>149</rouge>
+		<vert>165</vert>
+		<bleu>149</bleu>
+	</couleur>
+	<couleur name="Vert de vessie">
+		<rouge>34</rouge>
+		<vert>120</vert>
+		<bleu>15</bleu>
+	</couleur>
+	<couleur name="Vert d'eau">
+		<rouge>176</rouge>
+		<vert>242</vert>
+		<bleu>182</bleu>
+	</couleur>
+	<couleur name="Vert emeraude">
+		<rouge>1</rouge>
+		<vert>215</vert>
+		<bleu>88</bleu>
+	</couleur>
+	<couleur name="Vert empire">
+		<rouge>0</rouge>
+		<vert>86</vert>
+		<bleu>27</bleu>
+	</couleur>
+	<couleur name="Vert epinard">
+		<rouge>47</rouge>
+		<vert>79</vert>
+		<bleu>79</bleu>
+	</couleur>
+	<couleur name="Vert gazon">
+		<rouge>58</rouge>
+		<vert>137</vert>
+		<bleu>35</bleu>
+	</couleur>
+	<couleur name="Vert imperial">
+		<rouge>0</rouge>
+		<vert>86</vert>
+		<bleu>27</bleu>
+	</couleur>
+	<couleur name="Vert kaki">
+		<rouge>121</rouge>
+		<vert>137</vert>
+		<bleu>51</bleu>
+	</couleur>
+	<couleur name="Vert lichen">
+		<rouge>133</rouge>
+		<vert>193</vert>
+		<bleu>126</bleu>
+	</couleur>
+	<couleur name="Vert lime">
+		<rouge>158</rouge>
+		<vert>253</vert>
+		<bleu>56</bleu>
+	</couleur>
+	<couleur name="Vert malachite">
+		<rouge>31</rouge>
+		<vert>160</vert>
+		<bleu>85</bleu>
+	</couleur>
+	<couleur name="Vert melese">
+		<rouge>56</rouge>
+		<vert>111</vert>
+		<bleu>72</bleu>
+	</couleur>
+	<couleur name="Vert militaire">
+		<rouge>89</rouge>
+		<vert>102</vert>
+		<bleu>67</bleu>
+	</couleur>
+	<couleur name="Vert mousse">
+		<rouge>103</rouge>
+		<vert>159</vert>
+		<bleu>90</bleu>
+	</couleur>
+	<couleur name="Vert olive">
+		<rouge>112</rouge>
+		<vert>141</vert>
+		<bleu>35</bleu>
+	</couleur>
+	<couleur name="Vert opaline">
+		<rouge>151</rouge>
+		<vert>223</vert>
+		<bleu>198</bleu>
+	</couleur>
+	<couleur name="Vert perroquet">
+		<rouge>58</rouge>
+		<vert>242</vert>
+		<bleu>75</bleu>
+	</couleur>
+	<couleur name="Vert pin">
+		<rouge>1</rouge>
+		<vert>121</vert>
+		<bleu>111</bleu>
+	</couleur>
+	<couleur name="Vert pistache">
+		<rouge>190</rouge>
+		<vert>245</vert>
+		<bleu>116</bleu>
+	</couleur>
+	<couleur name="Vert poireau">
+		<rouge>76</rouge>
+		<vert>166</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Vert pomme">
+		<rouge>52</rouge>
+		<vert>201</vert>
+		<bleu>36</bleu>
+	</couleur>
+	<couleur name="Vert prairie">
+		<rouge>87</rouge>
+		<vert>213</vert>
+		<bleu>59</bleu>
+	</couleur>
+	<couleur name="Vert prasin">
+		<rouge>76</rouge>
+		<vert>166</vert>
+		<bleu>107</bleu>
+	</couleur>
+	<couleur name="Vert printemps">
+		<rouge>0</rouge>
+		<vert>255</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Vert sapin">
+		<rouge>9</rouge>
+		<vert>82</vert>
+		<bleu>40</bleu>
+	</couleur>
+	<couleur name="Vert sauge">
+		<rouge>104</rouge>
+		<vert>157</vert>
+		<bleu>113</bleu>
+	</couleur>
+	<couleur name="Vert smaragdin">
+		<rouge>1</rouge>
+		<vert>215</vert>
+		<bleu>88</bleu>
+	</couleur>
+	<couleur name="Vert tilleul">
+		<rouge>165</rouge>
+		<vert>209</vert>
+		<bleu>82</bleu>
+	</couleur>
+	<couleur name="Vert veronese">
+		<rouge>88</rouge>
+		<vert>111</vert>
+		<bleu>45</bleu>
+	</couleur>
+	<couleur name="Vert viride">
+		<rouge>64</rouge>
+		<vert>130</vert>
+		<bleu>109</bleu>
+	</couleur>
+	<couleur name="Violet">
+		<rouge>102</rouge>
+		<vert>0</vert>
+		<bleu>153</bleu>
+	</couleur>
+	<couleur name="Amethyste">
+		<rouge>136</rouge>
+		<vert>77</vert>
+		<bleu>167</bleu>
+	</couleur>
+	<couleur name="Aubergine">
+		<rouge>55</rouge>
+		<vert>0</vert>
+		<bleu>40</bleu>
+	</couleur>
+	<couleur name="Bleu persan">
+		<rouge>102</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Byzantin">
+		<rouge>189</rouge>
+		<vert>51</vert>
+		<bleu>164</bleu>
+	</couleur>
+	<couleur name="Byzantium">
+		<rouge>112</rouge>
+		<vert>41</vert>
+		<bleu>99</bleu>
+	</couleur>
+	<couleur name="Cerise">
+		<rouge>222</rouge>
+		<vert>49</vert>
+		<bleu>99</bleu>
+	</couleur>
+	<couleur name="Colombin">
+		<rouge>106</rouge>
+		<vert>69</vert>
+		<bleu>93</bleu>
+	</couleur>
+	<couleur name="Fushia">
+		<rouge>253</rouge>
+		<vert>63</vert>
+		<bleu>146</bleu>
+	</couleur>
+	<couleur name="Glycine">
+		<rouge>201</rouge>
+		<vert>160</vert>
+		<bleu>220</bleu>
+	</couleur>
+	<couleur name="Gris de lin">
+		<rouge>210</rouge>
+		<vert>202</vert>
+		<bleu>236</bleu>
+	</couleur>
+	<couleur name="Heliotrope">
+		<rouge>223</rouge>
+		<vert>115</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Indigo">
+		<rouge>121</rouge>
+		<vert>28</vert>
+		<bleu>248</bleu>
+	</couleur>
+	<couleur name="Indigo">
+		<rouge>46</rouge>
+		<vert>0</vert>
+		<bleu>108</bleu>
+	</couleur>
+	<couleur name="Indigo du web">
+		<rouge>75</rouge>
+		<vert>0</vert>
+		<bleu>130</bleu>
+	</couleur>
+	<couleur name="Lavande">
+		<rouge>150</rouge>
+		<vert>131</vert>
+		<bleu>236</bleu>
+	</couleur>
+	<couleur name="Lie de vin">
+		<rouge>172</rouge>
+		<vert>30</vert>
+		<bleu>68</bleu>
+	</couleur>
+	<couleur name="Lilas">
+		<rouge>182</rouge>
+		<vert>102</vert>
+		<bleu>210</bleu>
+	</couleur>
+	<couleur name="Magenta">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>255</bleu>
+	</couleur>
+	<couleur name="Magenta fonce">
+		<rouge>128</rouge>
+		<vert>0</vert>
+		<bleu>128</bleu>
+	</couleur>
+	<couleur name="Magenta fushia">
+		<rouge>219</rouge>
+		<vert>0</vert>
+		<bleu>115</bleu>
+	</couleur>
+	<couleur name="Mauve">
+		<rouge>212</rouge>
+		<vert>115</vert>
+		<bleu>212</bleu>
+	</couleur>
+	<couleur name="Orchidee">
+		<rouge>218</rouge>
+		<vert>112</vert>
+		<bleu>214</bleu>
+	</couleur>
+	<couleur name="Parme">
+		<rouge>207</rouge>
+		<vert>160</vert>
+		<bleu>233</bleu>
+	</couleur>
+	<couleur name="Pourpre">
+		<rouge>158</rouge>
+		<vert>14</vert>
+		<bleu>64</bleu>
+	</couleur>
+	<couleur name="Prune">
+		<rouge>129</rouge>
+		<vert>20</vert>
+		<bleu>83</bleu>
+	</couleur>
+	<couleur name="Rose bonbon">
+		<rouge>249</rouge>
+		<vert>66</vert>
+		<bleu>158</bleu>
+	</couleur>
+	<couleur name="Rose vif">
+		<rouge>255</rouge>
+		<vert>0</vert>
+		<bleu>127</bleu>
+	</couleur>
+	<couleur name="Rouge-violet">
+		<rouge>199</rouge>
+		<vert>21</vert>
+		<bleu>133</bleu>
+	</couleur>
+	<couleur name="Violet d'eveque">
+		<rouge>114</rouge>
+		<vert>62</vert>
+		<bleu>100</bleu>
+	</couleur>
+	<couleur name="Violine">
+		<rouge>161</rouge>
+		<vert>6</vert>
+		<bleu>132</bleu>
+	</couleur>
+	<couleur name="Zizolin">
+		<rouge>108</rouge>
+		<vert>2</vert>
+		<bleu>119</bleu>
+	</couleur>
+</Couleurs>

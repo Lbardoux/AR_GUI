@@ -1,0 +1,26 @@
+<ModulePeinture>
+        <!-- Indique l'emplacement par défaut du module.
+            Les valeurs possibles sont les suivantes :
+                - 0 <- HAUT_GAUCHE
+                - 1 <- HAUT_DROIT
+                - 2 <- BAS_GAUCHE
+                - 3 <- BAS_DROIT
+            Par défaut, la valeur HAUT_GAUCHE sera prise
+            C'est aussi cette valeur qui est prise si la valeur insérée
+            n'est pas reconnue
+        -->
+    <emplacement>0</emplacement>
+    <!-- Temps en seconde pour activer une couleur -->
+    <tempsActivation>3</tempsActivation>
+    <profilUtilisateurice>
+        <!-- On trouve ici le profil de l'utilisateurice -->
+        <!-- Valeurs possibles : DROITIER - GAUCHER
+                                    ⴷ         ⴷ
+                                    0         1
+                                Par défaut
+         -->
+        <habilite>0</habilite>
+    </profilUtilisateurice>
+    <!-- Fichier de la palette à charger -->
+    <Palette>assets/palette1.xml</Palette>
+</ModulePeinture>
