@@ -11,7 +11,6 @@
 
 Sprite Sprites::test;
 
-Sprite Sprites::spr_touchButton;
 Sprite Sprites::spr_peinture_on;
 Sprite Sprites::spr_peinture_off;
 Sprite Sprites::spr_peinture_reset;
@@ -19,35 +18,38 @@ Sprite Sprites::spr_peinture_save;
 
 cv::Size Sprites::tailleIcone = {56, 56};
 
+
 void Sprites::init(void)
 {
-    loadSprite("assets/images/exit.png", Sprites::test);
-    loadSprite("assets/images/valid.png", Sprites::spr_touchButton);
-    loadSprite("assets/images/peinture_on.png", Sprites::spr_peinture_on);
-    cv::resize(Sprites::spr_peinture_on, Sprites::spr_peinture_on, Sprites::tailleIcone);
-    loadSprite("assets/images/peinture_off.png", Sprites::spr_peinture_off);
-    cv::resize(Sprites::spr_peinture_off, Sprites::spr_peinture_off, Sprites::tailleIcone);
-    loadSprite("assets/images/button_reset.png", Sprites::spr_peinture_reset);
-    cv::resize(Sprites::spr_peinture_reset, Sprites::spr_peinture_reset, Sprites::tailleIcone);
-    loadSprite("assets/images/peinture_sauvegarde.png", Sprites::spr_peinture_save);
-    cv::resize(Sprites::spr_peinture_save, Sprites::spr_peinture_save, Sprites::tailleIcone);
+    loadSprite("assets/images/exit.png", Sprites::test, true);
+    loadSprite("assets/images/peinture_on.png", Sprites::spr_peinture_on, true);
+    loadSprite("assets/images/peinture_off.png", Sprites::spr_peinture_off, true);
+    loadSprite("assets/images/button_reset.png", Sprites::spr_peinture_reset, true);
+    loadSprite("assets/images/peinture_sauvegarde.png", Sprites::spr_peinture_save, true);
 }
 
 void Sprites::empty(void)
 {
 	mtl::log::info("Aboutissement des Sprites...", mtl::log::hold_on());
-    spr_touchButton.release();
-
+    Sprites::test.release();
+    Sprites::spr_peinture_on.release();
+    Sprites::spr_peinture_off.release();
+    Sprites::spr_peinture_reset.release();
+    Sprites::spr_peinture_save.release();
 	mtl::log::info("Fait!");
 }
 
-void loadSprite(const std::string& fname, Sprite& dst)
+void loadSprite(const std::string& fname, Sprite& dst, bool resize)
 {
     if (fname.substr(fname.rfind(".")) != ".png")
     {
         throw std::invalid_argument("Les sprites doivent etre des .png");
     }
     dst = cv::imread(fname, cv::IMREAD_UNCHANGED);
+    if (resize)
+    {
+        cv::resize(dst, dst, Sprites::tailleIcone);
+    }
     mtl::log::info("\t|-- Chargement de", fname);
 }
 
@@ -62,16 +64,12 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
         for(int row=beginY;row<endY;++row)
         {
             uint8_t alpha = sprite.at<mat_data_t>(row, col)[3];
-            mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
-            mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
-            matAt(dst, col + x, row + y) = fromSprite + fromDst;
-			/*double alpha = static_cast<double>(sprite.at<mat_data_t>(row, col)[3])/255.0;
-			if (alpha > 0.0)
-			{
-				mat_data_t fromSprite = (1.0 - alpha)*matAt(sprite, col, row);
-				mat_data_t fromDst    = alpha*matAt(dst, col + x, row + y);
-				matAt(dst, col + x, row + y) = fromSprite + fromDst;
-			}*/
-		}
+            if (alpha != 0)
+            {
+                mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
+                mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
+                matAt(dst, col + x, row + y) = fromSprite + fromDst;
+            }
+        }
     }
 }

@@ -38,8 +38,8 @@ PaletteCouleur& PaletteCouleur::addCouleur(const mat_data_t& color)
 	ActionButton* bouton = new ActionButton;
 
 	bouton->init("", [this, ind]() {
-		this->ensembleSprite[ind].first->changeFirstActivation(false);
-		fillMat(*this->couleur, matAt(*this->ensembleSprite[ind].second, 0, 0));
+        this->ensembleSprite[ind].first->changeFirstActivation(false);
+        fillMat(*this->couleur, matAt(*this->ensembleSprite[ind].second, 0, 0));
 	},
 	spr,
 	this->_x + (COULEUR_LONGUEUR * col),
@@ -210,6 +210,7 @@ void PaintModule::resetToile()
 	this->reset.changeFirstActivation(false);
 	fillMat(this->toile, matEmptyColor());
 	this->peinture(false);
+    this->fillBordure();
 }
 
 void PaintModule::rendVisible(bool val)
@@ -298,7 +299,6 @@ void PaintModule::updateTime(const CursorSet& cursors)
 			return;
 
 		this->pinceau = this->palette.getCouleur();
-		// mtl::log::warning("Couleur : ", this->palette.getCouleur());
 		this->pinceau.x(c.x() - this->toileX).y(c.y() - this->toileY);
 		this->pinceau.draw(this->toile);
 	}

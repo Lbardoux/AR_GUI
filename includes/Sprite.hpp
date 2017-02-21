@@ -46,7 +46,6 @@ class Sprites final
          */
         static void empty(void);
 
-        static Sprite spr_touchButton;  //!< Sprite pour le TouchButton
         static Sprite spr_peinture_on;  //!< Sprite pour la peinture ON
         static Sprite spr_peinture_off; //!< Sprite pour la peinture OFF
         static Sprite spr_peinture_reset; //!< Sprite pour réinitialiser la toile
@@ -58,7 +57,7 @@ class Sprites final
  * @param[in]  fname Le nom du fichier, depuis la racine du projet.
  * @param[out] dst   Le réceptacle qui va stocker l'image.
  */
-void loadSprite(const std::string& fname, Sprite& dst);
+void loadSprite(const std::string& fname, Sprite& dst, bool resize = false);
 
 /**
  * @brief Affiche @b dst sur @b sprite en mettant son origine à @b x et @b y.
