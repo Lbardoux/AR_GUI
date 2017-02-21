@@ -2,43 +2,42 @@
  * @file
  */
 #include "Mesh.hpp"
+#include "logs.hpp"
 
 Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
         const Vector & offset) : m_program(program), m_texture(0)
 {
-    std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
+    mtl::log::info("Chargement du fichier OBJ :", path_to_obj, " --> ", mtl::log::hold_on());
     readWaveFront(path_to_obj, offset);
     initVAO();
     glGenTextures(1, &m_texture);
     initTexture(path_to_texture);
-    std::cout<<"Fait"<<std::endl;
+    mtl::log::info("OK");
 }
 
 Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
         const Vector & offset) : m_program(program), m_texture(0)
 {
-    std::cout<<"Chargement du fichier OBJ : \'"<<path_to_obj<<"\' ... ";
+    mtl::log::info("Chargement du fichier OBJ :", path_to_obj, " --> ", mtl::log::hold_on());
     readWaveFront(path_to_obj, offset);
     initVAO();
     glGenTextures(1, &m_texture);
     readTextureFromCamera(camera);
-    std::cout<<"Fait"<<std::endl;
+    mtl::log::info("OK");
 }
 
 Mesh::~Mesh()
 {
     glDeleteTextures(1, &m_texture);
+    /*glBindVertexArray(m_vao);
+    glDeleteBuffers(1, &this->m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &this->m_vao);*/
 }
 
 void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
 {
-    /*float xmin = std::numeric_limits<float>::max();
-    float ymin = std::numeric_limits<float>::max();
-    float zmin = std::numeric_limits<float>::max();
-    float xmax = std::numeric_limits<float>::min();
-    float ymax = std::numeric_limits<float>::min();
-    float zmax = std::numeric_limits<float>::min();*/
-
     std::vector<int> vertexIndices, uvIndices, normalIndices;
     std::vector<vec3> temp_vertices;
     std::vector<vec2> temp_uvs;
@@ -62,14 +61,6 @@ void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
             float x, y, z;
             assert(fscanf(file, "%f %f %f\n", &x, &y, &z));
             vec3 vertex(x + offset.x(), y + offset.y(), z + offset.z());
-
-            /*if(xmin > x) xmin = x;
-            if(ymin > x) ymin = y;
-            if(zmin > x) zmin = z;
-            if(xmax < x) xmax = x;
-            if(ymax < y) ymax = y;
-            if(zmax < z) zmax = z;*/
-
             temp_vertices.push_back(vertex);
         }
         else if ( strcmp( lineHeader, "vt" ) == 0 )
@@ -88,7 +79,6 @@ void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
         }
         else if ( strcmp( lineHeader, "f" ) == 0 )
         {
-            std::string vertex1, vertex2, vertex3;
             int vertexIndex[3], uvIndex[3], normalIndex[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
                 &vertexIndex[0], &uvIndex[0], &normalIndex[0], 
@@ -133,61 +123,38 @@ void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
         m_uvs     .push_back(uv);
         m_normals .push_back(normal);
     }
-
-    //std::cout<<std::endl<<std::endl<<xmin<<" "<<ymin<<" "<<zmin<<" "<<xmax<<" "<<ymax<<" "<<zmax<<std::endl;
 }
 
 void Mesh::initVAO()
 {
     std::size_t vbo_vertex_size = m_vertices.size() * sizeof(vec3);
-    std::size_t vbo_normal_size = m_normals.size() * sizeof(vec3);    
+    std::size_t vbo_normal_size = m_normals.size() * sizeof(vec3);
     std::size_t vbo_texture_size = m_uvs.size() * sizeof(vec2);
 
     const float * vbo_vertex_content = &m_vertices.front()[0];
     const float * vbo_normal_content = &m_normals.front()[0];
     const float * vbo_texture_content = &m_uvs.front()[0];
 
-    //On vérifie que notre buffer n'est pas déjà alloué, si c'est le cas, on libere l'espace
-    //if(glIsBuffer(m_vbo) == GL_TRUE) glDeleteBuffers(1, &m_vbo);
-    //On alloue un espace mémoire pour le vbo
     glGenBuffers(1, &m_vbo);
-    //On bind le vbo afin de l'utiliser
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        //On alloue un espace mémoire pour toutes les données du buffer: nos vertex et nos normals
         glBufferData(GL_ARRAY_BUFFER, vbo_vertex_size + vbo_normal_size + vbo_texture_size, 0, GL_STATIC_DRAW);
-        //On remplie le buffer avec nos vertex, on remplie de: 0 à vertex_buffer_size()
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vbo_vertex_size, vbo_vertex_content);        
-        //On remplie le buffer avec nos normals, on remplie de: vertex_buffer_size() à normal_buffer_size()  
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vbo_vertex_size, vbo_vertex_content);
         glBufferSubData(GL_ARRAY_BUFFER, vbo_vertex_size, vbo_normal_size, vbo_normal_content);
-        //On remplie avec les coordonnées de texture
         glBufferSubData(GL_ARRAY_BUFFER, vbo_vertex_size + vbo_normal_size, vbo_texture_size, vbo_texture_content);
-        //On cherche les zones ou se trouves les "in variables"
         GLint position_location = glGetAttribLocation(m_program, "position");
         GLint normal_location   = glGetAttribLocation(m_program, "normal");
         GLint texture_location  = glGetAttribLocation(m_program, "vertexUV");
-    //On débind le vbo
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    //On vérifie que notre array n'est pas déjà alloué, si c'est le cas, on libère l'espace
-    //if(glIsVertexArray(m_vao) == GL_TRUE) glDeleteVertexArrays(1, &m_vao);
-    //On crée notre vao
     glGenVertexArrays(1, &m_vao);
-    //On bind le vao, afin de l'utiliser
     glBindVertexArray(m_vao);
-        //On bind le vbo afin de l'utiliser
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-            //On link nos données "vertex" (qui commence à partir de "0") du buffer à la "in variable" "position" 
             glVertexAttribPointer(position_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-            glEnableVertexAttribArray(0);
-            //On link nos données "normal" (qui commence à partir de "vertex_buffer_size()") du buffer à la "in variable" "normal"
             glVertexAttribPointer(normal_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size));
             glEnableVertexAttribArray(1);
-            //On link nos données "texture"
             glVertexAttribPointer(texture_location, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size + vbo_normal_size));
             glEnableVertexAttribArray(2);
-        //On débind le vbo
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //On débind le vao
     glBindVertexArray(0);
 }
 
@@ -199,11 +166,7 @@ void Mesh::readTextureFromCamera(Camera & camera)
     GLenum minFilter = GL_NEAREST;
     GLenum magFilter = GL_NEAREST;
     GLenum wrapFilter = GL_CLAMP;
- 
-    // Bind to our texture handle
     glBindTexture(GL_TEXTURE_2D, m_texture);
- 
-    // Catch silly-mistake texture interpolation method for magnification
     if (magFilter == GL_LINEAR_MIPMAP_LINEAR  ||
         magFilter == GL_LINEAR_MIPMAP_NEAREST ||
         magFilter == GL_NEAREST_MIPMAP_LINEAR ||

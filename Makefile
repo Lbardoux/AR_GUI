@@ -19,7 +19,7 @@ LXX       = $(LINK_$(VERBOSE))
 WARNINGS := -Wall -Wextra
 STD      := -std=c++11
 TARGET   := -g
-CXXFLAGS := $(TARGET) $(STD) $(WARNINGS) -DQT_NO_DEBUG_OUTPUT -DINCLUDE_GL_CONTEXT=#include "GlContext.hpp"
+CXXFLAGS := $(TARGET) $(STD) $(WARNINGS) -DQT_NO_DEBUG_OUTPUT
 
 SRC       := src
 OBJ       := obj
@@ -99,7 +99,7 @@ $(OBJ)/Clothe.o              : $(INCLUDES)/Clothe.hpp $(INCLUDES)/Player.hpp $(I
 $(OBJ)/Cursor.o              : $(INCLUDES)/Cursor.hpp $(INCLUDES)/clamp.hpp $(INCLUDES)/Cv_core.hpp
 $(OBJ)/Matrix.o              : $(INCLUDES)/Matrix.hpp $(MTLKIT)/vec.hpp
 $(OBJ)/App.o                 : $(INCLUDES)/App.hpp $(INCLUDES)/WindowsManager.hpp $(INCLUDES)/KeyboardMapping.hpp $(INCLUDES)/Cv_core.hpp \
-                               $(INCLUDES)/SkeletonStateWindow.hpp
+                               $(INCLUDES)/SkeletonStateWindow.hpp $(INCLUDES)/fbo2cvmat.hpp
 $(OBJ)/Camera.o              : $(INCLUDES)/logs.hpp $(INCLUDES)/Camera.hpp
 $(OBJ)/CLmanager.o           : $(INCLUDES)/CLmanager.hpp
 $(OBJ)/TouchButton.o         : $(INCLUDES)/TouchButton.hpp $(INCLUDES)/WidgetManager.hpp

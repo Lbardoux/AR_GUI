@@ -15,6 +15,8 @@ Sprite Sprites::spr_peinture_on;
 Sprite Sprites::spr_peinture_off;
 Sprite Sprites::spr_peinture_reset;
 Sprite Sprites::spr_peinture_save;
+Sprite Sprites::spr_clothe_on;
+Sprite Sprites::spr_clothe_off;
 
 cv::Size Sprites::tailleIcone = {56, 56};
 
@@ -26,6 +28,8 @@ void Sprites::init(void)
     loadSprite("assets/images/peinture_off.png", Sprites::spr_peinture_off, true);
     loadSprite("assets/images/button_reset.png", Sprites::spr_peinture_reset, true);
     loadSprite("assets/images/peinture_sauvegarde.png", Sprites::spr_peinture_save, true);
+    loadSprite("assets/images/clothe_button_on.png", Sprites::spr_clothe_on, true);
+    loadSprite("assets/images/clothe_button_off.png", Sprites::spr_clothe_off, true);
 }
 
 void Sprites::empty(void)
@@ -36,6 +40,8 @@ void Sprites::empty(void)
     Sprites::spr_peinture_off.release();
     Sprites::spr_peinture_reset.release();
     Sprites::spr_peinture_save.release();
+    Sprites::spr_clothe_on.release();
+    Sprites::spr_clothe_off.release();
 	mtl::log::info("Fait!");
 }
 
@@ -64,11 +70,17 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
         for(int row=beginY;row<endY;++row)
         {
             uint8_t alpha = sprite.at<mat_data_t>(row, col)[3];
-            if (alpha != 0)
+            switch(alpha)
             {
-                mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
-                mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
-                matAt(dst, col + x, row + y) = fromSprite + fromDst;
+                case 0:
+                    break;
+                case 255:
+                    matAt(dst, col + x, row + y) = matAt(sprite, col, row);
+                    break;
+                default:
+                    mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
+                    mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
+                    matAt(dst, col + x, row + y) = fromSprite + fromDst;
             }
         }
     }

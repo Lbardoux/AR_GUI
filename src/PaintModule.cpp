@@ -1,25 +1,21 @@
 #include "PaintModule.hpp"
 #include <sys/types.h>
 #include <sstream>
+#include "clamp.hpp"
 
 PaletteCouleur::PaletteCouleur() : couleur(NULL), visible(false)
 {
+    
 }
 
 int clampChannel(int value)
 {
-	if(value < 0)
-		return 0;
-	else if (value > 255)
-		return 255;
-	else
-		return value;
+    return clamp<int>(value, 0, 255);
 }
 
 mat_data_t readColor(XmlLoader& loader)
 {
-    return
-    mat_data_t(
+    return mat_data_t(
         clampChannel(loader.element("rouge").text<int>()),
         clampChannel(loader.element("vert").text<int>()),
         clampChannel(loader.element("bleu").text<int>()),
@@ -246,6 +242,12 @@ void PaintModule::initWidgets()
 	} , &Sprites::spr_peinture_save, this->sauvegarde.x(), this->sauvegarde.y(), this->_activation_module);
 	this->sauvegarde.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->sauvegarde);
+    
+    /*this->activeDress.init("Robe", [this](void){
+        this->dress(!this->dressActive);
+    }, &Sprites::spr_clothe_on, this->activeDress.x(), this->activeDress.y(), this->_activation_module);
+    this->activeDress.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
+    this->widgets.addWidget(&this->activeDress);*/
 }
 
 void PaintModule::membreQuiPeint(PlayerMember p)
@@ -260,6 +262,14 @@ void PaintModule::peinture(bool val)
 	this->activePeinture.changeFirstActivation(false);
 	this->activePeinture.getText() = this->peintureActif ? "Désactiver" : "Activer";
 	this->activePeinture.setSprite(this->peintureActif ? &Sprites::spr_peinture_off : &Sprites::spr_peinture_on);
+}
+
+void PaintModule::dress(bool value)
+{
+    this->dressActive = value;
+    this->activeDress.changeFirstActivation(false);
+    
+    this->activeDress.setSprite((this->dressActive) ? &Sprites::spr_clothe_on : &Sprites::spr_clothe_off);
 }
 
 void PaintModule::saveToile()
@@ -285,7 +295,6 @@ void PaintModule::resetToile()
 
 void PaintModule::readConfig(const std::string& fileName)
 {
-	// XmlLoader loader("ModulePeinture.xml");
     XmlLoader loader(fileName);
     mtl::log::info("Chargement du module de Peinture ", fileName);
 
@@ -293,7 +302,6 @@ void PaintModule::readConfig(const std::string& fileName)
 
     loader.node("profilUtilisateurice");
     int habilite = loader.element("habilite").text<int>();
-    // habilite == 0 -> Droitier
     if(habilite == 0)
     	this->membre = PlayerMember::RIGHT_HAND;
     else
@@ -301,7 +309,6 @@ void PaintModule::readConfig(const std::string& fileName)
     loader.prev();
 
     this->setEmplacement(static_cast<Emplacement>(loader.element("emplacement").text<int>()));
-    // this->setEmplacement(Emplacement::HAUT_DROIT);
     this->palette.readConfig(loader.element("Palette").text<std::string>());
 }
 

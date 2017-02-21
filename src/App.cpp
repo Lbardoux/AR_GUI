@@ -7,6 +7,15 @@
 #include "GlCore.hpp"
 #include "GlContext.hpp"
 #include "Pipeline.hpp"
+#include "Shader.hpp"
+#include "ShaderProgram.hpp"
+#include "Player.hpp"
+#include "Mesh.hpp"
+#include "vec.hpp"
+#include "Clothe.hpp"
+#include "MaidDrawer.hpp"
+
+#include "fbo2cvmat.hpp"
 
 
 App::App(void) noexcept : process(true)//, actionCatch(&Sprites::test, "Saisir"), actionQuit(&Sprites::test, "Quitter")
@@ -29,28 +38,46 @@ void App::quit(void)
 
 void App::mainLoop(void)
 {
-	mtl::log::info("Démarrage de la Main loop");
 	this->process = true;
+    mtl::log::info("Chargement du contexte OpenGL --->", mtl::log::hold_on());
+    GlContext::initGL(this->cameraW.largeur(), this->cameraW.hauteur());
+    mtl::log::info("OK");
+    
+    mtl::log::info("Chargement de la configuration du pipeline --->", mtl::log::hold_on());
+    Pipeline::fromXML("assets/PipelineConfig.xml");
+    mtl::log::info("OK");
+    
+    mtl::log::info("Chargement des shaders : ", mtl::log::hold_on());
+    VertexShader vertex("assets/shaders/vertex.cpp");
+    mtl::log::info("vertex(OK) ", mtl::log::hold_on());
+    FragmentShader fragment("assets/shaders/fragment.cpp");
+    mtl::log::info("fragment(OK)");
+    ShaderProgram program({vertex, fragment});
+    mtl::log::info("Chargement du ShaderProgram");
+    
+    Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
+    Clothe clothe(this->player, PlayerMember::LEFT_SHOULDER, PlayerMember::RIGHT_SHOULDER, soubrette);
+    MaidDrawer maid_drawer(this->player, clothe, program);
+    cv::Mat my_beautiful_clothe;
+    
+    mtl::log::info("Démarrage de la Main loop");
 	while(this->process)
 	{
 		this->cameraW.readFrame();
-		
 		this->player.update();
 		this->programState.setState(this->player.isVisible());
-		// this->actionCatch.draw(this->cameraW.getCamera().colorFrame());
-		// this->actionQuit.draw(this->cameraW.getCamera().colorFrame());
-		
 		if (this->player.isVisible())
 		{
 			this->setCursor.update(this->player);
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
 			this->widgets.updateTime(this->setCursor);
 			this->peinture.updateTime(this->setCursor);
+            fbo2cvmat(maid_drawer.draw(), my_beautiful_clothe, this->cameraW.largeur(), this->cameraW.hauteur());
+            blit(this->cameraW.getCamera().colorFrame(), my_beautiful_clothe, 0, 0);
 		}
 
 		this->peinture.updateWidgets();
 		this->widgets.updateWidgets();
-
 		this->peinture.draw(this->cameraW.getCamera().colorFrame());
         if (this->player.isVisible())
 		{
@@ -60,31 +87,11 @@ void App::mainLoop(void)
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(12);
 	}
+    mtl::log::info("Fermeture des fenetres");
 	this->windows.closeWindows();
+    mtl::log::info("Extinction du contexte OpenGL");
+    GlContext::endGL();
 }
-
-/*
-        Camera *camera = new Camera();
-        camera->init();
-        camera->start(640, 480);
-        Player player(*camera);
-
-        GlContext::initGL(640, 480);
-        Pipeline::fromXML("assets/PipelineConfig.xml");
-
-        VertexShader vertex("assets/shaders/vertex.cpp");
-        FragmentShader fragment("assets/shaders/fragment.cpp");
-        ShaderProgram program({vertex, fragment});
-
-        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
-
-        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
-
-        MaidDrawer maid_drawer(player, clothe, program);
-        maid_drawer.draw();
-
-        GlContext::endGL();
-*/
 
 KeyboardMapping<char, std::function<void(void)>>& App::getKeyboard(void) noexcept
 {
@@ -99,8 +106,7 @@ WindowsManager& App::getWindowsManager(void) noexcept
 void App::initInputs(void)
 {
     this->keyboard.addAction('q', [this](void){this->process = false;});
-    this->keyboard.addAction('e', [this](void){this->programState.setState(true);});
-    this->keyboard.addAction('d', [this](void){this->programState.setState(false);});
+    
 }
 
 void App::initLibs(void)
@@ -125,8 +131,6 @@ void App::initWindows(void)
     this->programState.setName("RED = KO / GREEN = OK");
     this->programState.open(0u, 0u);
     this->windows.addWindow(&this->programState);
-
-	// Fenetre de la camera
 	this->cameraW.init("Camera", 640, 480);
 	this->windows.addWindow(&this->cameraW);
 }

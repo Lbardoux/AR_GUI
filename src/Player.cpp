@@ -18,12 +18,9 @@ void Player::init(Camera & camera)
     mtl::log::info("Initialisation de NiTE ...", mtl::log::hold_on());
 	nite::NiTE::initialize();
     mtl::log::info("Fait!");
-
-    //Création du tracker
-    //m_user_tracker = nite::UserTracker;
     if(m_user_tracker.create(&device) != nite::STATUS_OK)
     {
-        mtl::log::error("Failed to create tracker");
+        mtl::log::error("Impossible de créer un tracker");
         assert(false);
     }
 
@@ -123,7 +120,6 @@ nite::Point3f Player::getCameraPositionOf(PlayerMember member) const
 	nite::Point3f beforeConversion = getPositionOf(member);
 	m_user_tracker.convertJointCoordinatesToDepth(	beforeConversion.x, beforeConversion.y, beforeConversion.z, 
 													&afterConversion.x, &afterConversion.y);
-	//return afterConversion;
 	afterConversion.x *= 2;
 	afterConversion.y *= 2;
 	return afterConversion;

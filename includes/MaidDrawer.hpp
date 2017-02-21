@@ -27,9 +27,10 @@ public:
 	MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program);
 
 	/**
-     * @brief Déstructeur par défaut.
+     * @brief Destructeur par défaut.
+     * @warning NOPE NOPE NOPE pas avec OpenGL !
      */
-    ~MaidDrawer() = default;
+    ~MaidDrawer();
 
     /**
      * @brief Dessine dans le frame buffer
@@ -41,7 +42,7 @@ private:
     ShaderProgram &    m_program;       //!< Le shader
 	GLuint             m_color_sampler;	//!< Le color sampler
 	GLuint             m_color_buffer;	//!< Le color buffer
-	GLuint             m_depth_buffer;	//!< Le depth buffer
+    GLuint             m_depth_buffer;	//!< Le depth buffer
 	GLuint             m_frame_buffer;	//!< Le frame buffer
     Player &           m_player;        //!< Le joueur
     Clothe &           m_maid;          //!< La soubrette

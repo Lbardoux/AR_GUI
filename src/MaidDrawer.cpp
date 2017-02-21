@@ -9,9 +9,7 @@ MaidDrawer::MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program) 
 	///Creation de la texture couleur
     glGenTextures(1, &m_color_buffer);
     glBindTexture(GL_TEXTURE_2D, m_color_buffer);
-    glTexImage2D(GL_TEXTURE_2D, 0,
-        GL_RGBA, 640, 480, 0,
-        GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 640, 480, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     glGenerateMipmap(GL_TEXTURE_2D);
     glGenSamplers(1, &m_color_sampler);
     glSamplerParameteri(m_color_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -22,9 +20,7 @@ MaidDrawer::MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program) 
     //Creation de la texture depth.
     glGenTextures(1, &m_depth_buffer);
     glBindTexture(GL_TEXTURE_2D, m_depth_buffer);
-    glTexImage2D(GL_TEXTURE_2D, 0,
-        GL_DEPTH_COMPONENT, 640, 480, 0,
-        GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 640, 480, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
     
     //Creation et configuration du FBO
     glGenFramebuffers(1, &m_frame_buffer);
@@ -42,19 +38,31 @@ MaidDrawer::MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program) 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
+MaidDrawer::~MaidDrawer(void)
+{
+    /*glDeleteSamplers(1, &this->m_color_sampler);
+    glDeleteTextures(1, &this->m_depth_buffer);
+    glDeleteTextures(1, &this->m_color_buffer);
+    glDeleteFramebuffers(1, &this->m_frame_buffer);*/
+    
+}
+
 GLuint MaidDrawer::draw() const
 {
 	m_program.use();
 
-	//Nettoyage
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frame_buffer);
     glViewport(0, 0, 640, 480);
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Matrices
-    Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
-    Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+    //Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
+    static Transform model(1.0f, 0.0f, 0.0f, 0.0f,
+                           0.0f, -1.0f, 0.0f, 0.0f,
+                           0.0f, 0.0f, 1.0f, 0.0f,
+                           0.0f, 0.0f, 0.0f, 1.0f);
+    Transform view = model*lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
     Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
 
     //Détection
