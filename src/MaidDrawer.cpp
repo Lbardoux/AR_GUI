@@ -46,15 +46,18 @@ GLuint MaidDrawer::draw() const
 {
 	m_program.use();
 
-	//Nettoyage
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frame_buffer);
     glViewport(0, 0, 640, 480);
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Matrices
-    Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
-    Transform view = lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+    //Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
+    static Transform model(1.0f, 0.0f, 0.0f, 0.0f,
+                           0.0f, -1.0f, 0.0f, 0.0f,
+                           0.0f, 0.0f, 1.0f, 0.0f,
+                           0.0f, 0.0f, 0.0f, 1.0f);
+    Transform view = model*lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
     Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
 
     //Détection

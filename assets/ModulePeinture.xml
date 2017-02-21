@@ -15,7 +15,7 @@
     <profilUtilisateurice>
         <!-- On trouve ici le profil de l'utilisateurice -->
         <!-- Valeurs possibles : DROITIER - GAUCHER
-                                    ⴷ         ⴷ
+                                    ^         ^
                                     0         1
                                 Par défaut
          -->

@@ -3,7 +3,8 @@
 in vec3 o_position;
 in vec3 o_normal;
 in vec2 o_uv;
-out vec3 color;
+//out vec3 color;
+out vec4 color;
 
 uniform sampler2D u_texture;
 
@@ -21,6 +22,7 @@ void main(){
     vec3 h = normalize(l + e);
     vec3 specular = vec3(1.0f, 1.0f, 1.0f) * pow(max(0.0, dot(h, n)), 30.0);
     //color = ambient + diffuse;
-    color = ambient + diffuse;// + specular;
+    vec3 withlight = ambient + diffuse;
+    color = vec4(withlight, 255);// + specular;
     //color = vec3(1,1,1);
 }

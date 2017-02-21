@@ -121,6 +121,11 @@ class PaintModule
 		 * @param[in]  val   Valeur de la peinture
 		 */
 		void peinture(bool val);
+        /**
+         * @brief Active ou désactive la robe.
+         * @param[in] value Si oui ou non on souhaite la robe.
+         */
+        void dress(bool value);
 		/**
 		 * @date       19-Feb-2017
 		 * @brief      Fonction qui remet la toile à 0 et tout ce qui va avec
@@ -162,6 +167,7 @@ class PaintModule
 		WidgetManager widgets;			//!< Ensemble des widgets du module de Peinture
 		PaletteCouleur palette;			//!< Palette de couleur du module
 		ActionButton activePeinture; 	//!< Widget pour activer / désactiver le mode peinture
+        ActionButton activeDress;       //!< Widget pour activer /désactiver la robe sur le joueur.
 
 		Sprite spr_palette; 			//!< Icone de la palette
 		ActionButton ouvrePalette; 		//!< Widget qui permet d'ouvrir la palette des couleurs
@@ -180,6 +186,7 @@ class PaintModule
 		int toileY;						//!< Coordonnées en Y de la toile 
 		int tailleBordure;				//!< Taille de la bordure de la toile
 		bool peintureActif;				//!< Indique si le mode peinture est actif
+        bool dressActive;               //!< Indique si la robe est active.
 
 		int width;						//!< Largeur de la fenetre
 		int height;						//!< Hauteur de la fenetre

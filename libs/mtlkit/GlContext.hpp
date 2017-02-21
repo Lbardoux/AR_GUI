@@ -61,9 +61,15 @@ class GlContext final
 		 */
 		static void windowCaption(const char *const title) noexcept;
         
+        /**
+         * @brief Closes definitely the SDL window.
+         */
+        static void close(void);
+        static bool    destroyed; //!< To remind if the window is already destroyed.
+        
     private:
-        static Window* WINDOW;  //!< The window for OpenGL.
-        static Context CONTEXT; //!< The OpenGL context.
+        static Window* WINDOW;    //!< The window for OpenGL.
+        static Context CONTEXT;   //!< The OpenGL context.
         
         GlContext(void) = delete;
         

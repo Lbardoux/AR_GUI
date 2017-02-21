@@ -10,6 +10,7 @@
 
 GlContext::Window* GlContext::WINDOW = nullptr;
 GlContext::Context GlContext::CONTEXT;
+bool               GlContext::destroyed = false;
 
 
 GlContext::Window* GlContext::window(void)
@@ -119,13 +120,22 @@ void GlContext::initGL(int32_t width, int32_t height, int32_t minorVersion, int3
 	EventManager::init();
 }
 
+void GlContext::close(void)
+{
+    SDL_DestroyWindow(GlContext::window());
+    GlContext::destroyed = true;
+}
+
 namespace // clean at the end, after destructors.
 {
 	void _quit_after_destructors(void)
 	{
 		SDL_GL_DeleteContext(*GlContext::context());
-		SDL_DestroyWindow(GlContext::window());
-		SDL_Quit();
+        if (GlContext::destroyed == false)
+        {
+            SDL_DestroyWindow(GlContext::window());
+		}
+        SDL_Quit();
 	}
 }
 

@@ -7,6 +7,15 @@
 #include "GlCore.hpp"
 #include "GlContext.hpp"
 #include "Pipeline.hpp"
+#include "Shader.hpp"
+#include "ShaderProgram.hpp"
+#include "Player.hpp"
+#include "Mesh.hpp"
+#include "vec.hpp"
+#include "Clothe.hpp"
+#include "MaidDrawer.hpp"
+
+#include "fbo2cvmat.hpp"
 
 
 App::App(void) noexcept : process(true)//, actionCatch(&Sprites::test, "Saisir"), actionQuit(&Sprites::test, "Quitter")
@@ -31,14 +40,26 @@ void App::mainLoop(void)
 {
 	mtl::log::info("Démarrage de la Main loop");
 	this->process = true;
+    
+    // partie de Charles
+    GlContext::initGL(this->cameraW.largeur(), this->cameraW.hauteur());
+    Pipeline::fromXML("assets/PipelineConfig.xml");
+    VertexShader vertex("assets/shaders/vertex.cpp");
+    FragmentShader fragment("assets/shaders/fragment.cpp");
+    ShaderProgram program({vertex, fragment});
+    Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
+    Clothe clothe(this->player, PlayerMember::LEFT_SHOULDER, PlayerMember::RIGHT_SHOULDER, soubrette);
+    MaidDrawer maid_drawer(this->player, clothe, program);
+    //GlContext::close();
+    cv::Mat my_beautiful_clothe;
+    // end
+    
 	while(this->process)
 	{
 		this->cameraW.readFrame();
 		
 		this->player.update();
 		this->programState.setState(this->player.isVisible());
-		// this->actionCatch.draw(this->cameraW.getCamera().colorFrame());
-		// this->actionQuit.draw(this->cameraW.getCamera().colorFrame());
 		
 		if (this->player.isVisible())
 		{
@@ -46,6 +67,9 @@ void App::mainLoop(void)
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
 			this->widgets.updateTime(this->setCursor);
 			this->peinture.updateTime(this->setCursor);
+            
+            fbo2cvmat(maid_drawer.draw(), my_beautiful_clothe, this->cameraW.largeur(), this->cameraW.hauteur());
+            blit(this->cameraW.getCamera().colorFrame(), my_beautiful_clothe, 0, 0);
 		}
 
 		this->peinture.updateWidgets();
@@ -61,29 +85,31 @@ void App::mainLoop(void)
 		this->keyboard.checkInputs(12);
 	}
 	this->windows.closeWindows();
+    
+    GlContext::endGL();
 }
 
 /*
-        Camera *camera = new Camera();
-        camera->init();
-        camera->start(640, 480);
-        Player player(*camera);
+Camera *camera = new Camera();
+camera->init();
+camera->start(640, 480);
+Player player(*camera);
 
-        GlContext::initGL(640, 480);
-        Pipeline::fromXML("assets/PipelineConfig.xml");
+GlContext::initGL(640, 480);
+Pipeline::fromXML("assets/PipelineConfig.xml");
 
-        VertexShader vertex("assets/shaders/vertex.cpp");
-        FragmentShader fragment("assets/shaders/fragment.cpp");
-        ShaderProgram program({vertex, fragment});
+VertexShader vertex("assets/shaders/vertex.cpp");
+FragmentShader fragment("assets/shaders/fragment.cpp");
+ShaderProgram program({vertex, fragment});
 
-        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
+Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
 
-        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
+Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
 
         MaidDrawer maid_drawer(player, clothe, program);
         maid_drawer.draw();
 
-        GlContext::endGL();
+GlContext::endGL();
 */
 
 KeyboardMapping<char, std::function<void(void)>>& App::getKeyboard(void) noexcept
