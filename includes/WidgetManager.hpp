@@ -58,7 +58,7 @@ public:
      *             un curseur depuis un temps de activationTime
      * @return     Vrai si le Widget est activé, Faux sinon.
      */
-    bool isActivated() const;
+    bool isActivated();
     /**
      * @date       10-Feb-2017
      * @brief      Action liée au Widget. C'est elle qui est appelée lorsque le Widget est activé
@@ -89,11 +89,12 @@ public:
     uint32_t  y() const ;
     uint32_t& y();
 
-private:
+protected:
     double activationTime;    //!< Temps minimum pour activer le Widget en seconde
     time_t firstActiveTime; //!< Temps auquel le Widget a été activé
     uint32_t _x; //!< Coordonnées en x du Widget
     uint32_t _y; //!< Coordonnées en y du Widget
+    double pourcent; //!< Pourcentage de progression de l'activation du widget
 };
 
 

@@ -46,6 +46,8 @@ class TouchButton : public Widget
         virtual void draw(Sprite& frame) override;
         virtual void update(void);
         virtual void updateTime(const CursorSet& cursors);
+
+
         /**
          * @date       17-Feb-2017
          * @brief      Ajoute un membre aux membres pouvant intéragir avec le Widget
@@ -63,7 +65,7 @@ class TouchButton : public Widget
     protected:
         Sprite* sprite; //!< La représentation de ce widget.
         std::vector<int> membres; //!< Contient les valeurs des membres pouvant intéragir avec le Widget
-        
+
         TouchButton& operator=(const TouchButton& other) = delete;
         TouchButton& operator=(TouchButton&& other) = delete;
 };

@@ -55,6 +55,17 @@ void TouchButton::action()
 void TouchButton::draw(Sprite& frame)
 {
     blit(frame, *(this->sprite), this->x(), this->y());
+
+    if(this->pourcent < 0.05)
+    	return;
+
+    int epaisseur = this->sprite->rows / 5;
+
+    int dX = this->x();
+    int fX = this->x() + (this->sprite->cols * this->pourcent);
+    int y  = this->y() + (this->sprite->rows - (epaisseur / 2));
+
+    cv::line(frame, cv::Point(dX, y), cv::Point(fX, y), cv::Scalar(255,255,255), epaisseur);
 }
 
 void TouchButton::update(void)

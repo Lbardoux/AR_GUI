@@ -1,6 +1,7 @@
 #include "WidgetManager.hpp"
+#include "clamp.hpp"
 
-Widget::Widget() : firstActiveTime(0)
+Widget::Widget() : firstActiveTime(0), pourcent(0)
 {
 
 }
@@ -23,7 +24,10 @@ bool Widget::changeFirstActivation(bool underCursor)
             time(&this->firstActiveTime);
     }
     else
+    {
+        this->pourcent = 0.0;
         this->firstActiveTime = 0;
+    }
 
     return underCursor;
 }
@@ -33,14 +37,18 @@ void Widget::setActivationTime(double seconde)
     this->activationTime = seconde;
 }
 
-bool Widget::isActivated() const
+bool Widget::isActivated()
 {
     if(this->activationTime <= .0f || this->firstActiveTime == 0)
         return false;
 
     time_t timer;
     timer = time(NULL);
-    return (difftime(timer, this->firstActiveTime) >= (this->activationTime - 1.0f));
+
+    this->pourcent = difftime(timer, this->firstActiveTime) / static_cast<double>(this->activationTime - 1.0f);
+    clamp(this->pourcent, 0.0, 1.0);
+
+    return (this->pourcent >= 1.0);
 }
 
 void Widget::update(void)
