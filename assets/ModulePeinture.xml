@@ -22,5 +22,5 @@
         <habilite>0</habilite>
     </profilUtilisateurice>
     <!-- Fichier de la palette à charger -->
-    <Palette>assets/palette1.xml</Palette>
+    <Palette>assets/palette2.xml</Palette>
 </ModulePeinture>

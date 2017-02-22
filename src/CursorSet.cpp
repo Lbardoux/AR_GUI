@@ -15,7 +15,10 @@ void CursorSet::init(const mat_data_t& color)
     Cursor c;
 
 	for(int p = 0; p < PlayerMember::NB_PLAYER_MEMBER; ++p)
-		addCursor(static_cast<PlayerMember>(p), ColoredCursor(c, color));
+        if(p == PlayerMember::RIGHT_HAND || p == PlayerMember::LEFT_HAND)
+		    addCursor(static_cast<PlayerMember>(p), ColoredCursor(c, color));
+        else
+            addCursor(static_cast<PlayerMember>(p), ColoredCursor(c, mat_data_t(89,102,67, 255)));
 }
 
 void CursorSet::addCursor(PlayerMember type, const ColoredCursor& cursor)

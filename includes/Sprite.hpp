@@ -70,4 +70,17 @@ void loadSprite(const std::string& fname, Sprite& dst, bool resize = false);
  */
 void blit(Sprite& dst, const Sprite& sprite, int x, int y);
 
+
+/**
+ * @date       19-Feb-2017
+ * @brief      Rempli la bordure de la toile
+ * @post       Le sprite aura une bordure carrée
+ * @param      sprite            Sprite sur lequel on applique la bordure
+ * @param[in]  color             Couleur de la bordure
+ * @param[in]  epaisseurBordure  Epaisseur de la bordure
+ * @param[in]  taillePointille   Ecart et taille en pointillé de la bordure. Si
+ *                               ce paramètre vaut 0, alors pas de pointillé
+ */
+void fillBordure(Sprite& sprite, const mat_data_t& color, int epaisseurBordure, int taillePointille = 0);
+
 #endif

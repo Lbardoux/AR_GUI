@@ -1,0 +1,122 @@
+<Palette>
+    <parametres>
+        <!-- 
+            Ici on trouve la forme de la palette. On précise le
+            nombre de colonnes/lignes que l'on souhaite.
+            Exemple : colonnes=3 lignes=2 donnera une palette :
+                 _ _ _
+                |_|_|_|
+                |_|_|_|
+        -->
+        <colonnes>3</colonnes>
+        <lignes>4</lignes>
+        <!-- Taille en pixel des carrés de la palette -->
+        <taille>
+            <width>50</width>
+            <height>50</height>
+        </taille>
+        <!-- Temps en seconde pour activer une couleur -->
+        <tempsActivation>3</tempsActivation>
+        <!-- Liste des membres pouvant intéragir avec les couleurs 
+            Liste des valeurs prises en comptes :
+              - 0   <- HEAD
+              - 1   <- NECK
+              - 2   <- TORSO
+              - 3   <- LEFT_SHOULDER
+              - 4   <- LEFT_ELBOW
+              - 5   <- LEFT_HAND
+              - 6   <- RIGHT_SHOULDER
+              - 7   <- RIGHT_ELBOW
+              - 8   <- RIGHT_HAND
+              - 9   <- LEFT_HIP
+              - 10  <- LEFT_KNEE
+              - 11  <- LEFT_FOOT
+              - 12  <- RIGHT_HIP
+              - 13  <- RIGHT_KNEE
+              - 14  <- RIGHT_FOOT
+        -->
+        <membres>
+            <membre>5</membre> <!-- Pour LEFT_HAND -->
+            <membre>8</membre> <!-- Pour RIGHT_HAND -->
+        </membres>
+    </parametres>
+    <couleursPossibles>
+        <!--
+            Ici sont listées les couleurs de la palette
+            Une couleur est de la forme
+                <couleur>
+                    <rouge>X</rouge>
+                    <vert>X</vert>
+                    <bleu>X</bleu>
+                </couleur>
+            Ou X est une valeure appartenant à [0-255]
+            Si X < 0   alors X<-0
+            Si X > 255 alors X<-255
+            Si le nombre de couleur est inférieur à colonne*ligne,
+            la couleur noire sera ajoutée par défaut
+            Si ce nombre est supérieur, seules les colonne*ligne premières
+            couleurs seront gardées, les autres seront ignorées
+            Vous trouverez dans le fichier colors.xml un ensemble de couleur prédéfinies
+        -->
+        <couleur name="Noir">
+            <rouge>0</rouge>
+            <vert>0</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Gris">
+            <rouge>128</rouge>
+            <vert>128</vert>
+            <bleu>128</bleu>
+        </couleur>
+        <couleur name="Bordeau">
+            <rouge>128</rouge>
+            <vert>0</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Rouge">
+            <rouge>255</rouge>
+            <vert>0</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Orange">
+            <rouge>255</rouge>
+            <vert>128</vert>
+            <bleu>64</bleu>
+        </couleur>
+        <couleur name="Jaune">
+            <rouge>255</rouge>
+            <vert>255</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Vert">
+            <rouge>0</rouge>
+            <vert>255</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Bleu">
+            <rouge>0</rouge>
+            <vert>0</vert>
+            <bleu>255</bleu>
+        </couleur>
+        <couleur name="Violet">
+            <rouge>128</rouge>
+            <vert>0</vert>
+            <bleu>255</bleu>
+        </couleur>
+        <couleur name="Blanc">
+            <rouge>255</rouge>
+            <vert>255</vert>
+            <bleu>255</bleu>
+        </couleur>
+        <couleur name="Marron">
+            <rouge>128</rouge>
+            <vert>64</vert>
+            <bleu>0</bleu>
+        </couleur>
+        <couleur name="Rose">
+            <rouge>255</rouge>
+            <vert>128</vert>
+            <bleu>192</bleu>
+        </couleur>
+    </couleursPossibles>
+</Palette>

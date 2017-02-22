@@ -192,11 +192,6 @@ class PaintModule
 		int height;						//!< Hauteur de la fenetre
 
 		/**
-		 * @date       19-Feb-2017
-		 * @brief      Rempli la bordure de la toile
-		 */
-		void fillBordure();
-		/**
 		 * @date       21-Feb-2017
 		 * @brief      Charge les widgets du module
 		 */

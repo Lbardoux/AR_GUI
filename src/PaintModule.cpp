@@ -15,10 +15,11 @@ int clampChannel(int value)
 
 mat_data_t readColor(XmlLoader& loader)
 {
-    return mat_data_t(
-        clampChannel(loader.element("rouge").text<int>()),
-        clampChannel(loader.element("vert").text<int>()),
+    return
+    mat_data_t(
         clampChannel(loader.element("bleu").text<int>()),
+        clampChannel(loader.element("vert").text<int>()),
+        clampChannel(loader.element("rouge").text<int>()),
         255
     );
 }
@@ -189,7 +190,7 @@ PaintModule::PaintModule() : visible(false), pidSauvegarde(::getpid()), numeroSa
 
 PaintModule::~PaintModule()
 {
-
+	this->toile.release();
 }
 
 void PaintModule::init(int width, int height, const std::string& fileName)
@@ -198,7 +199,7 @@ void PaintModule::init(int width, int height, const std::string& fileName)
 	this->height = height;
 
 	this->toile = cv::Mat(height - Sprites::spr_peinture_on.rows - 35, width, CV_8UC4);
-	fillBordure();
+	this->resetToile();
 
 	// this->palette.init(&this->spr_palette, 2, 2, 150, 150);
 	this->palette.setCouleur(&this->spr_palette);
@@ -289,9 +290,9 @@ void PaintModule::saveToile()
 void PaintModule::resetToile()
 {
 	this->reset.changeFirstActivation(false);
-	fillMat(this->toile, matEmptyColor());
+	fillMat(this->toile, mat_data_t(255,255,255,170));
 	this->peinture(false);
-    this->fillBordure();
+    ::fillBordure(this->toile, matRedColor(), this->tailleBordure, 6);
 }
 
 void PaintModule::readConfig(const std::string& fileName)
@@ -364,26 +365,26 @@ void PaintModule::setEmplacement(Emplacement e)
 		decalage = this->width - Sprites::tailleIcone.width;
 
 	this->activePeinture.x() = (20 * x) + decalage;
-	mtl::log::info("this->activePeinture.x() : ", this->activePeinture.x());
+	// mtl::log::info("this->activePeinture.x() : ", this->activePeinture.x());
 	this->activePeinture.y() = y;
-	mtl::log::info("this->activePeinture.y() : ", this->activePeinture.y());
+	// mtl::log::info("this->activePeinture.y() : ", this->activePeinture.y());
 
 	decalage = 8;
 
 	this->ouvrePalette.x() = this->activePeinture.x() + (x * (Sprites::tailleIcone.width + decalage));
-	mtl::log::info("this->ouvrePalette.x() : ", this->ouvrePalette.x());
+	// mtl::log::info("this->ouvrePalette.x() : ", this->ouvrePalette.x());
 	this->ouvrePalette.y() = y;
-	mtl::log::info("this->ouvrePalette.y() : ", this->ouvrePalette.y());
+	// mtl::log::info("this->ouvrePalette.y() : ", this->ouvrePalette.y());
 
 	this->reset.x() = this->ouvrePalette.x() + (x * (Sprites::tailleIcone.width + decalage));
-	mtl::log::info("this->reset.x() : ", this->reset.x());
+	// mtl::log::info("this->reset.x() : ", this->reset.x());
 	this->reset.y() = y;
-	mtl::log::info("this->reset.y() : ", this->reset.y());
+	// mtl::log::info("this->reset.y() : ", this->reset.y());
 
 	this->sauvegarde.x() = this->reset.x() + (x * (Sprites::tailleIcone.width + decalage));
 	this->sauvegarde.y() = y;
 
-	this->palette.setEmplacement(this->toileX + 2, this->toileY + 2);
+	this->palette.setEmplacement(this->toileX + 20, this->toileY + 20);
     
     this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
 	this->activeDress.y() = y;
@@ -422,24 +423,8 @@ void PaintModule::draw(cv::Mat frame)
 	if (this->visible)
 	{
 		this->widgets.draw(frame);
-		blit(frame, this->toile, this->toileX, this->toileY);
+		if(this->peintureActif)
+			blit(frame, this->toile, this->toileX, this->toileY);
 		this->palette.draw(frame);
-	}
-}
-
-void PaintModule::fillBordure()
-{
-	for (int i = 0; i < this->tailleBordure; ++i)
-	{
-		for (int x = 0; x < this->toile.cols; ++x)
-		{
-			matAt(this->toile, x, i) = matBlackColor();
-			matAt(this->toile, x, this->toile.rows - i - 1) = matBlackColor();
-		}
-		for (int y = 0; y < this->toile.rows; ++y)
-		{
-			matAt(this->toile, i, y) = matBlackColor();
-			matAt(this->toile, this->toile.cols - i - 1, y) = matBlackColor();
-		}
 	}
 }

@@ -68,19 +68,42 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
     {
         for(int row=beginY;row<endY;++row)
         {
-            unsigned int alpha = sprite.at<mat_data_t>(row, col)[3];
-            switch(alpha)
+            float alpha = static_cast<float>(sprite.at<mat_data_t>(row, col)[3]);
+            if (alpha != 0.0f)
             {
-                case 0:
-                    break;
-                case 255:
-                    matAt(dst, col + x, row + y) = matAt(sprite, col, row);
-                    break;
-                default:
-                    mat_data_t fromSprite = (alpha/255.0f)*matAt(sprite, col, row);
-                    mat_data_t fromDst    = ((255.0f-alpha)/255.0f)*matAt(dst, col + x, row + y);
-                    matAt(dst, col + x, row + y) = fromSprite + fromDst;
+                mat_data_t fromSprite = (alpha/255.0f)*matAt(sprite, col, row);
+                mat_data_t fromDst    = ((255.0f-alpha)/255.0f)*matAt(dst, col + x, row + y);
+                matAt(dst, col + x, row + y) = fromSprite + fromDst;
             }
+        }
+    }
+}
+
+void fillBordure(Sprite& sprite, const mat_data_t& color, int epaisseurBordure, int taillePointille)
+{
+    for (int i = 0; i < epaisseurBordure; ++i)
+    {
+        for (int x = 0; x < sprite.cols; ++x)
+        {
+            matAt(sprite, x, i) = color;
+            matAt(sprite, x, sprite.rows - i - 1) = color;
+            for(int xx = 0; xx < (taillePointille - 1); ++xx)
+            {
+                matAt(sprite, ++x, i) = color;
+                matAt(sprite, x, sprite.rows - i - 1) = color;
+            }
+            x += taillePointille;
+        }
+        for (int y = 0; y < sprite.rows; ++y)
+        {
+            matAt(sprite, i, y) = color;
+            matAt(sprite, sprite.cols - i - 1, y) = color;
+            for(int yy = 0; yy < (taillePointille - 1); ++yy)
+            {
+                matAt(sprite, i, ++y) = color;
+                matAt(sprite, sprite.cols - i - 1, y) = color;
+            }
+            y += taillePointille;
         }
     }
 }

@@ -43,6 +43,8 @@ void App::quit(void)
 
 void App::mainLoop(void)
 {
+	mtl::log::info("Démarrage de la Main loop");
+
 	this->process = true;
     mtl::log::info("Chargement du contexte OpenGL --->", mtl::log::hold_on());
     GlContext::initGL(this->cameraW.largeur(), this->cameraW.hauteur());
@@ -77,6 +79,7 @@ void App::mainLoop(void)
 			this->setCursor.draw(this->cameraW.getCamera().colorFrame());
 			this->widgets.updateTime(this->setCursor);
 			this->peinture.updateTime(this->setCursor);
+
             fbo2cvmat(maid_drawer.draw(), my_beautiful_clothe, this->cameraW.largeur(), this->cameraW.hauteur());
             blit(this->cameraW.getCamera().colorFrame(), my_beautiful_clothe, 0, 0);
 		}
@@ -84,11 +87,11 @@ void App::mainLoop(void)
 		this->peinture.updateWidgets();
 		this->widgets.updateWidgets();
 		this->peinture.draw(this->cameraW.getCamera().colorFrame());
+		this->widgets.draw(this->cameraW.getCamera().colorFrame());
         if (this->player.isVisible())
 		{
             this->setCursor.draw(this->cameraW.getCamera().colorFrame());
         }
-		this->widgets.draw(this->cameraW.getCamera().colorFrame());
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(12);
 	}
