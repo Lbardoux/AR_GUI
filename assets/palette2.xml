@@ -58,15 +58,15 @@
             couleurs seront gardées, les autres seront ignorées
             Vous trouverez dans le fichier colors.xml un ensemble de couleur prédéfinies
         -->
-        <couleur name="Noir">
-            <rouge>0</rouge>
-            <vert>0</vert>
-            <bleu>0</bleu>
-        </couleur>
         <couleur name="Gris">
             <rouge>128</rouge>
             <vert>128</vert>
             <bleu>128</bleu>
+        </couleur>
+        <couleur name="Noir">
+            <rouge>0</rouge>
+            <vert>0</vert>
+            <bleu>0</bleu>
         </couleur>
         <couleur name="Bordeau">
             <rouge>128</rouge>

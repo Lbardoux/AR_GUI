@@ -70,6 +70,9 @@ void PaletteCouleur::readConfig(const std::string& fileName)
 
     for(uint32_t i = nbCoul; i < this->_cols * this->_rows; ++i)
     	addCouleur(matBlackColor());
+    
+    // Application de la première couleur de la palette comme étant celle par défaut
+    fillMat(*this->couleur, matAt(*this->ensembleSprite[0].second, 0, 0));
 }
 
 void PaletteCouleur::setCouleur(Sprite* couleur)
@@ -190,7 +193,8 @@ PaintModule::PaintModule() : visible(false), pidSauvegarde(::getpid()), numeroSa
 
 PaintModule::~PaintModule()
 {
-	this->toile.release();
+    this->spr_palette.release();
+    this->toile.release();
 	this->bandeau.release();
 }
 
@@ -200,6 +204,7 @@ void PaintModule::init(int width, int height, const std::string& fileName)
 	this->height = height;
 
 
+    this->spr_palette = cv::Mat(Sprites::tailleIcone, CV_8UC4);
 	this->toile = cv::Mat(height - Sprites::tailleIcone.height - 35, width, CV_8UC4);
 	this->resetToile();
 	this->tailleBandeau = height - this->toile.rows;
@@ -223,12 +228,10 @@ void PaintModule::initWidgets()
 		this->peinture(!this->peintureActif);
 	}, NULL, this->activePeinture.x(), this->activePeinture.y(), this->_activation_module);
 	// On force la désactivation de la peinture
-	peinture(false);
+	this->peinture(false);
 	this->activePeinture.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->activePeinture);
 
-	this->spr_palette = cv::Mat(Sprites::tailleIcone, CV_8UC4);
-	fillMat(this->spr_palette, matBlackColor());
 	this->ouvrePalette.init("Couleurs", [this]() {
 		this->ouvrePalette.changeFirstActivation(false);
 		this->palette.visible = !this->palette.visible;
@@ -281,6 +284,9 @@ void PaintModule::dress(bool value)
 
 void PaintModule::saveToile()
 {
+    if(!this->peintureActif)
+        return;
+    
 	std::ostringstream fileName;
 	fileName << "o_mon_beau_dessin_" << this->pidSauvegarde << "_" << (this->numeroSauvegarde++) << ".png";
 	cv::Mat file;
@@ -294,9 +300,12 @@ void PaintModule::saveToile()
 
 void PaintModule::resetToile()
 {
+    if(!this->peintureActif)
+        return;
+    
 	this->reset.changeFirstActivation(false);
 	fillMat(this->toile, mat_data_t(255,255,255,170));
-	this->peinture(false);
+//	this->peinture(false);
     ::fillBordure(this->toile, matRedColor(), this->tailleBordure, 6);
 }
 
