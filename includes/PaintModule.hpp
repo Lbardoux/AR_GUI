@@ -186,10 +186,14 @@ class PaintModule
 		Emplacement emplacement; 		//!< Emplacement des widgets du module
 		PlayerMember membre; 			//!< Membre qui peut intéragire avec le module / qui peint
 
-		cv::Mat toile; 					//!< Toile qui contient le dessin
+		Sprite toile; 					//!< Toile qui contient le dessin
 		ColoredCursor pinceau;			//!< Représente le pinceau
 		int toileX;						//!< Coordonnées en X de la toile 
 		int toileY;						//!< Coordonnées en Y de la toile 
+		Sprite bandeau;					//!< Bandeau noir présent en dessous des boutons
+		int tailleBandeau;				//!< Taille du bandeau
+		int bandeauX;					//!< Coordonnées en X du bandeau 
+		int bandeauY;					//!< Coordonnées en Y du bandeau 
 		int tailleBordure;				//!< Taille de la bordure de la toile
 		bool peintureActif;				//!< Indique si le mode peinture est actif
         bool dressActive;               //!< Indique si la robe est active.

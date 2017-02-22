@@ -191,6 +191,7 @@ PaintModule::PaintModule() : visible(false), pidSauvegarde(::getpid()), numeroSa
 PaintModule::~PaintModule()
 {
 	this->toile.release();
+	this->bandeau.release();
 }
 
 void PaintModule::init(int width, int height, const std::string& fileName)
@@ -198,8 +199,12 @@ void PaintModule::init(int width, int height, const std::string& fileName)
 	this->width = width;
 	this->height = height;
 
-	this->toile = cv::Mat(height - Sprites::spr_peinture_on.rows - 35, width, CV_8UC4);
+
+	this->toile = cv::Mat(height - Sprites::tailleIcone.height - 35, width, CV_8UC4);
 	this->resetToile();
+	this->tailleBandeau = height - this->toile.rows;
+	this->bandeau = cv::Mat(this->tailleBandeau, width, CV_8UC4);
+	fillMat(this->bandeau, mat_data_t(0, 0, 0, 170));
 
 	// this->palette.init(&this->spr_palette, 2, 2, 150, 150);
 	this->palette.setCouleur(&this->spr_palette);
@@ -361,9 +366,15 @@ void PaintModule::setEmplacement(Emplacement e)
 	this->toileX = 0;
 
 	if (y == HAUT)
-		this->toileY = Sprites::tailleIcone.height + 35;
+	{
+		this->toileY = this->tailleBandeau;
+		this->bandeauY = 0;
+	}
 	else
+	{
 		this->toileY = 0;
+		this->bandeauY = this->toile.rows;
+	}
 
 	int decalage = 0;
 	if (x == DROITE)
@@ -425,6 +436,7 @@ void PaintModule::draw(cv::Mat frame)
 {
 	if (this->visible)
 	{
+		blit(frame, this->bandeau, this->bandeauX, this->bandeauY);
 		this->widgets.draw(frame);
 		if(this->peintureActif)
 			blit(frame, this->toile, this->toileX, this->toileY);
