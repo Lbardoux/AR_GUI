@@ -126,6 +126,11 @@ void GlContext::close(void)
     GlContext::destroyed = true;
 }
 
+void GlContext::minimize(void)
+{
+    SDL_MinimizeWindow(GlContext::window());
+}
+
 namespace // clean at the end, after destructors.
 {
 	void _quit_after_destructors(void)

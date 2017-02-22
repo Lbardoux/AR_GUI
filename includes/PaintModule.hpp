@@ -159,13 +159,24 @@ class PaintModule
 		 * @brief      Affiche le module de Peinture
 		 * @param[in]  frame  Frame sur laquelle on affiche
 		 */
-		void draw(cv::Mat frame);
+		void draw(cv::Mat& frame);
         
         /**
          * @brief Indique si on peut dessiner la robe ou non.
          * @return true si oui, false sinon.
          */
         bool canDrawDress(void);
+        /**
+         * @brief Indique si ça vaut le coup de dessiner la BoundingBox.
+         * @return true/false
+         */
+        bool canDrawBBox(void);
+        
+        /**
+         * @brief "Change" de main
+         * @param value
+         */
+        void switchHandValue(bool value);
 
 	private:
 		uint32_t _activation_module;    //!< Temps d'activation en seconde d'une couleur de la palette
@@ -178,6 +189,7 @@ class PaintModule
 		Sprite spr_palette; 			//!< Icone de la palette
 		ActionButton ouvrePalette; 		//!< Widget qui permet d'ouvrir la palette des couleurs
 		ActionButton reset;				//!< Bouton pour remettre la toile à 0
+        ActionButton switchHand;        //!< Bouton pour changer de mains
 
 		const int pidSauvegarde;		//!< PID du programme, pour faire des sauvegardes uniques
 		int numeroSauvegarde;			//!< Numéro du dessin à sauvegarder
@@ -198,6 +210,7 @@ class PaintModule
 		int tailleBordure;				//!< Taille de la bordure de la toile
 		bool peintureActif;				//!< Indique si le mode peinture est actif
         bool dressActive;               //!< Indique si la robe est active.
+        bool isRight;
 
 		int width;						//!< Largeur de la fenetre
 		int height;						//!< Hauteur de la fenetre

@@ -64,6 +64,7 @@ void App::mainLoop(void)
     Clothe clothe(this->player, PlayerMember::LEFT_SHOULDER, PlayerMember::RIGHT_SHOULDER, soubrette);
     MaidDrawer maid_drawer(this->player, clothe, program);
     cv::Mat my_beautiful_clothe;
+    GlContext::minimize();
     
     mtl::log::info("Démarrage de la Main loop");
 	while(this->process)
@@ -91,6 +92,10 @@ void App::mainLoop(void)
         if (this->player.isVisible())
         {
             this->setCursor.draw(this->cameraW.getCamera().colorFrame());
+            if (this->peinture.canDrawBBox())
+            {
+                this->setCursor.drawBoundingBox(this->cameraW.getCamera().colorFrame());
+            }
         }
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(6);

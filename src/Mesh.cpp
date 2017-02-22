@@ -150,6 +150,15 @@ void Mesh::initVAO()
     glBindVertexArray(0);
 }
 
+namespace
+{
+    inline int access(unsigned char* header, int offset)
+    {
+        int* addrInt = reinterpret_cast<int*>(&header[offset]);
+        return *addrInt;
+    }
+}
+
 void Mesh::initTexture(const char * path)
 {
     unsigned char  header[54];
@@ -159,33 +168,35 @@ void Mesh::initTexture(const char * path)
     unsigned char* data;
 
     FILE * file = fopen(path,"rb");
-    if (!file) {
-        printf("Not exist\n");
+    if (!file)
+    {
+        mtl::log::error(path, "does not exist");
         assert(false);
     }
-    if ( fread(header, 1, 54, file)!=54 ){
-        printf("Not a correct BMP file (1)\n");
+    if (fread(header, 1, 54, file)!=54 )
+    {
+        mtl::log::error("Not a correct BMP file (1)");
         assert(false);
     }
-    if ( header[0]!='B' || header[1]!='M' ){
-        printf("Not a correct BMP file (2)\n");
+    if (header[0] != 'B' || header[1] != 'M')
+    {
+        mtl::log::error("Not a correct BMP file (2)");
         assert(false);
     }
-    
-    if ( *(int*)&(header[0x1E])!=0  )         {printf("Not a correct BMP file (3)\n");    assert(false);}
-    if ( *(int*)&(header[0x1C])!=24 )         {printf("Not a correct BMP file (4)\n");    assert(false);}
+    if (access(header, 0x1E) != 0)  {mtl::log::error("Not a correct BMP file (3)");assert(false);}
+    if (access(header, 0x1C) != 24) {mtl::log::error("Not a correct BMP file (4)");assert(false);}
+    dataPos    = access(header, 0x0A);
+    imageSize  = access(header, 0x22);
+    width      = access(header, 0x12);
+    height     = access(header, 0x16);
 
-    dataPos    = *(int*)&(header[0x0A]);
-    imageSize  = *(int*)&(header[0x22]);
-    width      = *(int*)&(header[0x12]);
-    height     = *(int*)&(header[0x16]);
-
-    // Some BMP files are misformatted, guess missing information
-    if (imageSize==0)    imageSize=width*height*3; // 3 : one byte for each Red, Green and Blue component
-    if (dataPos==0)      dataPos=54; // The BMP header is done that way
+    if (imageSize == 0)
+        imageSize = width*height*3;
+    if (dataPos == 0)
+        dataPos = 54;
 
     data = new unsigned char [imageSize];
-    fread(data,1,imageSize,file);
+    assert(fread(data,1,imageSize,file) == imageSize);
     fclose (file);
 
     glBindTexture(GL_TEXTURE_2D, m_texture);

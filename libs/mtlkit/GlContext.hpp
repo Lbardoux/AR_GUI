@@ -61,6 +61,8 @@ class GlContext final
 		 */
 		static void windowCaption(const char *const title) noexcept;
         
+        static void minimize(void);
+        
         /**
          * @brief Closes definitely the SDL window.
          */

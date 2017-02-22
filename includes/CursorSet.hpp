@@ -47,6 +47,11 @@ public:
      * @pre        Le type demandé a déjà été ajouté
      */
     void updateCursor(PlayerMember type, const ColoredCursor& cursor);
+    /**
+     * @brief Dessine la bounding box sur @b frame, qui contient les épaules et les hanches.
+     * @param[in] frame La cv::Mat sur laquelle dessiner.
+     */
+    void drawBoundingBox(cv::Mat& frame);
 
     /**
      * @date       08-Feb-2017

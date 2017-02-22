@@ -16,6 +16,8 @@ Sprite Sprites::spr_peinture_reset;
 Sprite Sprites::spr_peinture_save;
 Sprite Sprites::spr_clothe_on;
 Sprite Sprites::spr_clothe_off;
+Sprite Sprites::spr_switch_on;
+Sprite Sprites::spr_switch_off;
 
 cv::Size Sprites::tailleIcone = {56, 56};
 
@@ -29,6 +31,8 @@ void Sprites::init(void)
     loadSprite("assets/images/peinture_sauvegarde.png", Sprites::spr_peinture_save, true);
     loadSprite("assets/images/clothe_button_on.png", Sprites::spr_clothe_on, true);
     loadSprite("assets/images/clothe_button_off.png", Sprites::spr_clothe_off, true);
+    loadSprite("assets/images/switch_on.png", Sprites::spr_switch_on, true);
+    loadSprite("assets/images/switch_off.png", Sprites::spr_switch_off, true);
 }
 
 void Sprites::empty(void)
@@ -41,6 +45,8 @@ void Sprites::empty(void)
     Sprites::spr_peinture_save.release();
     Sprites::spr_clothe_on.release();
     Sprites::spr_clothe_off.release();
+    Sprites::spr_switch_on.release();
+    Sprites::spr_switch_off.release();
 	mtl::log::info("Fait!");
 }
 

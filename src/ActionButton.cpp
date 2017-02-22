@@ -1,14 +1,12 @@
 /**
  * @file ActionButton.cpp
  */
-
-
 #include "ActionButton.hpp"
 #include "TextPutter.hpp"
 
 ActionButton::ActionButton(void)
 {
-
+    
 }
 
 ActionButton::ActionButton(Sprite* image, const std::string& action) : TouchButton(image), text(action)
@@ -16,9 +14,9 @@ ActionButton::ActionButton(Sprite* image, const std::string& action) : TouchButt
     
 }
 
-ActionButton::~ActionButton()
+ActionButton::~ActionButton(void)
 {
-
+    
 }
 
 void ActionButton::action()
@@ -26,25 +24,18 @@ void ActionButton::action()
     this->function();
 }
 
-void ActionButton::init(const std::string& action, std::function<void(void)> function, Sprite* image, int x, int y, double seconde)
+void ActionButton::init(const std::string& action, std::function<void(void)> function, Sprite* image,
+                        int x, int y, double seconde)
 {
-	TouchButton::init(image, x, y, seconde);
-	this->text = action;
-	this->function = function;
+    TouchButton::init(image, x, y, seconde);
+    this->text = action;
+    this->function = function;
 }
 
 void ActionButton::draw(Sprite& frame)
 {
-	const int PIXELS_DOWN = 12;
     this->TouchButton::draw(frame);
-
-    if(this->text.empty())
-    	return;
-
-	/*TextPutter().pos(this->x(), this->y() + this->sprite->rows + PIXELS_DOWN)
-	            .fontSize(0.6f)
-	            .rgb(255, 255, 255)
-	            .write(frame, this->text);*/
+    // On n'affiche pas le texte, on verra plus tard.
 }
 
 std::string& ActionButton::getText(void) noexcept
@@ -56,4 +47,3 @@ const std::string& ActionButton::getText(void) const noexcept
 {
     return this->text;
 }
-

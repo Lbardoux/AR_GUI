@@ -52,6 +52,8 @@ class Sprites final
         static Sprite spr_peinture_save;  //!< Sprite pour la sauvegarde de l'image
         static Sprite spr_clothe_on;      //!< Dessin pour la robe ON.
         static Sprite spr_clothe_off;     //!< Dessin pour la robe OFF.
+        static Sprite spr_switch_on;      //!< Dessin pour changer de main ON
+        static Sprite spr_switch_off;     //!> Dessin pour changer de main OFF
 };
 
 /**

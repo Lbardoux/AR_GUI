@@ -86,11 +86,8 @@ mapCursor_t::iterator CursorSet::end()
     return this->_cursors.end();
 }
 
-void CursorSet::draw(cv::Mat& frame)
+void CursorSet::drawBoundingBox(cv::Mat& frame)
 {
-    std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::value_type& val) {
-        val.second.draw(frame);
-    });
     int thick = 1;
     if (isIn)
     {
@@ -100,6 +97,13 @@ void CursorSet::draw(cv::Mat& frame)
     cv::line(frame, cv::Point(this->xmin, this->ymax), cv::Point(this->xmax, this->ymax), cv::Scalar(0), thick);
     cv::line(frame, cv::Point(this->xmin, this->ymin), cv::Point(this->xmin, this->ymax), cv::Scalar(0), thick);
     cv::line(frame, cv::Point(this->xmax, this->ymin), cv::Point(this->xmax, this->ymax), cv::Scalar(0), thick);
+}
+
+void CursorSet::draw(cv::Mat& frame)
+{
+    std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::value_type& val) {
+        val.second.draw(frame);
+    });
 }
 
 void CursorSet::update(const Player& player)

@@ -1,6 +1,7 @@
 #include "PaintModule.hpp"
 #include <sys/types.h>
 #include <sstream>
+#include <utility>
 #include "clamp.hpp"
 
 PaletteCouleur::PaletteCouleur() : couleur(NULL), visible(false)
@@ -258,6 +259,22 @@ void PaintModule::initWidgets()
     this->dress(false);
     this->activeDress.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
     this->widgets.addWidget(&this->activeDress);
+    
+    this->switchHand.init("hands", [this](void){
+        std::swap(this->membre, this->membreConf);
+        this->switchHandValue(!this->isRight);
+    }, nullptr, this->switchHand.x(), this->switchHand.y(), this->_activation_module);
+    // en fonction des paramètres
+    this->switchHandValue(this->membre == PlayerMember::RIGHT_HAND);
+    this->switchHand.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
+    this->widgets.addWidget(&this->switchHand);
+}
+
+void PaintModule::switchHandValue(bool value)
+{
+    this->isRight = value;
+    this->switchHand.changeFirstActivation(false);
+    this->switchHand.setSprite(this->isRight ? &Sprites::spr_switch_off : &Sprites::spr_switch_on);
 }
 
 void PaintModule::membreQuiPeint(PlayerMember p)
@@ -314,6 +331,11 @@ bool PaintModule::canDrawDress(void)
     return this->dressActive;
 }
 
+bool PaintModule::canDrawBBox(void)
+{
+    return this->peintureActif;
+}
+
 void PaintModule::readConfig(const std::string& fileName)
 {
     XmlLoader loader(fileName);
@@ -343,6 +365,11 @@ void PaintModule::rendVisible(bool val)
 {
 	this->visible = val;
 }
+
+/*void PaintModule::placeWidget(Widget& widget, int dirX, int dirY)
+{
+    
+}*/
 
 void PaintModule::setEmplacement(Emplacement e)
 {
@@ -413,6 +440,9 @@ void PaintModule::setEmplacement(Emplacement e)
     
     this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
 	this->activeDress.y() = y;
+    
+    this->switchHand.x() = this->activeDress.x() + (x * (Sprites::tailleIcone.width + decalage));
+	this->switchHand.y() = y;
 }
 
 void PaintModule::updateWidgets(void)
@@ -449,7 +479,7 @@ void PaintModule::updateTime(const CursorSet& cursors)
 	}
 }
 
-void PaintModule::draw(cv::Mat frame)
+void PaintModule::draw(cv::Mat& frame)
 {
 	if (this->visible)
 	{
