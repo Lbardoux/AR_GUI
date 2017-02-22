@@ -185,6 +185,7 @@ class PaintModule
 
 		Emplacement emplacement; 		//!< Emplacement des widgets du module
 		PlayerMember membre; 			//!< Membre qui peut intéragire avec le module / qui peint
+        PlayerMember membreConf;        //!< Membre que l'on utilise pour la bbox
 
 		Sprite toile; 					//!< Toile qui contient le dessin
 		ColoredCursor pinceau;			//!< Représente le pinceau

@@ -5,7 +5,7 @@
 #include <functional>
 #include <initializer_list>
 
-CursorSet::CursorSet() : xmin(0), xmax(0), ymin(0), ymax(0)
+CursorSet::CursorSet() : xmin(0), xmax(0), ymin(0), ymax(0), isIn(false)
 {}
 
 CursorSet::~CursorSet()
@@ -38,6 +38,11 @@ void CursorSet::addCursor(PlayerMember type, const ColoredCursor& cursor)
 
     this->_cursors[type] = coloredCursor_t(cursor);
     this->_cursors[type].radius(4u);
+}
+
+void CursorSet::setIsIn(bool value) const
+{
+    this->isIn = value;
 }
 
 void CursorSet::updateCursor(PlayerMember type, const ColoredCursor& cursor)
@@ -86,10 +91,15 @@ void CursorSet::draw(cv::Mat& frame)
     std::for_each(this->_cursors.begin(), this->_cursors.end(), [&frame] (mapCursor_t::value_type& val) {
         val.second.draw(frame);
     });
-    cv::line(frame, cv::Point(this->xmin, this->ymin), cv::Point(this->xmax, this->ymin), cv::Scalar(0));
-    cv::line(frame, cv::Point(this->xmin, this->ymax), cv::Point(this->xmax, this->ymax), cv::Scalar(0));
-    cv::line(frame, cv::Point(this->xmin, this->ymin), cv::Point(this->xmin, this->ymax), cv::Scalar(0));
-    cv::line(frame, cv::Point(this->xmax, this->ymin), cv::Point(this->xmax, this->ymax), cv::Scalar(0));
+    int thick = 1;
+    if (isIn)
+    {
+        thick = 3;
+    }
+    cv::line(frame, cv::Point(this->xmin, this->ymin), cv::Point(this->xmax, this->ymin), cv::Scalar(0), thick);
+    cv::line(frame, cv::Point(this->xmin, this->ymax), cv::Point(this->xmax, this->ymax), cv::Scalar(0), thick);
+    cv::line(frame, cv::Point(this->xmin, this->ymin), cv::Point(this->xmin, this->ymax), cv::Scalar(0), thick);
+    cv::line(frame, cv::Point(this->xmax, this->ymin), cv::Point(this->xmax, this->ymax), cv::Scalar(0), thick);
 }
 
 void CursorSet::update(const Player& player)

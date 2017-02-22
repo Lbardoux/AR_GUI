@@ -324,9 +324,15 @@ void PaintModule::readConfig(const std::string& fileName)
     loader.node("profilUtilisateurice");
     int habilite = loader.element("habilite").text<int>();
     if(habilite == 0)
-    	this->membre = PlayerMember::RIGHT_HAND;
+    {
+    	this->membre     = PlayerMember::RIGHT_HAND;
+        this->membreConf = PlayerMember::LEFT_HAND;
+    }
     else
-    	this->membre = PlayerMember::LEFT_HAND;
+    {
+    	this->membre     = PlayerMember::LEFT_HAND;
+        this->membreConf = PlayerMember::RIGHT_HAND;
+    }
     loader.prev();
 
     this->setEmplacement(static_cast<Emplacement>(loader.element("emplacement").text<int>()));
@@ -425,10 +431,12 @@ void PaintModule::updateTime(const CursorSet& cursors)
 	{
 		if (!this->peintureActif)
 			return;
-        if (!cursors.isInBoundingBox((this->membre == PlayerMember::LEFT_HAND) ? PlayerMember::RIGHT_HAND : PlayerMember::LEFT_HAND))
+        if (!cursors.isInBoundingBox(this->membreConf))
         {
+            cursors.setIsIn(false);
             return;
         }
+        cursors.setIsIn(true);
 
 		const ColoredCursor& c = cursors.getCursor(this->membre);
 
