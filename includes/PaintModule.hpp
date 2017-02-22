@@ -160,6 +160,12 @@ class PaintModule
 		 * @param[in]  frame  Frame sur laquelle on affiche
 		 */
 		void draw(cv::Mat frame);
+        
+        /**
+         * @brief Indique si on peut dessiner la robe ou non.
+         * @return true si oui, false sinon.
+         */
+        bool canDrawDress(void);
 
 	private:
 		uint32_t _activation_module;    //!< Temps d'activation en seconde d'une couleur de la palette
