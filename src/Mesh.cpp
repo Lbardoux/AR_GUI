@@ -15,25 +15,16 @@ Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram
     mtl::log::info("OK");
 }
 
-Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
-           const Vector & offset) : m_program(program), m_texture(0)
-{
-    mtl::log::info("Chargement du fichier OBJ :", path_to_obj, " --> ", mtl::log::hold_on());
-    readWaveFront(path_to_obj, offset);
-    initVAO();
-    glGenTextures(1, &m_texture);
-    readTextureFromCamera(camera);
-    mtl::log::info("OK");
-}
-
 Mesh::~Mesh()
 {
     glDeleteTextures(1, &m_texture);
-    //glBindVertexArray(m_vao);
     glDeleteBuffers(1, &this->m_vbo);
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glBindVertexArray(0);
     glDeleteVertexArrays(1, &this->m_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    this->m_vertices.clear();
+    this->m_normals.clear();
+    this->m_uvs.clear();
 }
 
 void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
@@ -159,62 +150,6 @@ void Mesh::initVAO()
     glBindVertexArray(0);
 }
 
-void Mesh::readTextureFromCamera(Camera & camera)
-{
-    camera.readFrame();
-    cv::Mat mat = camera.colorFrame();
-
-    GLenum minFilter = GL_NEAREST;
-    GLenum magFilter = GL_NEAREST;
-    GLenum wrapFilter = GL_CLAMP;
-    glBindTexture(GL_TEXTURE_2D, m_texture);
-    if (magFilter == GL_LINEAR_MIPMAP_LINEAR  ||
-        magFilter == GL_LINEAR_MIPMAP_NEAREST ||
-        magFilter == GL_NEAREST_MIPMAP_LINEAR ||
-        magFilter == GL_NEAREST_MIPMAP_NEAREST)
-    {
-        magFilter = GL_LINEAR;
-    }
- 
-    // Set texture interpolation methods for minification and magnification
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magFilter);
- 
-    // Set texture clamping method
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapFilter);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapFilter);
- 
-    // Set incoming texture format to:
-    // GL_BGR       for CV_CAP_OPENNI_BGR_IMAGE,
-    // GL_LUMINANCE for CV_CAP_OPENNI_DISPARITY_MAP,
-    // Work out other mappings as required ( there's a list in comments in main() )
-    GLenum inputColourFormat = GL_BGRA;
-    if (mat.channels() == 1)
-    {
-        inputColourFormat = GL_LUMINANCE;
-    }
- 
-    // Create the texture
-    glTexImage2D(GL_TEXTURE_2D,     // Type of texture
-                 0,                 // Pyramid level (for mip-mapping) - 0 is the top level
-                 GL_RGB,            // Internal colour format to convert to
-                 mat.cols,          // Image width  i.e. 640 for Kinect in standard mode
-                 mat.rows,          // Image height i.e. 480 for Kinect in standard mode
-                 0,                 // Border width in pixels (can either be 1 or 0)
-                 inputColourFormat, // Input image format (i.e. GL_RGB, GL_RGBA, GL_BGR etc.)
-                 GL_UNSIGNED_BYTE,  // Image data type
-                 mat.ptr());        // The actual image data itself
- 
-    // If we're using mipmaps then generate them. Note: This requires OpenGL 3.0 or higher
-    if (minFilter == GL_LINEAR_MIPMAP_LINEAR  ||
-        minFilter == GL_LINEAR_MIPMAP_NEAREST ||
-        minFilter == GL_NEAREST_MIPMAP_LINEAR ||
-        minFilter == GL_NEAREST_MIPMAP_NEAREST)
-    {
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-}
-
 void Mesh::initTexture(const char * path)
 {
     unsigned char  header[54];
@@ -228,22 +163,18 @@ void Mesh::initTexture(const char * path)
         printf("Not exist\n");
         assert(false);
     }
-
-    // If less than 54 bytes are read, problem
     if ( fread(header, 1, 54, file)!=54 ){
         printf("Not a correct BMP file (1)\n");
         assert(false);
     }
-    // A BMP files always begins with "BM"
     if ( header[0]!='B' || header[1]!='M' ){
         printf("Not a correct BMP file (2)\n");
         assert(false);
     }
-    // Make sure this is a 24bpp file
+    
     if ( *(int*)&(header[0x1E])!=0  )         {printf("Not a correct BMP file (3)\n");    assert(false);}
     if ( *(int*)&(header[0x1C])!=24 )         {printf("Not a correct BMP file (4)\n");    assert(false);}
 
-    // Read the information about the image
     dataPos    = *(int*)&(header[0x0A]);
     imageSize  = *(int*)&(header[0x22]);
     width      = *(int*)&(header[0x12]);
@@ -272,23 +203,20 @@ void Mesh::draw(const Transform & model, const Transform & view, const Transform
 {
     glEnable(GL_TEXTURE_2D);
 
-    //Matrices
     Transform mv = view * model;
     Transform mvp = projection * mv;
-    GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
-    GLint mv_location  =  glGetUniformLocation(m_program, "MV");
-    GLint n_location   =  glGetUniformLocation(m_program, "N");
+    static GLint mvp_location =  glGetUniformLocation(m_program, "MVP");
+    static GLint mv_location  =  glGetUniformLocation(m_program, "MV");
+    static GLint n_location   =  glGetUniformLocation(m_program, "N");
     glUniformMatrix4fv(mvp_location, 1, GL_TRUE, mvp.getBuffer());
     glUniformMatrix4fv(mv_location, 1, GL_TRUE, mv.getBuffer());
     glUniformMatrix4fv(n_location, 1, GL_TRUE, mv.getBuffer());
 
-    //Texture
     GLint texture_location = glGetUniformLocation(m_program, "u_texture");
     glUniform1i(texture_location, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_texture);
 
-    //Triangles
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
     glBindVertexArray(0);

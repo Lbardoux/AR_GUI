@@ -90,9 +90,13 @@ public:
      * @param[in]  player  Squelette qui contient les informations des positions
      */
     void update(const Player& player);
+    
+    bool isInBoundingBox(PlayerMember type) const;
 
 private:
     mapCursor_t _cursors; //!< Ensemble des cursors
+    int xmin, xmax; //!< Les coordonnées X de la boite englobante.
+    int ymin, ymax; //!< Les coordonnées Y de la boite englobante.
 };
 
 #endif

@@ -18,7 +18,7 @@ CXX       = $(CC_$(VERBOSE))
 LXX       = $(LINK_$(VERBOSE))
 WARNINGS := -Wall -Wextra
 STD      := -std=c++11
-TARGET   := -g
+TARGET   := -s -O2
 CXXFLAGS := $(TARGET) $(STD) $(WARNINGS) -DQT_NO_DEBUG_OUTPUT
 
 SRC       := src

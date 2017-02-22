@@ -15,6 +15,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "GlContext.hpp"
 #include <GL/gl.h>
+
 /**
  * @brief Stores the all content of @b fbo into @b out.
  * @param[in]  fbo    The ID of the FrameBufferObject you wanna extract data.
@@ -33,7 +34,6 @@ void fbo2cvmat(GLuint fbo, cv::Mat& out, GLint width, GLint height)
     {
         out = cv::Mat(height, width, CV_8UC4);
     }
-    // je prefere le bleu, sinon remplacer RGBA par BGRA ici
     glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, out.data);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 }

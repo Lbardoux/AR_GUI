@@ -6,45 +6,24 @@
 MaidDrawer::MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program) : 
 	m_program(program), m_player(player), m_maid(maid)
 {
-	///Creation de la texture couleur
     glGenTextures(1, &m_color_buffer);
     glBindTexture(GL_TEXTURE_2D, m_color_buffer);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 640, 480, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    glGenSamplers(1, &m_color_sampler);
-    glSamplerParameteri(m_color_sampler, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glSamplerParameteri(m_color_sampler, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glSamplerParameteri(m_color_sampler, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glSamplerParameteri(m_color_sampler, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     
-    //Creation de la texture depth.
-    glGenTextures(1, &m_depth_buffer);
-    glBindTexture(GL_TEXTURE_2D, m_depth_buffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 640, 480, 0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
-    
-    //Creation et configuration du FBO
     glGenFramebuffers(1, &m_frame_buffer);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frame_buffer);
     glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_color_buffer, 0);
-    glFramebufferTexture(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_buffer, 0);
     
-    //Le fragment shader ne declare qu'une seule sortie, indice 0
     GLenum buffers[]= { GL_COLOR_ATTACHMENT0 };
     glDrawBuffers(1, buffers);
-
     assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
-    
-    //Nettoyage
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
 MaidDrawer::~MaidDrawer(void)
 {
-    glDeleteSamplers(1, &this->m_color_sampler);
-    glDeleteTextures(1, &this->m_depth_buffer);
     glDeleteTextures(1, &this->m_color_buffer);
     glDeleteFramebuffers(1, &this->m_frame_buffer);
-    
 }
 
 GLuint MaidDrawer::draw() const
@@ -56,7 +35,6 @@ GLuint MaidDrawer::draw() const
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //Matrices
     static Transform model(1.0f, 0.0f,  0.0f, 0.0f,
                            0.0f, -1.0f, 0.0f, 0.0f,
                            0.0f, 0.0f,  1.0f, 0.0f,
@@ -64,7 +42,6 @@ GLuint MaidDrawer::draw() const
     static Transform view = model*lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
     static Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
 
-    //Détection
     m_player.update();
     Point position_1 = m_player.getPointOf(RIGHT_SHOULDER);
     Point position_2 = m_player.getPointOf(LEFT_SHOULDER);

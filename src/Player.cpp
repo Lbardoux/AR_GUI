@@ -15,16 +15,17 @@ Player::Player(Camera & camera) : one_player_visible(false)
 void Player::init(Camera & camera)
 {
 	openni::Device & device = camera.getDevice();
-    mtl::log::info("Initialisation de NiTE ...", mtl::log::hold_on());
+    mtl::log::info("Initialisation de NiTE -->", mtl::log::hold_on());
 	nite::NiTE::initialize();
-    mtl::log::info("Fait!");
+    mtl::log::info("OK");
+    mtl::log::info("Initialisation du tracker --> ", mtl::log::hold_on());
     if(m_user_tracker.create(&device) != nite::STATUS_OK)
     {
         mtl::log::error("Impossible de créer un tracker");
         assert(false);
     }
 
-    mtl::log::info("Player initialisé");
+    mtl::log::info("OK");
 }
 
 bool Player::update()

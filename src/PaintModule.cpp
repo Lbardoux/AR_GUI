@@ -295,6 +295,11 @@ void PaintModule::resetToile()
     ::fillBordure(this->toile, matRedColor(), this->tailleBordure, 6);
 }
 
+bool PaintModule::canDrawDress(void)
+{
+    return this->dressActive;
+}
+
 void PaintModule::readConfig(const std::string& fileName)
 {
     XmlLoader loader(fileName);
@@ -365,21 +370,15 @@ void PaintModule::setEmplacement(Emplacement e)
 		decalage = this->width - Sprites::tailleIcone.width;
 
 	this->activePeinture.x() = (20 * x) + decalage;
-	// mtl::log::info("this->activePeinture.x() : ", this->activePeinture.x());
 	this->activePeinture.y() = y;
-	// mtl::log::info("this->activePeinture.y() : ", this->activePeinture.y());
 
 	decalage = 8;
 
 	this->ouvrePalette.x() = this->activePeinture.x() + (x * (Sprites::tailleIcone.width + decalage));
-	// mtl::log::info("this->ouvrePalette.x() : ", this->ouvrePalette.x());
 	this->ouvrePalette.y() = y;
-	// mtl::log::info("this->ouvrePalette.y() : ", this->ouvrePalette.y());
 
 	this->reset.x() = this->ouvrePalette.x() + (x * (Sprites::tailleIcone.width + decalage));
-	// mtl::log::info("this->reset.x() : ", this->reset.x());
 	this->reset.y() = y;
-	// mtl::log::info("this->reset.y() : ", this->reset.y());
 
 	this->sauvegarde.x() = this->reset.x() + (x * (Sprites::tailleIcone.width + decalage));
 	this->sauvegarde.y() = y;
@@ -406,6 +405,10 @@ void PaintModule::updateTime(const CursorSet& cursors)
 	{
 		if (!this->peintureActif)
 			return;
+        if (!cursors.isInBoundingBox((this->membre == PlayerMember::LEFT_HAND) ? PlayerMember::RIGHT_HAND : PlayerMember::LEFT_HAND))
+        {
+            return;
+        }
 
 		const ColoredCursor& c = cursors.getCursor(this->membre);
 

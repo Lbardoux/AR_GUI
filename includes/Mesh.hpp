@@ -50,8 +50,8 @@ public:
      * @param[in]  program      le shader
      * @param[in]  offset       le décallage
      */
-    Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
-            const Vector & offset = Vector());
+    /*Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
+            const Vector & offset = Vector());*/
 
     /**
      * @brief Déstructeur par défaut.
@@ -62,7 +62,7 @@ public:
      * @brief      Initialise ou rafraichie la texture
      * @param      camera  la camera
      */
-    void readTextureFromCamera(Camera & camera);
+    //void readTextureFromCamera(Camera & camera);
 
     /**
      * @brief Affiche le mesh

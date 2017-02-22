@@ -93,7 +93,7 @@
  * En premier lieu, il nous faut une caméra de profondeur branchée sur un port USB.
  * Puis, il suffit ensuite de taper la commande suivante <b>dans le répertoire où se trouve le binaire</b> :
  * @code
- * ./AdvancedGUI gl|cv
+ * ./AdvancedGUI
  * @endcode
  *
  * @subsection ss_id_guignol Utiliser l'application
