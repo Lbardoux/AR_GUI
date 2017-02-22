@@ -243,11 +243,12 @@ void PaintModule::initWidgets()
 	this->sauvegarde.addMembre(PlayerMember::RIGHT_HAND).addMembre(PlayerMember::LEFT_HAND);
 	this->widgets.addWidget(&this->sauvegarde);
     
-    /*this->activeDress.init("Robe", [this](void){
+    this->activeDress.init("Robe", [this](void){
         this->dress(!this->dressActive);
-    }, &Sprites::spr_clothe_on, this->activeDress.x(), this->activeDress.y(), this->_activation_module);
+    }, nullptr, this->activeDress.x(), this->activeDress.y(), this->_activation_module);
+    this->dress(false);
     this->activeDress.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
-    this->widgets.addWidget(&this->activeDress);*/
+    this->widgets.addWidget(&this->activeDress);
 }
 
 void PaintModule::membreQuiPeint(PlayerMember p)
@@ -383,6 +384,9 @@ void PaintModule::setEmplacement(Emplacement e)
 	this->sauvegarde.y() = y;
 
 	this->palette.setEmplacement(this->toileX + 2, this->toileY + 2);
+    
+    this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
+	this->activeDress.y() = y;
 }
 
 void PaintModule::updateWidgets(void)

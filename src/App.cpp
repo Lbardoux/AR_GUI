@@ -32,8 +32,13 @@ App::~App(void) noexcept
 
 void App::quit(void)
 {
-	mtl::log::info("Aboutissement de l'application");
+    mtl::log::info("Fermeture des fenetres");
+	this->windows.closeWindows();
+    QuitOpenNI();
 	Sprites::empty();
+    mtl::log::info("Extinction du contexte OpenGL");
+    GlContext::endGL();
+    mtl::log::info("Aboutissement de l'application");
 }
 
 void App::mainLoop(void)
@@ -51,9 +56,9 @@ void App::mainLoop(void)
     VertexShader vertex("assets/shaders/vertex.cpp");
     mtl::log::info("vertex(OK) ", mtl::log::hold_on());
     FragmentShader fragment("assets/shaders/fragment.cpp");
-    mtl::log::info("fragment(OK)");
+    mtl::log::info("fragment(OK)", mtl::log::hold_on());
     ShaderProgram program({vertex, fragment});
-    mtl::log::info("Chargement du ShaderProgram");
+    mtl::log::info("shaderProgram(OK)");
     
     Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
     Clothe clothe(this->player, PlayerMember::LEFT_SHOULDER, PlayerMember::RIGHT_SHOULDER, soubrette);
@@ -87,10 +92,6 @@ void App::mainLoop(void)
 		this->windows.updateWindows();
 		this->keyboard.checkInputs(12);
 	}
-    mtl::log::info("Fermeture des fenetres");
-	this->windows.closeWindows();
-    mtl::log::info("Extinction du contexte OpenGL");
-    GlContext::endGL();
 }
 
 KeyboardMapping<char, std::function<void(void)>>& App::getKeyboard(void) noexcept

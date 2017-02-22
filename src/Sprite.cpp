@@ -10,7 +10,6 @@
 #include "logs.hpp"
 
 Sprite Sprites::test;
-
 Sprite Sprites::spr_peinture_on;
 Sprite Sprites::spr_peinture_off;
 Sprite Sprites::spr_peinture_reset;
@@ -69,7 +68,7 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
     {
         for(int row=beginY;row<endY;++row)
         {
-            uint8_t alpha = sprite.at<mat_data_t>(row, col)[3];
+            unsigned int alpha = sprite.at<mat_data_t>(row, col)[3];
             switch(alpha)
             {
                 case 0:
@@ -78,8 +77,8 @@ void blit(Sprite& dst, const Sprite& sprite, int x, int y)
                     matAt(dst, col + x, row + y) = matAt(sprite, col, row);
                     break;
                 default:
-                    mat_data_t fromSprite = (alpha/255)*matAt(sprite, col, row);
-                    mat_data_t fromDst    = ((255-alpha)/255)*matAt(dst, col + x, row + y);
+                    mat_data_t fromSprite = (alpha/255.0f)*matAt(sprite, col, row);
+                    mat_data_t fromDst    = ((255.0f-alpha)/255.0f)*matAt(dst, col + x, row + y);
                     matAt(dst, col + x, row + y) = fromSprite + fromDst;
             }
         }

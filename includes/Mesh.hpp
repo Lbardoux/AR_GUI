@@ -7,7 +7,6 @@
 #ifndef _MESH_H_
 #define _MESH_H_
 
-#define USING_OPENGL
 
 #include <vector>
 #include <iostream>

@@ -40,10 +40,10 @@ MaidDrawer::MaidDrawer(Player & player, Clothe & maid, ShaderProgram & program) 
 
 MaidDrawer::~MaidDrawer(void)
 {
-    /*glDeleteSamplers(1, &this->m_color_sampler);
+    glDeleteSamplers(1, &this->m_color_sampler);
     glDeleteTextures(1, &this->m_depth_buffer);
     glDeleteTextures(1, &this->m_color_buffer);
-    glDeleteFramebuffers(1, &this->m_frame_buffer);*/
+    glDeleteFramebuffers(1, &this->m_frame_buffer);
     
 }
 
@@ -57,13 +57,12 @@ GLuint MaidDrawer::draw() const
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Matrices
-    //Transform model = translationMatrix(0, 0, 9000) * scaleMatrix(15 * 640.0f, 15 * 480.0f, 1);
-    static Transform model(1.0f, 0.0f, 0.0f, 0.0f,
+    static Transform model(1.0f, 0.0f,  0.0f, 0.0f,
                            0.0f, -1.0f, 0.0f, 0.0f,
-                           0.0f, 0.0f, 1.0f, 0.0f,
-                           0.0f, 0.0f, 0.0f, 1.0f);
-    Transform view = model*lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
-    Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
+                           0.0f, 0.0f,  1.0f, 0.0f,
+                           0.0f, 0.0f,  0.0f, 1.0f);
+    static Transform view = model*lookAt(Point(0, 0, 0), Point(0, 0, 1), Vector(0, 1, 0));
+    static Transform projection = perspective(45, 640.0f / 480.0f, 0.1f, 10000.0f);
 
     //Détection
     m_player.update();

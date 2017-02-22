@@ -97,4 +97,6 @@ struct Camera final
 
 };
 
+void QuitOpenNI(void);
+
 #endif

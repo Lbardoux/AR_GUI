@@ -17,4 +17,9 @@ void main()
     o_position = (MV * vec4(position, 1.0)).xyz;
     o_normal = (N * vec4(normal, 0.0)).xyz;
     o_uv = vertexUV;
+
+    /*const vec4 vertices[3] = vec4[3](vec4( 0.25, -0.25, 0.5, 1.0),
+                                    vec4(-0.25, -0.25, 0.5, 1.0),
+                                    vec4( 0.25, 0.25, 0.5, 1.0));
+	gl_Position = vertices[gl_VertexID];*/
 }

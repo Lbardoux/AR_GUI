@@ -5,7 +5,7 @@
 #include "logs.hpp"
 
 Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram & program, 
-        const Vector & offset) : m_program(program), m_texture(0)
+           const Vector & offset) : m_program(program), m_texture(0)
 {
     mtl::log::info("Chargement du fichier OBJ :", path_to_obj, " --> ", mtl::log::hold_on());
     readWaveFront(path_to_obj, offset);
@@ -16,7 +16,7 @@ Mesh::Mesh(const char * path_to_obj, const char * path_to_texture, ShaderProgram
 }
 
 Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
-        const Vector & offset) : m_program(program), m_texture(0)
+           const Vector & offset) : m_program(program), m_texture(0)
 {
     mtl::log::info("Chargement du fichier OBJ :", path_to_obj, " --> ", mtl::log::hold_on());
     readWaveFront(path_to_obj, offset);
@@ -29,11 +29,11 @@ Mesh::Mesh(const char * path_to_obj, Camera & camera, ShaderProgram & program,
 Mesh::~Mesh()
 {
     glDeleteTextures(1, &m_texture);
-    /*glBindVertexArray(m_vao);
+    //glBindVertexArray(m_vao);
     glDeleteBuffers(1, &this->m_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glDeleteVertexArrays(1, &this->m_vao);*/
+    //glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glBindVertexArray(0);
+    glDeleteVertexArrays(1, &this->m_vao);
 }
 
 void Mesh::readWaveFront(const char * path_to_obj, const Vector & offset)
@@ -150,6 +150,7 @@ void Mesh::initVAO()
     glBindVertexArray(m_vao);
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
             glVertexAttribPointer(position_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+            glEnableVertexAttribArray(0);
             glVertexAttribPointer(normal_location, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size));
             glEnableVertexAttribArray(1);
             glVertexAttribPointer(texture_location, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(vbo_vertex_size + vbo_normal_size));
@@ -216,15 +217,12 @@ void Mesh::readTextureFromCamera(Camera & camera)
 
 void Mesh::initTexture(const char * path)
 {
-    // Data read from the header of the BMP file
-    unsigned char header[54];
-    unsigned int dataPos;
-    unsigned int imageSize;
-    unsigned int width, height;
-    // Actual RGB data
-    unsigned char * data;
+    unsigned char  header[54];
+    unsigned int   dataPos;
+    unsigned int   imageSize;
+    unsigned int   width, height;
+    unsigned char* data;
 
-    // Open the file
     FILE * file = fopen(path,"rb");
     if (!file) {
         printf("Not exist\n");
@@ -255,25 +253,14 @@ void Mesh::initTexture(const char * path)
     if (imageSize==0)    imageSize=width*height*3; // 3 : one byte for each Red, Green and Blue component
     if (dataPos==0)      dataPos=54; // The BMP header is done that way
 
-    // Create a buffer
     data = new unsigned char [imageSize];
-
-    // Read the actual data from the file into the buffer
     fread(data,1,imageSize,file);
-
-    // Everything is in memory now, the file wan be closed
     fclose (file);
 
-    // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, m_texture);
-
-    // Give the image to OpenGL
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-
-    // OpenGL has now copied the data. Free our own version
     delete [] data;
 
-    // ... nice trilinear filtering.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -303,7 +290,7 @@ void Mesh::draw(const Transform & model, const Transform & view, const Transform
 
     //Triangles
     glBindVertexArray(m_vao);
-    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());  
+    glDrawArrays(GL_TRIANGLES, 0, m_vertices.size());
     glBindVertexArray(0);
 }
 

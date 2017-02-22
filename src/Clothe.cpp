@@ -19,11 +19,6 @@ float dot(Vector v1, Vector v2)
     return v1.x() * v2.x() + v1.y() * v2.y() + v1.z() * v2.z();
 }
 
-/*
- *Ne pas oublier de demander matrix.normal() à Laurent !
- *
- */
-
 void Clothe::draw(const Point & position1, const Point & position2, const Transform & view, 
     const Transform & projection) const
 {
@@ -42,7 +37,6 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
     float angle_z = acos(cos_angle_z);
     if(position1.y() > position2.y()) angle_z = -angle_z;
     Matrix rotation_z_matrix = rotationZMatrix(angle_z);
-    //std::cout<<angle_z<<std::endl;
 
     //La rotation selon x
     Vector p1_p2_y = Vector(p1_p2.x(), 0, p1_p2.z()).normalize(); 
@@ -50,8 +44,7 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
     float angle_y = acos(cos_angle_y);
     if(position1.z() > position2.z()) angle_y = -angle_y;
     Matrix rotation_y_matrix = rotationYMatrix(angle_y);
-    //std::cout<<angle_y<<std::endl;
 
-    Transform model = translation_matrix /** rotation_y_matrix*/ * rotation_z_matrix * scale_matrix;
+    Transform model = translation_matrix * rotation_z_matrix * scale_matrix;
     m_mesh.draw(model, view, projection);
 }

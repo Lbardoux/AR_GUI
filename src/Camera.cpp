@@ -12,10 +12,7 @@
 
 static bool OPENNI_INITIALISED = false;
 
-void __exit_Openni_message_()
-{
-    mtl::log::info("Shutting down OpenNI");
-}
+
 
 void OpenNIInitialiser()
 {
@@ -31,8 +28,12 @@ void OpenNIInitialiser()
 
     mtl::log::info("OpenNI initisalised correctly");
     OPENNI_INITIALISED = true;
-    atexit(openni::OpenNI::shutdown);
-    atexit(__exit_Openni_message_);
+}
+
+void QuitOpenNI(void)
+{
+    mtl::log::info("On ferme OpenNI");
+    openni::OpenNI::shutdown();
 }
 
 void printStatusOpenni(openni::Status status)

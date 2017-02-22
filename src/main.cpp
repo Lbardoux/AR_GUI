@@ -84,8 +84,7 @@
  *
  * @subsection ss_id_compiler Compiler sur nos machines.
  * <b>Ne pas tenter cette étape si chacune des étapes de l'installation n'ont pas été faites !</b>
- *
- * Remplacer @b nom par votre nom/alias (ils sont dans le Makefile).
+ * 
  * @code
  * make
  * @endcode
@@ -121,57 +120,20 @@
  * @version 1.0
  */
 #include <cstdlib>
-#include <string>
 
 #include "logs.hpp"
 #include "CLmanager.hpp"
 #include "App.hpp"
-#include "GlCore.hpp"
-#include "GlContext.hpp"
-#include "Pipeline.hpp"
-#include "Loop.hpp"
-#include "Shader.hpp"
-#include "Sprite.hpp"
-#include "MaidDrawer.hpp"
 
 
 int main(int argc, char** argv)
 {
     checkCommandLine(argc, argv);
     mtl::log::info("Ligne de commande valide");
-
-    if (std::string(argv[1]) == "cv")
-    {
-        mtl::log::info("Lancement avec OpenCV");
-        App appli;
-        mtl::log::info("Creation de l'application reussie");
-        appli.mainLoop();
-        mtl::log::info("Terminaison en cours");
-        appli.quit();
-    }
-    else
-    {
-        Camera *camera = new Camera();
-        camera->init();
-        camera->start(640, 480);
-        Player player(*camera);
-
-        GlContext::initGL(640, 480);
-        Pipeline::fromXML("assets/PipelineConfig.xml");
-
-        VertexShader vertex("assets/shaders/vertex.cpp");
-        FragmentShader fragment("assets/shaders/fragment.cpp");
-        ShaderProgram program({vertex, fragment});
-
-        Mesh soubrette("assets/objs/soubrette.obj", "assets/objs/texture.bmp", program, Vector(0, -12.2, 0));
-
-        Clothe clothe(player, LEFT_SHOULDER, RIGHT_SHOULDER, soubrette);
-
-        MaidDrawer maid_drawer(player, clothe, program);
-        maid_drawer.draw();
-
-        GlContext::endGL();
-        delete camera;
-    }
+    App appli;
+    mtl::log::info("Creation de l'application reussie");
+    appli.mainLoop();
+    mtl::log::info("Terminaison en cours");
+    appli.quit();
     return EXIT_SUCCESS;
 }
