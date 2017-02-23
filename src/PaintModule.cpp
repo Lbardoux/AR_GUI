@@ -206,13 +206,6 @@ void PaintModule::init(int width, int height, const std::string& fileName)
 
 
     this->spr_palette = cv::Mat(Sprites::tailleIcone, CV_8UC4);
-	this->toile = cv::Mat(height - Sprites::tailleIcone.height - 35, width, CV_8UC4);
-	this->resetToile();
-	this->tailleBandeau = height - this->toile.rows;
-	this->bandeau = cv::Mat(this->tailleBandeau, width, CV_8UC4);
-	fillMat(this->bandeau, mat_data_t(0, 0, 0, 170));
-
-	// this->palette.init(&this->spr_palette, 2, 2, 150, 150);
 	this->palette.setCouleur(&this->spr_palette);
 
 	this->peintureActif = false;
@@ -315,9 +308,9 @@ void PaintModule::saveToile()
 	this->sauvegarde.changeFirstActivation(false);
 }
 
-void PaintModule::resetToile()
+void PaintModule::resetToile(bool force)
 {
-    if(!this->peintureActif)
+    if(!force && !this->peintureActif)
         return;
     
 	this->reset.changeFirstActivation(false);
@@ -375,74 +368,107 @@ void PaintModule::setEmplacement(Emplacement e)
 {
 	this->emplacement = e;
 
-	const int HAUT   = 20;
-	const int BAS    = this->height - Sprites::tailleIcone.height - 20;
-	const int GAUCHE = 1;
-	const int DROITE = -1;
-	int x, y;
+	bool bas = true, droite = true, faitLigne = true;
 
 	switch (e)
 	{
-	case HAUT_GAUCHE:
-		x = GAUCHE;
-		y = HAUT;
+	case PLACEMENT_HAUT_GAUCHE:
+		bas       = false;
+		droite    = false;
+		faitLigne = true;
 		break;
-	case HAUT_DROIT:
-		x = DROITE;
-		y = HAUT;
+	case PLACEMENT_HAUT_DROIT:
+		bas       = false;
+		droite    = true;
+		faitLigne = true;
 		break;
-	case BAS_GAUCHE:
-		x = GAUCHE;
-		y = BAS;
+	case PLACEMENT_BAS_GAUCHE:
+		bas       = true;
+		droite    = false;
+		faitLigne = true;
 		break;
-	case BAS_DROIT:
-		x = DROITE;
-		y = BAS;
+	case PLACEMENT_BAS_DROIT:
+		bas       = true;
+		droite    = true;
+		faitLigne = true;
+		break;
+	case PLACEMENT_DROITE:
+		bas       = false;
+		droite    = true;
+		faitLigne = false;
+		break;
+	case PLACEMENT_GAUCHE:
+		bas       = false;
+		droite    = false;
+		faitLigne = false;
 		break;
 	default:
-		x = GAUCHE;
-		y = HAUT;
-		break;
+		// On rappelle la fonction avec la valeur HAUT_GAUCHE par défaut. On s'assure de mettre quelque chose de correct
+		// De plus, l'appel est certain de ne pas boucler, comme la valeur est prise dans un case
+		this->setEmplacement(PLACEMENT_HAUT_GAUCHE);
+		return;
 	}
+	// Pour ajouter un widget, il suffit d'appeler la fonction placeNouveauWidget
+	// avec les memes paramètres, et le widget concerné
+	placeNouveauWidget(this->activePeinture, bas, droite, faitLigne);
+	placeNouveauWidget(this->ouvrePalette,   bas, droite, faitLigne);
+	placeNouveauWidget(this->reset, 		 bas, droite, faitLigne);
+	placeNouveauWidget(this->sauvegarde,     bas, droite, faitLigne);
+	placeNouveauWidget(this->activeDress,    bas, droite, faitLigne);
+	placeNouveauWidget(this->switchHand,     bas, droite, faitLigne);
 
-	this->toileX = 0;
+ //    this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
+	// this->activeDress.y() = y;
+    
+ //    this->switchHand.x() = this->activeDress.x() + (x * (Sprites::tailleIcone.width + decalage));
+	// this->switchHand.y() = y;
 
-	if (y == HAUT)
+	// Calcul du bandeau
+	int epaisseurBandeau = (faitLigne ? Sprites::tailleIcone.height : Sprites::tailleIcone.width) + 35;
+
+	this->toile = cv::Mat(height - Sprites::tailleIcone.height - 35, width, CV_8UC4);
+
+	if(faitLigne)
 	{
-		this->toileY = this->tailleBandeau;
-		this->bandeauY = 0;
+		this->bandeau  = cv::Mat(epaisseurBandeau, this->width, CV_8UC4);
+		this->toile    = cv::Mat(this->height - epaisseurBandeau, this->width, CV_8UC4);
+		this->toileX   = 0;
+		this->toileY   = bas ? 0 : epaisseurBandeau;
+		this->bandeauX = 0;
+		this->bandeauY = bas ? this->height - epaisseurBandeau : 0;
 	}
 	else
 	{
-		this->toileY = 0;
-		this->bandeauY = this->toile.rows;
+		this->bandeau  = cv::Mat(this->height, epaisseurBandeau, CV_8UC4);
+		this->toile    = cv::Mat(this->height, this->width - epaisseurBandeau, CV_8UC4);
+		this->toileY   = 0;
+		this->toileX   = droite ? 0 : epaisseurBandeau;
+		this->bandeauY = 0;
+		this->bandeauX = droite ? this->width - epaisseurBandeau : 0;
 	}
 
-	int decalage = 0;
-	if (x == DROITE)
-		decalage = this->width - Sprites::tailleIcone.width;
-
-	this->activePeinture.x() = (20 * x) + decalage;
-	this->activePeinture.y() = y;
-
-	decalage = 8;
-
-	this->ouvrePalette.x() = this->activePeinture.x() + (x * (Sprites::tailleIcone.width + decalage));
-	this->ouvrePalette.y() = y;
-
-	this->reset.x() = this->ouvrePalette.x() + (x * (Sprites::tailleIcone.width + decalage));
-	this->reset.y() = y;
-
-	this->sauvegarde.x() = this->reset.x() + (x * (Sprites::tailleIcone.width + decalage));
-	this->sauvegarde.y() = y;
+	fillMat(this->bandeau, mat_data_t(0, 0, 0, 170));
+	this->resetToile(true);
 
 	this->palette.setEmplacement(this->toileX + 20, this->toileY + 20);
-    
-    this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
-	this->activeDress.y() = y;
-    
-    this->switchHand.x() = this->activeDress.x() + (x * (Sprites::tailleIcone.width + decalage));
-	this->switchHand.y() = y;
+}
+
+void PaintModule::placeNouveauWidget(Widget& nouv, bool bas, bool droite, bool faitLigne)
+{
+	// Calcul des coordonnées du premier Widget
+	static int x    = (this->width  - Sprites::tailleIcone.width)  * droite + ((1 - (2 * droite)) * 20);
+	static int y    = (this->height - Sprites::tailleIcone.height) * bas    + ((1 - (2 * bas))    * 20);
+	// Calcul des décalages
+	static int decX = Sprites::tailleIcone.width  + 8;
+	static int decY = Sprites::tailleIcone.height + 8;
+
+	// Affectation des valeurs précédemment calculées
+	nouv.x() = x;
+	nouv.y() = y;
+
+	// Calcul des prochaines coordonnées
+	x += faitLigne    * decX * (1 - (2 * droite));
+	y += (!faitLigne) * decY;
 }
 
 void PaintModule::updateWidgets(void)

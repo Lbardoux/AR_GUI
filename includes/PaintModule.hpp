@@ -9,10 +9,12 @@
 
 enum Emplacement
 {
-	HAUT_GAUCHE = 0,
-	HAUT_DROIT,
-	BAS_GAUCHE,
-	BAS_DROIT,
+	PLACEMENT_HAUT_GAUCHE = 0,
+	PLACEMENT_HAUT_DROIT,
+	PLACEMENT_BAS_GAUCHE,
+	PLACEMENT_BAS_DROIT,
+	PLACEMENT_DROITE,
+	PLACEMENT_GAUCHE,
 	NB_PLACEMENT
 };
 
@@ -129,8 +131,9 @@ class PaintModule
 		/**
 		 * @date       19-Feb-2017
 		 * @brief      Fonction qui remet la toile à 0 et tout ce qui va avec
+		 * @param[in]  force  Force l'application de la fonction
 		 */
-		void resetToile();
+		void resetToile(bool force=false);
 		/**
 		 * @date       19-Feb-2017
 		 * @brief      Fonction qui sauvegarde la toile La toile est sauvegardée
@@ -204,7 +207,6 @@ class PaintModule
 		int toileX;						//!< Coordonnées en X de la toile 
 		int toileY;						//!< Coordonnées en Y de la toile 
 		Sprite bandeau;					//!< Bandeau noir présent en dessous des boutons
-		int tailleBandeau;				//!< Taille du bandeau
 		int bandeauX;					//!< Coordonnées en X du bandeau 
 		int bandeauY;					//!< Coordonnées en Y du bandeau 
 		int tailleBordure;				//!< Taille de la bordure de la toile
@@ -220,6 +222,20 @@ class PaintModule
 		 * @brief      Charge les widgets du module
 		 */
 		void initWidgets();
+
+		/**
+		 * @date       23-Feb-2017
+		 * @brief      Place un widget sur la fenetre en fonction des autres
+		 *             déjà présent
+		 * @param      nouv       Widget dont on veut assigner les coordonnées
+		 * @param[in]  bas        Vrai si on veut mettre les boutons en bas,
+		 *                        faux si en haut
+		 * @param[in]  droite     Vrai si on veut mettre les boutons à droite,
+		 *                        faux si à gauche
+		 * @param[in]  faitLigne  Vrai si on veut des boutons en ligne, faux si
+		 *                        en colonne
+		 */
+		void placeNouveauWidget(Widget& nouv, bool bas, bool droite, bool faitLigne);
 };
 
 #endif	

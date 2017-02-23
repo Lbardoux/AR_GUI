@@ -5,11 +5,13 @@
                 - 1 <- HAUT_DROIT
                 - 2 <- BAS_GAUCHE
                 - 3 <- BAS_DROIT
+                - 4 <- DROITE
+                - 5 <- GAUCHE
             Par défaut, la valeur HAUT_GAUCHE sera prise
             C'est aussi cette valeur qui est prise si la valeur insérée
             n'est pas reconnue
         -->
-    <emplacement>0</emplacement>
+    <emplacement>5</emplacement>
     <!-- Temps en seconde pour activer une couleur -->
     <tempsActivation>3</tempsActivation>
     <profilUtilisateurice>
