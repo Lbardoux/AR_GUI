@@ -187,7 +187,7 @@ PaletteCouleur& PaletteCouleur::y(uint32_t y)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PaintModule::PaintModule() : visible(false), pidSauvegarde(::getpid()), numeroSauvegarde(0), tailleBordure(2)
+PaintModule::PaintModule() : visible(false), canSaveScreen(false), pidSauvegarde(::getpid()), numeroSauvegarde(0), tailleBordure(2)
 {
 
 }
@@ -261,6 +261,13 @@ void PaintModule::initWidgets()
     this->switchHandValue(this->membre == PlayerMember::RIGHT_HAND);
     this->switchHand.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
     this->widgets.addWidget(&this->switchHand);
+    
+    this->printScreen.init("print", [this](void){
+        this->canSaveScreen = true;
+        this->printScreen.changeFirstActivation(false);
+    }, &Sprites::spr_print, this->printScreen.x(), this->printScreen.y(), this->_activation_module);
+    this->printScreen.addMembre(PlayerMember::LEFT_HAND).addMembre(PlayerMember::RIGHT_HAND);
+    this->widgets.addWidget(&this->printScreen);
 }
 
 void PaintModule::switchHandValue(bool value)
@@ -359,10 +366,17 @@ void PaintModule::rendVisible(bool val)
 	this->visible = val;
 }
 
-/*void PaintModule::placeWidget(Widget& widget, int dirX, int dirY)
+void PaintModule::saveScreen(cv::Mat& frame)
 {
-    
-}*/
+    std::ostringstream fileName;
+    fileName << "o_le_beau_screen_" << this->pidSauvegarde << "_" << (this->numeroSauvegarde++) << ".png";
+    cv::Mat file;
+    cv::cvtColor(frame, file, CV_RGBA2RGB);
+    file.convertTo(file, CV_8UC3);
+    cv::imwrite(fileName.str(), file);
+    mtl::log::info("Image sauvegardée sous :", fileName.str());
+    this->sauvegarde.changeFirstActivation(false);
+}
 
 void PaintModule::setEmplacement(Emplacement e)
 {
@@ -416,7 +430,8 @@ void PaintModule::setEmplacement(Emplacement e)
 	placeNouveauWidget(this->reset, 		 bas, droite, faitLigne);
 	placeNouveauWidget(this->sauvegarde,     bas, droite, faitLigne);
 	placeNouveauWidget(this->activeDress,    bas, droite, faitLigne);
-	placeNouveauWidget(this->switchHand,     bas, droite, faitLigne);
+    placeNouveauWidget(this->switchHand,     bas, droite, faitLigne);
+    placeNouveauWidget(this->printScreen,    bas, droite, faitLigne);
 
 	// Calcul du bandeau
 	int epaisseurBandeau = (faitLigne ? Sprites::tailleIcone.height : Sprites::tailleIcone.width) + 35;
@@ -509,5 +524,10 @@ void PaintModule::draw(cv::Mat& frame)
 		if(this->peintureActif)
 			blit(frame, this->toile, this->toileX, this->toileY);
 		this->palette.draw(frame);
+        if(this->canSaveScreen)
+        {
+            this->canSaveScreen = false;
+            this->saveScreen(frame);
+        }
 	}
 }

@@ -37,7 +37,7 @@ void CursorSet::addCursor(PlayerMember type, const ColoredCursor& cursor)
         this->_cursors.erase(type);
 
     this->_cursors[type] = coloredCursor_t(cursor);
-    this->_cursors[type].radius(4u);
+    this->_cursors[type].radius(6u);
 }
 
 void CursorSet::setIsIn(bool value) const

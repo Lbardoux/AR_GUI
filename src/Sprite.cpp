@@ -18,6 +18,7 @@ Sprite Sprites::spr_clothe_on;
 Sprite Sprites::spr_clothe_off;
 Sprite Sprites::spr_switch_on;
 Sprite Sprites::spr_switch_off;
+Sprite Sprites::spr_print;
 
 cv::Size Sprites::tailleIcone = {56, 56};
 
@@ -33,6 +34,7 @@ void Sprites::init(void)
     loadSprite("assets/images/clothe_button_off.png", Sprites::spr_clothe_off, true);
     loadSprite("assets/images/switch_on.png", Sprites::spr_switch_on, true);
     loadSprite("assets/images/switch_off.png", Sprites::spr_switch_off, true);
+    loadSprite("assets/images/imprime_ecran.png", Sprites::spr_print, true);
 }
 
 void Sprites::empty(void)
@@ -47,6 +49,7 @@ void Sprites::empty(void)
     Sprites::spr_clothe_off.release();
     Sprites::spr_switch_on.release();
     Sprites::spr_switch_off.release();
+    Sprites::spr_print.release();
 	mtl::log::info("Fait!");
 }
 

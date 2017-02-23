@@ -180,6 +180,12 @@ class PaintModule
          * @param value
          */
         void switchHandValue(bool value);
+        
+        /**
+         * @brief Fais une capture d'écran.
+         * @param frame  Frame qui est à sauvegarder
+         */
+        void saveScreen(cv::Mat& frame);
 
 	private:
 		uint32_t _activation_module;    //!< Temps d'activation en seconde d'une couleur de la palette
@@ -193,6 +199,8 @@ class PaintModule
 		ActionButton ouvrePalette; 		//!< Widget qui permet d'ouvrir la palette des couleurs
 		ActionButton reset;				//!< Bouton pour remettre la toile à 0
         ActionButton switchHand;        //!< Bouton pour changer de mains
+        ActionButton printScreen;       //!< Permet de faire un impr-ecran.
+        bool canSaveScreen;             //!< Indique si on doit sauvegarder le prochain draw
 
 		const int pidSauvegarde;		//!< PID du programme, pour faire des sauvegardes uniques
 		int numeroSauvegarde;			//!< Numéro du dessin à sauvegarder
