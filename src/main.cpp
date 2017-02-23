@@ -8,9 +8,13 @@
  * Salut camarade développeur ! Alors comme ça tu veux compiler ce truc ?@n
  * Pour cela, rien de plus dur, il suffit, si tu es chez toi, d'avoir les <b>libs suivantes</b> d'installées@n
  * Une procédure va etre détaillée pour chaque morceau, mais ça donne une idée de l'ampleur de la tache :
- *    - @b <a href="http://opencv.org/downloads.html">OpenCV</a>
+ *    - @b <a href="http://opencv.org/downloads.html">OpenCV</a> 2.4 minimum
  *    - @b <a href="http://openni.ru/openni-sdk/">OpenNI</a>
  *    - @b <a href="http://openni.ru/files/nite/">Nite</a>
+ *    - @b SDL2
+ *    - @b SDL2 Image
+ *    - @b OpenGL 3.3 minimum
+ *    - @b Glew
  *    - @b tinyxml2 et son wrapper XmlLoader.
  *    - @b mtlkit.
  *    - @b logs
