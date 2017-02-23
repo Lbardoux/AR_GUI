@@ -406,6 +406,7 @@ void PaintModule::setEmplacement(Emplacement e)
 		// On rappelle la fonction avec la valeur HAUT_GAUCHE par défaut. On s'assure de mettre quelque chose de correct
 		// De plus, l'appel est certain de ne pas boucler, comme la valeur est prise dans un case
 		this->setEmplacement(PLACEMENT_HAUT_GAUCHE);
+		// On quitte, comme en arrivant ici on est déjà passé une fois dans la fonction 'valide'
 		return;
 	}
 	// Pour ajouter un widget, il suffit d'appeler la fonction placeNouveauWidget
@@ -416,12 +417,6 @@ void PaintModule::setEmplacement(Emplacement e)
 	placeNouveauWidget(this->sauvegarde,     bas, droite, faitLigne);
 	placeNouveauWidget(this->activeDress,    bas, droite, faitLigne);
 	placeNouveauWidget(this->switchHand,     bas, droite, faitLigne);
-
- //    this->activeDress.x() = this->sauvegarde.x() + (x * (Sprites::tailleIcone.width + decalage));
-	// this->activeDress.y() = y;
-    
- //    this->switchHand.x() = this->activeDress.x() + (x * (Sprites::tailleIcone.width + decalage));
-	// this->switchHand.y() = y;
 
 	// Calcul du bandeau
 	int epaisseurBandeau = (faitLigne ? Sprites::tailleIcone.height : Sprites::tailleIcone.width) + 35;

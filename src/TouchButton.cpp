@@ -59,7 +59,7 @@ void TouchButton::draw(Sprite& frame)
     if(this->pourcent < 0.05)
     	return;
 
-    int epaisseur = this->sprite->rows / 5;
+    int epaisseur = this->sprite->rows / 12;
 
     int dX = this->x();
     int fX = this->x() + (this->sprite->cols * this->pourcent);
