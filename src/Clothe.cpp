@@ -72,15 +72,10 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
     Matrix rotation_z_matrix = rotationZMatrix(angle_z);
 
     
-    //Vector normal = Vector(cos(angle_z + M_PI/2), sin(angle_z + M_PI/2), 0);
+    /*//Vector normal = Vector(cos(angle_z + M_PI/2), sin(angle_z + M_PI/2), 0);
     Vector normal = Vector(cos(0 + M_PI/2), sin(0 + M_PI/2), 0);//OK
     //std::cout<<"normal 				: "<<normal.x()<<" "<<normal.y()<<" "<<normal.z()<<" "<<std::endl;
     Vector p1_p2_proj = ( p1_p2 + (normal * (-dot(p1_p2, normal))) ).normalize();//OK
-    /*std::cout<<"p1_p2 				: "<<p1_p2.x()<<" "<<p1_p2.y()<<" "<<p1_p2.z()<<" "<<std::endl;
-    std::cout<<"dot(p1_p2, normal)	: "<<dot(p1_p2, normal)<<std::endl;
-    std::cout<<"p1_p2_proj 			: "<<p1_p2_proj.x()<<" "<<p1_p2_proj.y()<<" "<<p1_p2_proj.z()<<" "<<std::endl;
-    std::cout<<std::endl;*/
-    					//(projeté du point p1_p2 sur le plan de normale n) 
     				 	//(http://forum.mathematex.net/exercices-problemes-superieur-f18/projection-d-un-point-sur-un-plan-t923.html)
     Vector z = Vector(0, 0, 1);
     Vector osef = scale_product(normal, z);
@@ -90,11 +85,12 @@ void Clothe::draw(const Point & position1, const Point & position2, const Transf
     float angle_proj = acos(cos_angle_proj);
     std::cout<<"angle_proj avant	: "<<angle_proj * 180 / M_PI<<std::endl;
     //if(dot(p1_p2, z) < 0) angle_proj = -angle_proj;
-    //angle_proj -= M_PI;
+    angle_proj += M_PI;
+    if(angle_proj < 0) angle_proj += 2 * M_PI;
     std::cout<<"angle_proj apres	: "<<angle_proj * 180 / M_PI<<std::endl;
     Matrix rotation_proj_matrix = rotationYMatrix(angle_proj);//rotationMatrix(angle_proj, normal);
-    
+    Matrix rotation_proj_matrix = rotationYMatrix(0);*/
 
-    Transform model = translation_matrix * /*rotation_z_matrix */ rotation_proj_matrix * scale_matrix;
+    Transform model = translation_matrix * rotation_z_matrix * /* rotation_proj_matrix */ scale_matrix;
     m_mesh.draw(model, view, projection);
 }
